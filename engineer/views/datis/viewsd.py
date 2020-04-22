@@ -485,7 +485,7 @@ def updatisdaily(request, id) :
     
     if statusofservera == "MAINS" and statusofserverb == "MAINS" :
          remarks1 = "Status of ServerA and serverB is on MAINS(update)"
-         val = (id,p_id,remarks1,statusofserverb,currdate,currtime)
+         val = (emp_id,p_id,remarks1,statusofserverb,currdate,currtime)
          sql = "INSERT INTO datisdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
          cursor.execute(sql,val)
     

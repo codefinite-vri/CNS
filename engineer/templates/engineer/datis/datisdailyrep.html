@@ -379,8 +379,7 @@
 				        <div class="modal-body">
 							{% for sup in supdetails %}
 				          <h5>{{ sup.name }}</h5>
-				          <h6>Email: <a data-toggle="modal" data-target="#report" href="/email">{{ sup.email }}</a></h6>
-						 
+				          <h6>Email: <a data-toggle="modal" data-target="#report" href="#">{{ sup.email }}</a></h6>
 						  <!--put the contact in the a href as mailto:{{ contact }} and outside in phone too-->
 						  <h6>Phone: {{ sup.contact }}</h6>
 						  {% endfor %}

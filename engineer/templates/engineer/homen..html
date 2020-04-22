@@ -58,69 +58,28 @@
 							<br>
 						</div>
 					</div>
-					
-
-				<div class="modal fade" id="contactsuper">
-				    <div class="modal-dialog">
-				      <div class="modal-content">
-				        <div class="modal-header">
-				          <h4 class="modal-title">SUPERVISOR</h4>
-				          <button type="button" class="close" data-dismiss="modal">&times;</button>
-				        </div>
-				        <div class="modal-body">
-							{% for sup in supdetails %}
-				          <h5>{{ sup.name }}</h5>
-				          <h6>Email: <a data-toggle="modal" data-target="#report" href="#">{{ sup.email }}</a></h6>
-						  <!--put the contact in the a href as mailto:{{ contact }} and outside in phone too-->
-						  <h6>Phone: {{ sup.contact }}</h6>
-						  {% endfor %}
-				        </div>
-				        <div class="modal-footer">
-				          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-				        </div>  
-				      </div>
-				    </div>
-				</div>
-				
-				<div class="modal fade" id="report">
-					<div class="modal-dialog">
-					  <div class="modal-content">
-						<div class="modal-header">
-						  <h4 class="modal-title">SEND REPORT TO SUPERVISOR</h4>
-						  <button type="button" class="close" data-dismiss="modal">&times;</button>
-						</div>
-						<div class="modal-body">
-						 <div class="helloform" style="padding:0">
-							<form method='post' action="/sent/" >
-								{% csrf_token %}
-								{% for sup in supdetails %}
-				         		<br>
-								<div class="form-group row has-warning">
-									<label for="to" class="col-sm-6 col-form-label">TO: {{ sup.name }}</label>
-								</div>
-								<div class="form-group row has-warning">
-									<label for="Subject" class="col-sm-6 col-form-label">SUBJECT:</label>
-									<div>
-									  <input class="form-control form-control-sm" type='text'></input>
-									</div>
-								</div>
-								<hr>
-								<div class="form-group row has-warning">
-									<label for="body" class="col-sm-6 col-form-label">BODY:</label>
-									<div>
-									  <textarea rows="5" placeholder="Enter message" size="100" name='feedback' value="Hello {{ sup.name }}, this is regarding the issue."></textarea> 
-									</div>
-								</div>
-								<hr>                                                  
-								<input type="submit" value="SEND">
-								{% endfor %} 
-							</form>
-						  </div>
-						</div>
-					  </div>
+					<div class="modal fade" id="contactsuper">
+					    <div class="modal-dialog">
+					      <div class="modal-content">
+					        <div class="modal-header">
+					          <h3 class="modal-title">SUPERVISOR</h3>
+					          
+					        </div>
+					        <div class="modal-body">
+					        	{% for supdetails1 in supdetails %}
+					          <h4>Name:{{supdetails1.name}}</h4>
+					          <h5>Email: <a href="mailto:{{ supdetails1.email }}">{{ supdetails1.email }}</a></h5>
+					          <!--put the contact in the a href as mailto:{{ contact }} and outside in phone too-->
+					          <h5>Phone: {{ supdetails1.contact }}</h5>
+								{% endfor %}
+					        </div>
+					        
+					        <div class="modal-footer">
+					          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+					        </div>  
+					      </div>
+					    </div>
 					</div>
-				  </div>   
-				  
 				</div>	
 	
 				<div class="col-md-2">
@@ -415,8 +374,8 @@
 
 				<div id="verific" class="tab-pane fade fac">
 					<h5 lass="dateset" style="text-align: center;">Choose type of report to view.</h5>
-			    	 <div id="facfix" style="position: relative;"> 	
-			  			<button class="reportlink" onclick="openReport('Pending', this, 'blue')" id="open">Pending</button>
+					<div id="facfix" style="position: relative;">
+						<button class="reportlink" onclick="openReport('Pending', this, 'blue')" id="open">Pending</button>
 						<button class="reportlink" onclick="openReport('Approved', this, 'blue')">Approved</button>
 						<button class="reportlink" onclick="openReport('Declined', this, 'blue')">Declined</button>
 					</div>
@@ -428,7 +387,7 @@
 				                <tr>
 				                	<th>Date-Time</th>
 				                  	<th>Task Name</th>
-				                  	<th>Submission Status</th>
+				                  	<th>Status</th>
 				                </tr>
 				            </thead>
 				            <tbody>
@@ -440,13 +399,13 @@
 										{% else %}
 								<tr data-href="/homew/{{ id }}/{{ coms.token }}">
 								{% endif %}
-									<td>{{ coms.time }}<br>{{ coms.date }}</td>
+									<td>{{ coms.date }}<br>{{ coms.time }}</td>
 									{% if coms.type == "Datisdaily" %}
 									<td>Datis Daily</td>
 									{% else %}
 									<td>Datis Weekly</td>
 							     	{% endif %}
-									<td>{{ coms.status }}</td>
+									<td>Pending Approval</td>
 									{% endif %}
 									{% endif %}
 								</tr>
@@ -460,8 +419,8 @@
 				            <thead>
 				                <tr>
 				                	<th>Date-Time</th>
-				                  	<th>Task Name</th>
-				                  	<th>Submission Status</th>
+				                  	<th>Task</th>
+				                  	<th>Status</th>
 				                </tr>
 				            </thead>
 				            <tbody>
@@ -472,13 +431,13 @@
 										{% else %}
 								<tr data-href="/homew/{{ id }}/{{ coms.token }}">
 								{% endif %}
-									<td>{{ coms.time }}<br>{{ coms.date }}</td>
+									<td>{{ coms.date }}<br>{{ coms.time }}</td>
 									{% if coms.type == "Datisdaily" %}
 									<td>Datis Daily</td>
 									{% else %}
 									<td>Datis Weekly</td>
 							     	{% endif %}
-									<td>{{ coms.status }}</td>
+									<td>Approved</td>
 									{% endif %}
 								</tr>
 								{% endfor %}
@@ -492,8 +451,8 @@
 				            <thead>
 				                <tr>
 				                	<th>Date-Time</th>
-				                  	<th>Task Name</th>
-				                  	<th>Submission Status</th>
+				                  	<th>Task</th>
+				                  	<th>Status</th>
 				                </tr>
 				            </thead>
 				            <tbody>
@@ -504,13 +463,13 @@
 										{% else %}
 								<tr data-href="/datisweekly/{{ id }}/{{ coms.token }}">
 								{% endif %}
-									<td>{{ coms.time }}<br>{{ coms.date }}</td>
+									<td>{{ coms.date }}<br>{{ coms.time }}</td>
 									{% if coms.type == "Datisdaily" %}
 									<td>Datis Daily</td>
 									{% else %}
 									<td>Datis Weekly</td>
 							     	{% endif %}
-									<td>{{ coms.status }}</td>
+									<td>Declined</td>
 									{% endif %}
 								</tr>
 								{% endfor %}
@@ -524,7 +483,8 @@
 				    <div class="modal-dialog">
 				      <div class="modal-content">
 				        <div class="modal-header">
-				          <h4 class="modal-title">Standards - Datis Daily<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+				          <h4 class="modal-title">Standards - Datis Daily</h4>
+				          <button type="button" class="close" data-dismiss="modal">&times;</button>
 				        </div>
 				        <div class="modal-body">
 				          <table  class="table table-bordered standtab table-condensed table-striped table-hover todaytasks">
@@ -589,8 +549,8 @@
 				    <div class="modal-dialog">
 				      <div class="modal-content">
 				        <div class="modal-header">
-				          <h4 class="modal-title">Standards - Datis Weekly<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
-				          
+				          <h4 class="modal-title">Standards - Datis Weekly</h4>
+				          <button type="button" class="close" data-dismiss="modal">&times;</button>
 				        </div>
 				        <div class="modal-body">
 				          <table class="table table-bordered table-condensed table-striped table-hover todaytasks">
@@ -639,7 +599,8 @@
 				    <div class="modal-dialog">
 				      <div class="modal-content">
 				        <div class="modal-header">
-				          <h4 class="modal-title">Standards - VHF RX Daily<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+				          <h4 class="modal-title">Standards - VHF RX Daily</h4>
+				          <button type="button" class="close" data-dismiss="modal">&times;</button>
 				        </div>
 				        <div class="modal-body">
 				          <table class="table table-bordered table-condensed table-striped table-hover todaytasks">
@@ -680,7 +641,8 @@
 				    <div class="modal-dialog">
 				      <div class="modal-content">
 				        <div class="modal-header">
-				          <h4 class="modal-title">Standards - VHF RX Monthly<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+				          <h4 class="modal-title">Standards - VHF RX Monthly</h4>
+				          <button type="button" class="close" data-dismiss="modal">&times;</button>
 				        </div>
 				        <div class="modal-body">
 				          <table class="table table-bordered table-condensed table-striped table-hover todaytasks">
@@ -753,7 +715,8 @@
 				    <div class="modal-dialog">
 				      <div class="modal-content">
 				        <div class="modal-header">
-				          <h4 class="modal-title">Standards - DSCN Daily<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+				          <h4 class="modal-title">Standards - DSCN Daily</h4>
+				          <button type="button" class="close" data-dismiss="modal">&times;</button>
 				        </div>
 				        <div class="modal-body">
 				          <table class="table table-bordered table-condensed table-striped table-hover todaytasks">

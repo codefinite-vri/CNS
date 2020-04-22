@@ -10,6 +10,7 @@ from cryptography.fernet import Fernet as frt
 from supervisor.views import main
 from login.sup.homeviewSup import run_sup as run_sup
 from login.eng.homeviewEng import dhomeview as dhomeview
+#from login.eng.homeviewEng import dhomeviewn as dhomeviewn
 from login.eng.logEng import logEng as logEng
 from head.views import dispMap as dispMap
 
@@ -57,13 +58,20 @@ def validate(request):
     if b=='41' :
         x=models.Engineer.objects.all()
         for i in x:  
-        
-        
-            
             if (uid == str(i.emp_id)) & (check_password(passw,i.password)) :
                 flag=0
-                request.session['type']='e'
-                return dhomeview(request,id) 
+                dept = models.Engineer.objects.all().values('dept').filter(emp_id=uid)[0]['dept']
+                if dept == "C" :
+                    request.session['type']='e'
+                    return dhomeview(request,id)
+                '''elif dept =="S" :
+                    request.session['type']='e'
+                    return dhomeviews(request,id)
+                elif dept == "N" :
+                    request.session['type']='e'
+                    return dhomeviewn(request,id)'''
+                       
+                    
     elif b=='21' :
         x=models.Dgm.objects.all()
         for i in x:

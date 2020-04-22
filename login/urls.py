@@ -90,7 +90,6 @@ urlpatterns = [
     path('datisdailyrec/<int:id>',datviewsd.datisdailyrec),
     path('repsuberrors/<int:p_id>/<int:id>',datviewsd.repsuberrors),
     path('finalrepsub/<int:p_id>/<int:id>',datviewsd.finalrepsub),
-    #path('email/',datviewsd.email),
     path('sent/',datviewsd.sent),
     #added new route
     path('homed/<int:id>/<int:p_id>',datviewsd.homed),
