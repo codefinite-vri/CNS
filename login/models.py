@@ -249,7 +249,6 @@ class Datisweekly(models.Model):
     status_of_rop = models.CharField(db_column='status_of_ROP', max_length=5, blank=True, null=True)  # Field name made lowercase.
     remarks = models.TextField(db_column='REMARKS', blank=True, null=True)  # Field name made lowercase.
     unit_incharge_approval = models.CharField(db_column='Unit_incharge_approval', max_length=3, blank=True, null=True)  # Field name made lowercase.
-    s_verify = models.IntegerField(blank=True, null=True)
     approval_date = models.DateField(blank=True, null=True)
     approval_time = models.TimeField(blank=True, null=True)
 
