@@ -470,7 +470,7 @@
 										{% else %}
 								<tr data-href="/homew/{{ id }}/{{ coms.token }}">
 								{% endif %}
-									<td>{{ coms.time }}<br>{{ coms.date }}</td>
+									<td>{{ coms.approval_date }}<br>{{ coms.approval_time }}</td>
 									{% if coms.type == "Datisdaily" %}
 									<td>Datis Daily</td>
 									{% else %}
@@ -502,7 +502,7 @@
 										{% else %}
 								<tr data-href="/datisweekly/{{ id }}/{{ coms.token }}">
 								{% endif %}
-									<td>{{ coms.time }}<br>{{ coms.date }}</td>
+									<td>{{ coms.approval_date }}<br>{{ coms.approval_time }}</td>
 									{% if coms.type == "Datisdaily" %}
 									<td>Datis Daily</td>
 									{% else %}
