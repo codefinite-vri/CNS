@@ -2,12 +2,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Daily DATIS Maintenance Report</title>
+	<title>Daily CDVOR Maintenance Entry</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="{% static 'engineer/datisstyle.css' %}">
+	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<!--<script src="strength.js"></script> temp-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<link href="https://fonts.googleapis.com/css2?family=Gotu&family=Righteous&display=swap" rel="stylesheet">
@@ -18,93 +20,69 @@
 		<nav class="navbar sticky-top">
 			<ul class="navbar-nav">
 	    		<li class="nav-item">
-	      			<a href='#' onclick="window.location.href='/routebackdd/{{ id }}'" class="taskbut"><img src="{% static '/images/task.png' %}"></a>
-	    		</li>
+					{% for cdvordd in cdvord %}
+	      			<a href='#' onclick="window.location.href='/cdvordaily/{{ cdvordd.emp_id }}'" class="taskbut"><img src="{% static '/images/task.png' %}"></a>		
+					  {% endfor %}
+				</li>
+				
 	    	</ul>
 			<div class="title-header">PREVENTIVE MAINTENANCE LOG<img src="{% static '/images/aai.jpg' %}"></div>
+			
 		</nav>
 		<br>
-		
-
 			<div class="row">
 				<div class="col-sm-7">
-					{% for datisd in datis_d %}
-					{% if f != 1 %}
-					{% if datisd.room_temp < 25 and datisd.status_of_servera == "MAINS" and datisd.status_of_serverb == "STANDBY" and datisd.status_of_ups == "NORMAL" and datisd.status_of_ac == "SVCBL" or datisd.room_temp < 25 and datisd.status_of_servera == "STANDBY" and datisd.status_of_serverb == "MAINS" and datisd.status_of_ups == "NORMAL" and datisd.status_of_ac == "SVCBL" %}
-					<div class="alert alert-success">
-						<strong>Maintenance succesful!</strong> 
-							All entries matched with standard values.
-										
-					{% else %}					
-					<div class="alert alert-danger">
-						<strong>Maintenance failed!!!</strong> 
-							Please try again.
-					
-					{% endif %}
-					{% endif %}
-					{% if f == 1 %}
-					<div class="alert alert-danger">
-						<strong>Report Submitted to the supervisor!</strong> 
-					
-				   {% endif %}
-					<div class="card" style="text-align: center;">				    
-						<form id="form-v">					   
+					<form method='POST' action='/upcdvorrepsub/{{ id }}' id="form-v" >
+						{% csrf_token %}
+						{% for cdvordd in cdvord %}
+					    <div class="card" style="text-align: center;">
 					      <div class="card-body">
-					        <h2 class="card-title">DATIS-TERMA DAILY MAINTENANCE ENTRY</h2>
+					        <h2 class="card-title">CDVOR DAILY MAINTENANCE ENTRY</h2>
 					      
-					      	
-							 	<div class="alert alert-light" style="height: 40px; padding-top: 0px">
-								    Recorded on:  DATE: {{ datisd.date }}  |  TIME: {{ datisd.time }}<br>
-                                    <strong>STATUS: {{ datisd.status }} </strong>
-								</div>
-						
+					      	<hr>
+							<div class="form-group row has-warning" >
+							  	<textarea required="required" class="form-control form-control-sm" rows="5" id="procedure" placeholder="Enter Maintenance Procedure" name='remarks'></textarea>
+							   	<!--<input type="textarea" class="form-control " id="room_temp" name="Maintenance Procedure"  style="height:200px;" required>-->
+							   
+							</div>
+
 	     					 <hr>
 							<div class="form-group row has-warning">
-							  <label for="room_temp" class="col-sm-6 col-form-label">Room Temperature*</label>
+							  <label for="azimuth_angle" class="col-sm-6 col-form-label">Azimuth angle</label>
 							  <div>
-							   	<input type="text" class="form-control form-control-sm" id="room_temp" name="Room Temperature" readonly="true" value="{{ datisd.room_temp }}">
+							   	<input type="text/number" class="form-control form-control-sm" id="azimuth_angle" name="Azimuth angle"  value="{{ cdvordd.azimuth_angle }}" required>
 							  </div>
 							</div>
-
-
-							  <hr>
-							<div class="form-group row has-warning">
-							  <label for="status_of_AC" class="col-sm-6 col-form-label">Status of AC*</label>
-							  <div>
-							     <input type="text" class="form-control form-control-sm" id="status_of_AC" name="Room Temperature" readonly="true" value="{{ datisd.status_of_ac }}">
-							  </div>
-							</div>
-							
-							  <hr>  
-							<div class="form-group row has-warning">
-							  <label for="status_of_UPS" class="col-sm-6 col-form-label">Status of UPS*</label>
-							  <div>
-							    <input type="text" class="form-control form-control-sm" id="status_of_UPS" name="Status of UPS" readonly="true" value="{{ datisd.status_of_ups }}"/><br>
-							  </div>
-							</div>
-
-
-							  <hr>
-							  <div class="form-group row has-warning">
-							    <label for="status_of_server A" class="col-sm-6 col-form-label">Status of Server A*</label>
-							    <div>
-							    	<input type="text" class="form-control form-control-sm" id="status_of_serverA" name="Status of Server A" readonly="true" value="{{ datisd.status_of_servera }}"/><br>
-							    </div>
-							  </div>
-
-							  
-							  	<hr>  
-							  <div class="form-group row has-warning">
-							    <label for="status_of_serverB" class="col-sm-6 col-form-label">Status of Server B*</label>
-							    <div>
-							    	<input type="text" class="form-control form-control-sm" id="status_of_serverB" name="Status of Server B" readonly="true" value="{{ datisd.status_of_serverb }}">
-							    </div>
-							  </div>
-
-							    
-							  	<hr>
-						 <!-- 
-							  <div class="form-group row">
+                            <hr>
+                            <div class="form-group row has-warning">
+                                <label for="number_30hz_modulation" class="col-sm-6 col-form-label">30Hz modulation</label>
+                                <div>
+                                     <input type="text/number" class="form-control form-control-sm" id="number_30hz_modulation" name="30Hz modulation"  value="{{ cdvordd.number_30hz_modulation }}" required>
+                                </div>
+                              </div>
+                            <hr>
+                            <div class="form-group row has-warning">
+                                <label for="number_9960hz_modulation" class="col-sm-6 col-form-label">9960hz modulation</label>
+                                <div>
+                                     <input type="text/number" class="form-control form-control-sm" id="number_9960hz_modulation" name="9960Hz modulation"  value="{{ cdvordd.number_9960hz_modulation }}" required>
+                                </div>
+                              </div>
+                            <hr>
+                            <div class="form-group row has-warning">
+                                <label for="number_9960hz_deviation" class="col-sm-6 col-form-label">9960hz deviation</label>
+                                <div>
+                                     <input type="text/number" class="form-control form-control-sm" id="number_9960hz_deviation" name="9960Hz deviation"  value="{{ cdvordd.number_9960hz_deviation }}" required>
+                                </div>
+                              </div>  
+                             <hr>
+                             <div class="form-group row has-warning">
+                                <label for="field_intensity" class="col-sm-6 col-form-label">Field intensity</label>
+                                <div>
+                                     <input type="text/number" class="form-control form-control-sm" id="field_intensity" name="Field intensity"  value="{{ cdvordd.field_intensity }}" required>
+                                </div>
+                              </div> 
+						<!--  
+							 <div class="form-group row">
 							    <label for="datetime_of_servers_wrt_GPS_CLK" class="col-sm-6 col-form-label">Date and time of servers wrt GPS CLK</label>
 							    <div>
 							      <input type="text" class="form-control form-control-sm" id="datetime_of_servers_wrt_GPS_CLK">
@@ -174,24 +152,12 @@
 							    </div>
 							  </div>
 							    <hr> 
-							-->
-							
-				      		</div>				      
-				  		</form>
-					  	<div class="row row1" style="align-items: right; padding-left: 27%; padding-bottom: 1%">
-					  		{% if datisd.room_temp < 25 and datisd.status_of_servera == "MAINS" and datisd.status_of_serverb == "STANDBY" and datisd.status_of_ups == "NORMAL" and datisd.status_of_ac == "SVCBL" or datisd.room_temp < 25 and datisd.status_of_servera == "STANDBY" and datisd.status_of_serverb == "MAINS" and datisd.status_of_ups == "NORMAL" and datisd.status_of_ac == "SVCBL" %}
-	                  				<p></p>
-								{% elif f != 1  %}
-								   
-								    <button style="width: 100px; margin-right: 10%;"class="btn submitbut" onclick="window.location.href='/editdatisd/{{ datisd.p_id }}'">EDIT</button>
-
-								   <button class="btn submitbut" onclick="window.location.href='/repsuberrors/{{ datisd.p_id }}/{{ id }}'">SUBMIT WITH ERRORS</button>						
-							{% endif %}
-					  	</div>
-				  		
-					</div>				  		
-				</div>
-				  {% endfor %}
+						-->
+							<button class="btn submitbut">SUBMIT</button>
+								{%endfor%}
+				      		</div>
+				    	</div>
+				  	</form>
 				</div>
 	
 				 <div class="col-sm-5" >
@@ -235,7 +201,7 @@
 			                            </tr>
 			                        </thead>
 		                          	<tbody>
-		                            {% for log in datisdlogs %}
+		                            {% for log in cdvordlogs %}
 			                            <tr>
 			                                <td>{{ log.log_id }}</td>
 			                                <td>{{ log.remarks }}</td>
@@ -258,31 +224,32 @@
 	      				      	</div>
 	    				        <div class="modal-body">
 	    				          	<table class="table table-bordered table-condensed table-striped table-hover todaytasks">
-		    				          	<tr>
-		    				          		<th>VALUE LABEL</th>
-		    				          		<th>NORMAL VALUE</th>
-		    				          	</tr>
-		    				          	<tr>
-		    				          		<td>Room Temperature</td>
-		    				          		<td>24 C</td>
-		    				          	</tr>
-		    				          	
-		    								    <tr>
-		    				          		<td>Status of AC</td>
-		    				          		<td>SVCBL</td>
-		    				          	</tr>
-		    				          	<tr>
-		    				          		<td>Status OF UPS</td>
-		    				          		<td>NORMAL</td>
-		    				          	</tr>
-		    				          	<tr>
-		    				          		<td>Status of Server A</td>
-		    				          		<td>MAINS/STANDBY</td>
-		    				          	</tr>
-		    				          	<tr>
-		    				          		<td>Status of Server B</td>
-		    				          		<td>MAINS/STANDBY</td>
-		    				          	</tr>
+                                        <tr>
+                                            <th>VALUE LABEL</th>
+                                            <th>NORMAL VALUE</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Azimuth Angle</td>
+                                            <td>less than 25</td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td>30Hz Modulation</td>
+                                            <td>28 - 30</td>
+                                        </tr>
+                                        <tr>
+                                            <td>9960Hz Modulation</td>
+                                            <td>28 - 30</td>
+                                        </tr>
+                                      <tr>
+                                          <td>9960Hz Deviation</td>
+                                          <td>15 - 17</td>
+                                      </tr>
+                                        <tr>
+                                            <td>Field Intensity</td>
+                                            <td>-1 - 1</td>
+                                        </tr>
+
 		    				          	<!--	<tr>
 		    				          		<td>Date and time of servers wrt GPS CLK</td>
 		    				          		<td>Correct</td>
@@ -328,35 +295,36 @@
 				                        <thead>
 				                            <tr>  
 												<th>Date</th>
-				                                <th>Time</th>
-				                                <th>Room Temp</th>
-				                                <th>Status of AC</th>
-				                              <th>Status of UPS</th>
-				                                <th>Status of server A</th>
-				                                <th>Status of server B</th>
+												<th>Time</th>
+												<th>Azimuth Angle</th>
+				                                <th>30Hz modulation</th>
+				                              <th>9960Hz modulation</th>
+				                                <th>9960Hz deviation</th>
+				                                <th>Field Intensity</th>
 				                                <th>Remarks</th>
-				                                <th>Test</th>
+				                    <!--            <th>Test</th>   -->
 				                            </tr>
 				                        </thead>
 				                        <tbody>
-				                            {% for datisdd in datisd %}
+				                            {% for cdvordd in cdvor_d %}
 				                            <tr>
-				                             <td>{{ datisdd.date }}</td>
-				                                <td>{{ datisdd.time }}</td>
-				                                <td>{{ datisdd.room_temp }}</td>
-				                                <td>{{ datisdd.status_of_ac }}</td>
-				                                <td>{{ datisdd.status_of_ups }}</td>
-				                                <td>{{ datisdd.status_of_servera }}</td>
-				                                <td>{{ datisdd.status_of_serverb }}</td>
-				                                <td>{{ datisdd.remarks }}</td>
-									{% if datisdd.room_temp < 25 and datisdd.status_of_servera == "MAINS" and datisdd.status_of_serverb == "STANDBY" and datisdd.status_of_ups == "NORMAL" and datisdd.status_of_ac == "SVCBL" or datisdd.room_temp < 25 and datisdd.status_of_servera == "STANDBY" and datisdd.status_of_serverb == "MAINS" and datisdd.status_of_ups == "NORMAL" and datisdd.status_of_ac == "SVCBL" %}
-												<td>Pass</td>
+				                             
+				                              <td>{{ cdvordd.date }}</td>
+				                                <td>{{ cdvordd.time }}</td>
+				                                <td>{{ cdvordd.azimuth_angle }}</td>
+				                                <td>{{ cdvordd.number_30hz_modulation }}</td>
+				                                <td>{{ cdvordd.number_9960hz_modulation }}</td>
+				                                <td>{{ cdvordd.number_9960hz_deviation }}</td>
+				                                <td>{{ cdvordd.field_intensity }}</td>
+				                                <td>{{ cdvordd.remarks }}</td>
+				                        <!--    {% if datisd.room_temp < 25 and datisd.status_of_servera == "MAINS" and datisd.status_of_serverb == "STANDBY" and datisd.status_of_ups == "NORMAL" and datisd.status_of_ac == "SVCBL" or datisd.room_temp < 25 and datisd.status_of_servera == "STANDBY" and datisd.status_of_serverb == "MAINS" and datisd.status_of_ups == "NORMAL" and datisd.status_of_ac == "SVCBL" %}
+				                                <td>Pass</td>
 				                            {% else %}
 				                                <td>Fail</td>
-				                            {% endif %}  
+				                            {% endif %}  -->
 				                            </tr>
 				                            {% endfor %}
-				                         </tbody>
+				                       </tbody>
 				                    </table>
 			                    </div>
 			                    <div class="modal-footer">
@@ -366,20 +334,19 @@
 		                </div>
 	              	</div>
 
-	              	
-
+	            
 
 				<div class="modal fade" id="contactsuper">
 				    <div class="modal-dialog">
 				      <div class="modal-content">
 				        <div class="modal-header">
-				          <h4 class="modal-title">SUPERVISOR<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+				          <h4 class="modal-title">SUPERVISOR</h4>
 				          <button type="button" class="close" data-dismiss="modal">&times;</button>
 				        </div>
 				        <div class="modal-body">
 							{% for sup in supdetails %}
 				          <h5>{{ sup.name }}</h5>
-				          <h6>Email: <a href="mailto:{{ sup.email }}">{{ sup.email }}</a></h6>
+				          <h6>Email: <a data-toggle="modal" data-target="#report" href="/email">{{ sup.email }}</a></h6>
 						 
 						  <!--put the contact in the a href as mailto:{{ contact }} and outside in phone too-->
 						  <h6>Phone: {{ sup.contact }}</h6>
@@ -392,46 +359,68 @@
 				    </div>
 				</div>
 				
-				
-			</div>
-	</div>
+				<div class="modal fade" id="report">
+					<div class="modal-dialog">
+					  <div class="modal-content">
+						<div class="modal-header">
+						  <h4 class="modal-title">SEND REPORT TO SUPERVISOR</h4>
+						  <button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+						<div class="modal-body">
+						 <div class="helloform" style="padding:0">
+							<form method='post' action="/sent/" >
+								{% csrf_token %}
+								{% for sup in supdetails %}
+				         		<br>
+								<div class="form-group row has-warning">
+									<label for="to" class="col-sm-6 col-form-label">TO: {{ sup.name }}</label>
+								</div>
+								<div class="form-group row has-warning">
+									<label for="Subject" class="col-sm-6 col-form-label">SUBJECT:</label>
+									<div>
+									  <input class="form-control form-control-sm" type='text'></input>
+									</div>
+								</div>
+								<hr>
+								<div class="form-group row has-warning">
+									<label for="body" class="col-sm-6 col-form-label">BODY:</label>
+									<div>
+									  <textarea rows="5" placeholder="Enter message" size="100" name='feedback' value="Hello {{ sup.name }}, this is regarding the issue."></textarea> 
+									</div>
+								</div>
+								<hr>                                                  
+								<input type="submit" value="SEND">
+								{% endfor %} 
+							</form>
+						  </div>
+						</div>
+					  </div>
+					</div>
+				  </div></div>
+			</div>			
+	<!--ADDITION-->
 <script>
-	$(function(){
-            if($("#room_temp").val()<"25"){
-            	 $('#room_temp').css('border-color', 'pale-green');
-            }else{
-               $('#room_temp').css('border-color', 'red');
-            }
+$(function(){
+	 $('#room_temp').css('border-color', '#CED4DA');
+	 $('#procedure').css('border-color', '#CED4DA');
+	});
 
-            if($("#status_of_AC").val()=="SVCBL"){
-            	 $('#status_of_AC').css('border-color', 'pale-green');
+ $("#room_temp").on("keyup",function(){
+            if($("#room_temp").val()==""){
+            	 $('#room_temp').css('border-color', 'red');
+                return false;
             }else{
-               $('#status_of_AC').css('border-color', 'red');
+               $('#room_temp').css('border-color', '#CED4DA');
             }
-
-            if($("#status_of_UPS").val()=="NORMAL"){
-            	 $('#status_of_UPS').css('border-color', 'pale-green');
-            }else{
-               $('#status_of_UPS').css('border-color', 'red');
-            }
-
-            if($("#status_of_serverB").val()=="MAINS" && $("#status_of_serverA").val()=="STANDBY" ){
-            	 $('#status_of_serverB').css('border-color', 'pale-green');
-            	 $('#status_of_serverA').css('border-color', 'pale-green');
-            }
-            else if($("#status_of_serverA").val()=="MAINS" && $("#status_of_serverB").val()=="STANDBY" ){
-            	 $('#status_of_serverA').css('border-color', 'pale-green');
-            	 $('#status_of_serverB').css('border-color', 'pale-green');
-            }else{
-               $('#status_of_serverA').css('border-color', 'red');
-               $('#status_of_serverB').css('border-color', 'red');
-            }
-           
         });
-		
-
-
-	</script>
+ $("#procedure").on("keyup",function(){
+            if($("#procedure").val()==""){
+            	 $('#procedure').css('border-color', 'red');
+                return false;
+            }else{
+               $('#procedure').css('border-color', '#CED4DA');
+            }
+        });
+</script>
 </body>
 
-</html>

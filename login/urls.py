@@ -13,7 +13,7 @@ from engineer.views.vhf import viewsy as vhfviewsy
 from engineer.views.dscn import viewsd as dscnviewsd
 from engineer.views.dscn import viewsm as dscnviewsm
 from engineer.views.dscn import viewsw as dscnviewsw
-
+from engineer.views.cdvor import viewsd as cdvorviewsd
 
 urlpatterns = [
     path('',views.login),
@@ -57,8 +57,8 @@ urlpatterns = [
     path('dscndaily/<int:id>',dscnviewsd.dscnd),
     path('dscndailyrep/<int:id>',dscnviewsd.dscndrep),
     path('dscnrepsub/<int:id>',dscnviewsd.dscndrepsub),
-    path('routebackdsd/<int:id>',dscnviewsd.routebackdscnd),
-    path('editdscnd/<int:dscndaily_id>',dscnviewsd.editdscndaily),
+    #path('routebackdsd/<int:id>',dscnviewsd.routebackdscnd),
+    path('editdscnd/<int:p_id>',dscnviewsd.editdscndaily),
     path('updscnrepsub/<int:id>',dscnviewsd.updscndaily),
     path('dscndailylogs/<int:id>',dscnviewsd.dscndailylogs),
    
@@ -103,8 +103,22 @@ urlpatterns = [
     path('updatiswrepsub/<int:id>',datviewsw.updatisweekly),
     path('repsubwerrors/<int:p_id>/<int:id>',datviewsw.repsubwerrors),
     path('finalwrepsub/<int:p_id>/<int:id>',datviewsw.finalwrepsub),
-    path('homew/<int:id>/<int:p_id>',datviewsw.homew)
+    path('homew/<int:id>/<int:p_id>',datviewsw.homew),
    
+   #cdvor
+   #daily
+    path('cdvordailyrep/<int:id>',cdvorviewsd.cdvordrep),
+    path('cdvorrepsub/<int:id>',cdvorviewsd.cdvordrepsubm),
+
+    path('cdvordaily/<int:id>', cdvorviewsd.cdvord),
+    path('routebackcd/<int:id>/',cdvorviewsd.routebackcdvord),
+    path('cdvordailyrec/<int:id>',cdvorviewsd.cdvordailyrec),
+    path('editcdvord/<int:p_id>',cdvorviewsd.editcdvordaily),
+    path('upcdvorrepsub/<int:id>',cdvorviewsd.upcdvordaily),
+    path('repsubcderrors/<int:p_id>/<int:id>',cdvorviewsd.repsuberrors),
+    path('finalcdrepsub/<int:p_id>/<int:id>',cdvorviewsd.finalrepsub),
+    path('homecd/<int:id>/<int:p_id>',cdvorviewsd.homecd),
+    
     # path('engineer/',include('supervisor.urls'))
     # path('employee/',views.employee)
     # path('officer/',views.officer)

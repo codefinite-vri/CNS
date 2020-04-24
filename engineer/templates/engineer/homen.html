@@ -108,121 +108,85 @@
 							  <th>Status</th>
 							  
 			      		</tr>
-			      		<!-- DATIS DAILY -->
-			      		{% if datisd_deadline <= currdate %} 
-            			{% if datisdsub_on == currdate and ddr == 0 %}
+			      		<!-- CDVOR DAILY -->
+			      		{% if cdvord_deadline <= currdate %} 
+            			{% if cdvordsub_on == currdate and cdr == 0 %}
 						{% if statusd == "PENDING" %}	
-						<tr data-href='/datisdaily/{{ id }}'>
-			                	<td>{{ datisd_deadline }}</td>                
-			                 	<td>DATIS DAILY</td>
+						<tr data-href='/cdvordaily/{{ id }}'>
+			                	<td>{{ cdvord_deadline }}</td>                
+			                 	<td>CDVOR DAILY</td>
 			                 	<td>Pending</td>
 							</tr>
 							{% endif %}
-						 {% elif ddr == 0 %}
-		                	<tr data-href='/datisdailyrep/{{ id }}'>
-			                 <td>{{ datisd_deadline }}</td>
-			                 <td>DATIS Daily</td>
+						 {% elif cdr == 0 %}
+		                	<tr data-href='/cdvordailyrep/{{ id }}'>
+			                 <td>{{ cdvord_deadline }}</td>
+			                 <td>CDVOR Daily</td>
 			                 <td>Pending</td>
 		                	</tr>
 		                {% endif %}
              			{% endif %}  
-						 {% if statusd == "COMPLETED WITH ERRORS" and ddr == 1 %}	
-						 <tr data-href='/datisdailyrec/{{ id }}'>
-							 <td>{{ datisdsub_on }}</td>                
-							  <td>DATIS DAILY</td>
+						 {% if statusd == "COMPLETED WITH ERRORS" and cdr == 1 %}	
+						 <tr data-href='/cdvordailyrec/{{ id }}'>
+							 <td>{{ cdvordsub_on }}</td>                
+							  <td>CDVOR DAILY</td>
 							  <td>Completed with errors</td>
 						 </tr>
 						 {% endif %}
 					
-             			{% if ddr == 1 and statusd == "COMPLETED" %}
-             				<tr data-href='/datisdailyrec/{{ id }}'>
-			                 <td>{{ datisdsub_on }}</td>
-			                 <td>DATIS Daily</td>
+             			{% if cdr == 1 and statusd == "COMPLETED" %}
+             				<tr data-href='/cdvordailyrec/{{ id }}'>
+			                 <td>{{ cdvordsub_on }}</td>
+			                 <td>CDVOR Daily</td>
 			                 <td>Completed</td>
 			                </tr>
               			{% endif %}
               
-						<!-- Vhf daily-->
-						{% if vhfd_deadline <= currdate %} 
-            			{% if vhfdsub_on == currdate and vdr == 0 %}
-						{% if statusvd == "PENDING" %}	
-						<tr data-href='/vhfdaily/{{ id }}'>
-		                	<td>{{ vhfd_deadline }}</td>                
-		                 	<td>VHF DAILY</td>
-		                 	<td>Pending</td>
-						</tr>
-							{% endif %}
-						 {% elif vdr == 0 %}
-		                <tr data-href='/vhfdailyrep/{{ id }}'>
-			                <td>{{ vhfd_deadline }}</td>
-			                <td>VHF Daily</td>
-			                <td>Pending</td>
-		                </tr>
-		                {% endif %}
-             			{% endif %}  
-						 {% if statusvd == "COMPLETED WITH ERRORS" and vdr == 1 %}	
-						 <tr data-href='/vhfdailyrec/{{ id }}'>
-							 <td>{{ vhfdsub_on }}</td>                
-							  <td>VHF DAILY</td>
-							  <td>Completed with errors</td>
-						 </tr>
-						 {% endif %}
-					
-             			{% if vdr == 1 and statusvd == "COMPLETED" %}
-             			<tr data-href='/vhfdailyrec/{{ id }}'>
-			                 <td>{{ vhfdsub_on }}</td>
-			                 <td>VHF Daily</td>
-			                 <td>Completed</td>
-			            </tr>
-              			{% endif %}
-              
-			  
 				
-				
-						  <!-- Datis weekly-->
-				        {% if dwr == 0 %} 
-	                    {% if currdate > wdate %}
+						  <!--   CDVOR Weekly-->
+				        {% if cwr == 0 %} 
+  	                    {% if currdate > wdate %}
 	                    	<tr data-href='/datisweeklyrep/{{ id }}' >
-		                       	<td>{{ datiswsub_deadline }}</td>    
-		                   		<td>DATIS Weekly</td>
+		                       	<td>{{ cdvorwsub_deadline }}</td>    
+		                   		<td>CDVOR Weekly</td>
 		                      	<td>Pending</td>
 		                    </tr>
-						  {% elif datiswsub_deadline == currdate %}
+						  {% elif cdvorwsub_deadline == currdate %}
 						    {% if status == "PENDING" %}
 	                      	<tr data-href='/datisweekly/{{ id }}' >
-		                      <td>{{ datiswsub_deadline }}</td>    
-		                      <td>DATIS Weekly</td>
+		                      <td>{{ cdvorwsub_deadline }}</td>    
+		                      <td>CDVOR Weekly</td>
 		                      <td>Pending</td>
 							</tr>
 							{% else %}
 							<tr data-href='/datisweeklyrep/{{ id }}' >
-								<td>{{ datiswsub_deadline }}</td>    
-								<td>DATIS Weekly</td>
+								<td>{{ cdvorwsub_deadline }}</td>    
+								<td>CDVOR Weekly</td>
 								<td>Pending</td>
 							</tr>
 							  {% endif %}
-							  {% elif datiswsub_on == currdate %}
+							  {% elif cdvorwsub_on == currdate %}
 							  {% if status == "PENDING" %}
 							<tr data-href='/datisweekly/{{ id }}' >
-								<td>{{ datiswsub_deadline }}</td>    
-								<td>DATIS Weekly</td>
+								<td>{{ cdvorwsub_deadline }}</td>    
+								<td>CDVOR Weekly</td>
 								<td>Pending</td>
 							</tr>	
 				                {% endif %}
 					  	     {% endif %} 
 	                      {% endif %}
 	                      
-	                      {% if dwr == 1 and datiswsub_on == currdate %}
+	                      {% if cwr == 1 and cdvorwsub_on == currdate %}
 						     {% if status == "COMPLETED"  %}  
 						    <tr data-href='/datisweeklyrec/{{ id }}' > 
-		                      <td>{{ datiswsub_deadline }}</td>    
-		                      <td>DATIS Weekly</td>
+		                      <td>{{ cdvorwsub_deadline }}</td>    
+		                      <td>CDVOR Weekly</td>
 		                      <td>Completed</td>
 							</tr>
 							{% else %}
 							<tr data-href='/datisweeklyrec/{{ id }}' > 
-								<td>{{ datiswsub_deadline }}</td>    
-								<td>DATIS Weekly</td>
+								<td>{{ cdvorwsub_deadline }}</td>    
+								<td>CDVOR Weekly</td>
 								<td>Completed with errors</td>
 							</tr>
 				  			  {% endif %}
@@ -247,20 +211,20 @@
 				    			<th>Previous Records</th>
 							</tr>
 							<tr>
-								<td>{{ datisd_deadline }}</td>
-	                            {% if datisd_deadline == currdate %} 
-								{% if datisdsub_on == currdate and ddr == 0 %}
-								<td><button class="btn standards" onclick="window.location.href='/datisdaily/{{ id }}'">DATIS</button></td>
-					           	{% elif ddr == 0 %}
-							   	<td><button class="btn standards" onclick="window.location.href='/datisdailyrep/{{ id }}'">DATIS</button></td>
+								<td>{{ cdvord_deadline }}</td>
+	                            {% if cdvord_deadline == currdate %} 
+								{% if cdvordsub_on == currdate and cdr == 0 %}
+								<td><button class="btn standards" onclick="window.location.href='/cdvordaily/{{ id }}'">CDVOR</button></td>
+					           	{% elif cdr == 0 %}
+							   	<td><button class="btn standards" onclick="window.location.href='/cdvordailyrep/{{ id }}'">CDVOR</button></td>
 					        	{% endif %}
 	                            {% endif %}
-								{% if ddr == 1  %}
-								<td><button disabled class="btn standards" onclick="window.location.href='/datisdailyrec/{{ id }}'">Datis</button></td>
+								{% if cdr == 1  %}
+								<td><button disabled class="btn standards" onclick="window.location.href='/cdvordailyrec/{{ id }}'">Cdvor</button></td>
 					            {% endif %}
-					    			<td>{{ datisdsub_on }}</td>
-					    			<td><button class="btn standards" data-toggle="modal" data-target="#datisdaily">STANDARDS</button></td>
-					    			<td><button class="btn standards" onclick="window.location.href='/datisdailyrec/{{ id }}'">MORE DETAILS</button></td>
+					    			<td>{{ cdvordsub_on }}</td>
+					    			<td><button class="btn standards" data-toggle="modal" data-target="#cdvordaily">STANDARDS</button></td> <!-- dont change this #datisdaily-->
+					    			<td><button class="btn standards" onclick="window.location.href='/cdvordailyrec/{{ id }}'">MORE DETAILS</button></td>
 				    		</tr>
 				    		
 		    		 		<tr data-href='#'>
@@ -293,30 +257,30 @@
 				    		</tr>
 				    		<tr>
 								<td>{{ wdate }}</td>
-								{% if dwr == 1 and datiswsub_on == currdate %}
+								{% if cwr == 1 and cdvorwsub_on == currdate %}
 								{% if status == "COMPLETED" or status == "COMPLETED WITH ERRORS" %}
-								<td><button disabled class="btn standards" onclick="window.location.href='/datisweeklyrec/{{ id }}'">DATIS</button></td>
+								<td><button disabled class="btn standards" onclick="window.location.href='/datisweeklyrec/{{ id }}'">CDVOR</button></td>
 								{% else %}
-								<td><button class="btn standards" onclick="window.location.href='/datisweekly/{{ id }}'">DATIS</button></td>
+								<td><button class="btn standards" onclick="window.location.href='/datisweekly/{{ id }}'">CDVOR</button></td>
 								{% endif %}	 
-								{% elif dwr == 0 %}
+								{% elif cwr == 0 %}
 								 {% if currdate > wdate %}
-								 <td><button class="btn standards" onclick="window.location.href='/datisweeklyrep/{{ id }}'">DATIS</button></td>
-							   {% elif datiswsub_deadline == currdate %}
+								 <td><button class="btn standards" onclick="window.location.href='/datisweeklyrep/{{ id }}'">CDVOR</button></td>
+							   {% elif cdvorwsub_deadline == currdate %}
 								 {% if status == "PENDING" %}
-								 <td><button class="btn standards" onclick="window.location.href='/datisweekly/{{ id }}'">DATIS</button></td>
+								 <td><button class="btn standards" onclick="window.location.href='/datisweekly/{{ id }}'">CDVOR</button></td>
 							    {% else %}
-								<td><button class="btn standards" onclick="window.location.href='/datisweeklyrep/{{ id }}'">DATIS</button></td>
+								<td><button class="btn standards" onclick="window.location.href='/datisweeklyrep/{{ id }}'">CDVOR</button></td>
 								{% endif %}
-								{% elif datiswsub_on == currdate %}
+								{% elif cdvorwsub_on == currdate %}
 								 {% if status == "PENDING" %}
-								 <td><button class="btn standards" onclick="window.location.href='/datisweekly/{{ id }}'">DATIS</button></td>
+								 <td><button class="btn standards" onclick="window.location.href='/datisweekly/{{ id }}'">CDVOR</button></td>
 								  {% endif %}
 								 {% else %}
-								<td><button class="btn standards" onclick="window.location.href='/datisweeklyrep/{{ id }}'">DATIS</button></td>
+								<td><button class="btn standards" onclick="window.location.href='/datisweeklyrep/{{ id }}'">CDVOR</button></td>
 								{% endif %}
 							    {% endif %}
-								<td>{{ datiswsub_on }}</td>
+								<td>{{ cdvorwsub_on }}</td>
 			         			<td><button class="btn standards" data-toggle="modal" data-target="#datisweekly">STANDARDS</button></td>
 								 <td><button class="btn standards" onclick="window.location.href='/datisweeklyrec/{{ id }}'">MORE DETAILS</button></td>
 					     	</tr>
@@ -349,7 +313,7 @@
 				    		</tr>
 				    		<tr data-href='#'>
 				    			<td>01.04.2020</td>
-				    			<td><button disabled class="btn standards" onclick="window.location.href='#'">DATIS</button></td>
+				    			<td><button disabled class="btn standards" onclick="window.location.href='#'">CDVOR</button></td>
 				    			<td>01.04.2020</td>
 				    			<td> </td>
 				    			<td><button class="btn standards" href="#">MORE DETAILS</button></td>
@@ -394,16 +358,16 @@
 								{% for coms in com %}
 								{% if coms.unit_incharge_approval == None %} 	
 								{% if coms.status == "COMPLETED" or coms.status == "COMPLETED WITH ERRORS" %}
-								{% if coms.type == "Datisdaily" %}
-									<tr data-href="/homed/{{ id }}/{{ coms.token }}">
+								{% if coms.type == "Cdvordaily" %}
+									<tr data-href="/homecd/{{ id }}/{{ coms.token }}">
 										{% else %}
 								<tr data-href="/homew/{{ id }}/{{ coms.token }}">
 								{% endif %}
 									<td>{{ coms.date }}<br>{{ coms.time }}</td>
-									{% if coms.type == "Datisdaily" %}
-									<td>Datis Daily</td>
+									{% if coms.type == "Cdvordaily" %}
+									<td>Cdvor Daily</td>
 									{% else %}
-									<td>Datis Weekly</td>
+									<td>Cdvor Weekly</td>
 							     	{% endif %}
 									<td>Pending Approval</td>
 									{% endif %}
@@ -426,16 +390,16 @@
 				            <tbody>
 								{% for coms in com %}
 								{% if coms.unit_incharge_approval == "YES" %}
-								{% if coms.type == "Datisdaily" %}
-									<tr data-href="/homed/{{ id }}/{{ coms.token }}">
+								{% if coms.type == "Cdvordaily" %}
+									<tr data-href="/homecd/{{ id }}/{{ coms.token }}">
 										{% else %}
 								<tr data-href="/homew/{{ id }}/{{ coms.token }}">
 								{% endif %}
 									<td>{{ coms.date }}<br>{{ coms.time }}</td>
-									{% if coms.type == "Datisdaily" %}
-									<td>Datis Daily</td>
+									{% if coms.type == "Cdvordaily" %}
+									<td>Cdvor Daily</td>
 									{% else %}
-									<td>Datis Weekly</td>
+									<td>Cdvor Weekly</td>
 							     	{% endif %}
 									<td>Approved</td>
 									{% endif %}
@@ -458,16 +422,16 @@
 				            <tbody>
 								{% for coms in com %}
 								{% if coms.unit_incharge_approval == "NO" %}
-								{% if coms.type == "Datisdaily" %}
-									<tr data-href="/homed/{{ id }}/{{ coms.token }}">
+								{% if coms.type == "Cdvordaily" %}
+									<tr data-href="/homecd/{{ id }}/{{ coms.token }}">
 										{% else %}
 								<tr data-href="/datisweekly/{{ id }}/{{ coms.token }}">
 								{% endif %}
 									<td>{{ coms.date }}<br>{{ coms.time }}</td>
-									{% if coms.type == "Datisdaily" %}
-									<td>Datis Daily</td>
+									{% if coms.type == "Cdvordaily" %}
+									<td>Cdvor Daily</td>
 									{% else %}
-									<td>Datis Weekly</td>
+									<td>Cdvor Weekly</td>
 							     	{% endif %}
 									<td>Declined</td>
 									{% endif %}
@@ -479,40 +443,40 @@
 			    </div> 
 			</div>
 		</div>
-		<div class="modal fade" id="datisdaily">
+		<div class="modal fade" id="cdvordaily">
 				    <div class="modal-dialog">
 				      <div class="modal-content">
 				        <div class="modal-header">
-				          <h4 class="modal-title">Standards - Datis Daily</h4>
+				          <h4 class="modal-title">Standards - CDVOR Daily</h4>
 				          <button type="button" class="close" data-dismiss="modal">&times;</button>
 				        </div>
-				        <div class="modal-body">
-				          <table  class="table table-bordered standtab table-condensed table-striped table-hover todaytasks">
-				          	<tr>
-				          		<th>VALUE LABEL</th>
-				          		<th>NORMAL VALUE</th>
-				          	</tr>
-				          	<tr>
-				          		<td>Room Temperature</td>
-				          		<td>24 C</td>
-				          	</tr>
-				          	
+						<div class="modal-body">
+							<table class="table table-bordered table-condensed table-striped table-hover todaytasks">
 								<tr>
-				          		<td>Status of AC</td>
-				          		<td>SVCBL</td>
-				          	</tr>
-				          		<tr>
-				          		<td>Status OF UPS</td>
-				          		<td>NORMAL</td>
-				          	</tr>
-				          		<tr>
-				          		<td>Status of Server A</td>
-				          		<td>MAINS/STANDBY</td>
-				          	</tr>
-				          		<tr>
-				          		<td>Status of Server B</td>
-				          		<td>MAINS/STANDBY</td>
-				          	</tr>
+									<th>VALUE LABEL</th>
+									<th>NORMAL VALUE</th>
+								</tr>
+								<tr>
+									<td>Azimuth Angle</td>
+									<td> less than 25</td>
+								</tr>
+								
+									<tr>
+									<td>30Hz Modulation</td>
+									<td>28 - 30</td>
+								</tr>
+									<tr>
+									<td>9960Hz Modulation</td>
+									<td>28 - 30</td>
+								</tr>
+									<tr>
+									<td>9960Hz Deviation</td>
+									<td>15 - 17</td>
+								</tr>
+									<tr>
+									<td>Field Intensity</td>
+									<td>-1 - 1</td>
+								</tr>
 				          	<!--	<tr>
 				          		<td>Date and time of servers wrt GPS CLK</td>
 				          		<td>Correct</td>

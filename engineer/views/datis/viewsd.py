@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.db import connection
 from datetime import date,datetime,timedelta
 from login import models as models
@@ -13,7 +13,8 @@ def sent(request):
         id = request.session['uid']
         mail = request.POST['feedback'] 
         send_mail('urgent',mail,'aai.urgent@gmail.com',['kelkarkulbhushan@gmail.com'],fail_silently=False)
-        return routebackdatisd(request, id )
+        return redirect(request.META['HTTP_REFERER'])
+        #return routebackdatisd(request, id )
 
 def logoutd(request,id):
    try:
@@ -122,7 +123,6 @@ def routebackdatisd(request, id) :
         
     if currdate > wdate :  #if it goes beyond 7 days
         dwr = 0
-    print(flag)     
     if flag :    
         if  temp1 < temp : #report submitted after deadline
             datiswsub_deadline = temp1    
@@ -145,8 +145,49 @@ def routebackdatisd(request, id) :
                 dwr=1  
             elif status == "PENDING" :
                 dwr=0
-        print(dwr)   
-    print(datiswsub_on) 
+    
+    #!!!!!!!!!!!!!!!!!!!!dscn daily!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+    dsdr = 0 
+    statusdsd = ""
+    uia = None
+    dscnd_deadline = ""
+    currdate = date.today()
+    currtime = datetime.now().strftime("%H:%M:%S")
+    dscndsub_on = cursor.execute("select date from dscndaily where date = %s",[date.today()])    
+    if dscndsub_on :
+        statusdsd = models.Dscndaily.objects.all()
+        statusdsd =  statusdsd.values('date','status')
+        statusdsd = statusdsd.order_by('-date')
+        statusdsd = statusdsd.values('status')
+        statusdsd = statusdsd.values('status').filter(a_id=1)[0]['status']
+        if statusdsd == "PENDING" :
+            dscndsub_on = currdate
+            dscnd_deadline = currdate
+            dsdr=0
+        elif statusdsd == "COMPLETED" :
+            dscnd_deadline = currdate + timedelta(days=1)
+            dscndsub_on = currdate
+            dsdr = 1 
+        elif statusdsd == "COMPLETED WITH ERRORS" :
+            dscnd_deadline = currdate + timedelta(days=1)
+            dscndsub_on = currdate
+            dsdr = 1
+    else :
+        dscnd_deadline = models.Dscndaily.objects.all()
+        dscnd_deadline = dscnd_deadline.values('date')
+        dscnd_deadline = dscnd_deadline.order_by('-date')
+        dscnd_deadline = dscnd_deadline.values('date').filter(a_id=1)[0]['date']
+        dscndsub_on = dscnd_deadline
+        dscnd_deadline = dscnd_deadline + timedelta(days=2)
+        tempdate = dscndsub_on + timedelta(days=1)
+        i = 1 
+        while i == 1 and tempdate != date.today() : 
+         if (dscnd_deadline <= date.today()) :    
+            dscndsub_on = date.today()-timedelta(days=1)    
+            tempdate = tempdate + timedelta(days=1)
+         else : 
+            break
+        dscnd_deadline = date.today()
     datisdaily=[entry for entry in models.Datisdaily.objects.filter(emp_id=id).values().order_by('-date')]
     for item in datisdaily:
         item.update( {"type":"Datisdaily"})
@@ -154,11 +195,17 @@ def routebackdatisd(request, id) :
     datisweekly=[entry for entry in models.Datisweekly.objects.filter(emp_id=id).values().order_by('-date')]
     for item in datisweekly:
         item.update( {"type":"Datisweekly"})
-    com=datisdaily+[i for i in datisweekly]
+    
+    dscndaily=[entry for entry in models.Dscndaily.objects.filter(emp_id=id).values().order_by('-date')]
+    for item in dscndaily:
+        item.update( {"type":"Dscndaily"})
+    
+    
+    com=datisdaily+[i for i in datisweekly]+[i for i in dscndaily]
     com=sorted(com,key=itemgetter('date'),reverse=True)
     for i in com:
         i.update({'token':i['p_id']})
-     
+   
     '''
     #!!!!!!!!!!!!!!!!!!!!!vhfdaily!!!!!!!!!!!!!!!!!!!!!!!!
     vdr = 0
@@ -237,31 +284,6 @@ def routebackdatisd(request, id) :
     else :
         vhfysub_deadline =  wdate
         vyr = 1
-     #!!!!!!!!!!!!!!!!!!!!!!!!!!dscndaily!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!    
-    dsdr = 0
-    currdate = date.today()            
-    dscndsub_on = cursor.execute("select date from dscndaily where date = %s",[date.today()])    
-    if dscndsub_on :
-        dscnd_deadline = currdate + timedelta(days=1)
-        dscndsub_on = currdate
-        dsdr =1 
-        
-    else :
-        dscnd_deadline = models.Dscndaily.objects.all()
-        dscnd_deadline = dscnd_deadline.values('date')
-        dscnd_deadline = dscnd_deadline.order_by('-date')
-        dscnd_deadline = dscnd_deadline.values('date').filter(a_id=1)[0]['date']
-        dscndsub_on = dscnd_deadline
-        dscnd_deadline = dscnd_deadline + timedelta(days=2)
-        if (dscnd_deadline <= date.today()) :    
-            remarks = "---Report not submitted---"
-            val = ((date.today()-timedelta(days=1)),id,'2',remarks)
-            sql = "INSERT INTO dscndaily (date,emp_id,f_id,remarks) values (%s ,%s, %s,%s)"
-            cursor.execute(sql,val)  
-            dscndsub_on = date.today()-timedelta(days=1)    
-        else : 
-            dscnd_deadline = date.today()
-   
     #!!!!!!!!!!!!!!!!!!!!!!!!dscnweekly!!!!!!!!!!!!!!!!!!!!!!!!!!
     currdate = date.today()
     wdate = models.Dscnweekly.objects.all()
@@ -299,7 +321,7 @@ def routebackdatisd(request, id) :
         dsmr = 1
     
     return render(request,'./engineer/home.html',{'status':status,'dscnmsub_deadline':dscnmsub_deadline,'dscnmsub_on':dscnmsub_on,'dsmr':dsmr,'dswr':dswr,'dscnwsub_on':dscnwsub_on,'dscnwsub_deadline':dscnwsub_deadline,'dscnd_deadline':dscnd_deadline,'dscndsub_on':dscndsub_on,'dsdr':dsdr,'ddr':ddr,'dwr':dwr,'vdr':vdr,'vmr':vmr,'vyr':vyr,'currdate':currdate,'name':name1,'id':id,'empdet':empdetails,'datisdsub_on':datisdsub_on,'datisd_deadline':datisd_deadline,'datiswsub_on':datiswsub_on,'datiswsub_deadline':datiswsub_deadline,'vhfdsub_on':vhfdsub_on,'vhfd_deadline':vhfd_deadline,'vhfmsub_on':vhfmsub_on,'vhfmsub_deadline':vhfmsub_deadline,'vhfysub_on':vhfysub_on,'vhfysub_deadline':vhfysub_deadline})'''
-    return render(request,'./engineer/home.html',{'com':com,'wdate':wdate,'supdetails':supdetails,'statusd':statusd,'status':status,'ddr':ddr,'dwr':dwr,'currdate':currdate,'name':name1,'id':id,'empdet':empdetails,'datisdsub_on':datisdsub_on,'datisd_deadline':datisd_deadline,'datiswsub_on':datiswsub_on,'datiswsub_deadline':datiswsub_deadline})
+    return render(request,'./engineer/home.html',{'dsdr':dsdr,'dscndsub_on':dscndsub_on,'dscnd_deadline':dscnd_deadline,'statusdsd':statusdsd,'com':com,'wdate':wdate,'supdetails':supdetails,'statusd':statusd,'status':status,'ddr':ddr,'dwr':dwr,'currdate':currdate,'name':name1,'id':id,'empdet':empdetails,'datisdsub_on':datisdsub_on,'datisd_deadline':datisd_deadline,'datiswsub_on':datiswsub_on,'datiswsub_deadline':datiswsub_deadline})
   else :
     return render(request,'login/login.html')  
 

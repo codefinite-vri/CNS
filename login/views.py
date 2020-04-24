@@ -10,8 +10,9 @@ from cryptography.fernet import Fernet as frt
 from supervisor.views import main
 from login.sup.homeviewSup import run_sup as run_sup
 from login.eng.homeviewEng import dhomeview as dhomeview
-#from login.eng.homeviewEng import dhomeviewn as dhomeviewn
+from login.eng.homeviewEng import dhomeviewn as dhomeviewn
 from login.eng.logEng import logEng as logEng
+from login.eng.logEng import logEngN as logEngN
 from head.views import dispMap as dispMap
 
 # Create your views here.
@@ -27,8 +28,13 @@ def login(request):
     # print("key")
     # print(request.session['key'])
     if request.session.has_key('uid') and request.session.get('type')=='e':
-         return logEng(request,request.session.get('uid'))
-         
+         id = int(request.session['uid'])
+         dept = models.Engineer.objects.all().values('dept').filter(emp_id = id)[0]['dept']
+         if dept == 'C':
+            return logEng(request,request.session.get('uid'))
+         elif dept == 'N':
+            return logEngN(request, request.session.get('uid'))
+
     if request.session.has_key('uid') and request.session.get('type')=='s':
         return run_sup(request,request.session.get('uid'))
     else:
@@ -64,12 +70,13 @@ def validate(request):
                 if dept == "C" :
                     request.session['type']='e'
                     return dhomeview(request,id)
+                elif dept == "N" :  
+                    request.session['type']='e'
+                    return dhomeviewn(request,id)
+                
                 '''elif dept =="S" :
                     request.session['type']='e'
-                    return dhomeviews(request,id)
-                elif dept == "N" :
-                    request.session['type']='e'
-                    return dhomeviewn(request,id)'''
+                    return dhomeviews(request,id)'''
                        
                     
     elif b=='21' :
