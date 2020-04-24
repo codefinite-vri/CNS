@@ -91,7 +91,8 @@ class AuthUserUserPermissions(models.Model):
 
 
 class Cdvordaily(models.Model):
-    date = models.DateTimeField()
+    date = models.DateField()
+    time = models.TimeField(blank=True, null=True)
     a = models.ForeignKey(Airport, models.DO_NOTHING)
     emp = models.ForeignKey('Engineer', models.DO_NOTHING, blank=True, null=True)
     azimuth_angle = models.IntegerField(db_column='Azimuth_angle', blank=True, null=True)  # Field name made lowercase.
@@ -104,12 +105,27 @@ class Cdvordaily(models.Model):
     unit_incharge_approval = models.CharField(db_column='Unit_incharge_approval', max_length=3, blank=True, null=True)  # Field name made lowercase.
     f_id = models.CharField(max_length=10)
     p_id = models.AutoField(primary_key=True)
-    s_verify = models.IntegerField(blank=True, null=True)
     status = models.CharField(max_length=30)
+    approval_date = models.DateField(blank=True, null=True)
+    approval_time = models.TimeField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'cdvordaily'
+
+class Cdvordlogs(models.Model):
+    log_id = models.AutoField(primary_key=True)
+    emp = models.ForeignKey('Engineer', models.DO_NOTHING)
+    p = models.ForeignKey('Datisdaily', models.DO_NOTHING)
+    value = models.CharField(max_length=30)
+    remarks = models.CharField(db_column='Remarks', max_length=100)  # Field name made lowercase.
+    date = models.DateField(db_column='Date')  # Field name made lowercase.
+    time = models.TimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'cdvordlogs'
+
 
 
 class Cdvormonthly(models.Model):
@@ -133,19 +149,19 @@ class Cdvormonthly(models.Model):
     error_spread = models.FloatField(blank=True, null=True)
     remarks = models.TextField(db_column='REMARKS', blank=True, null=True)  # Field name made lowercase.
     unit_incharge_approval = models.CharField(db_column='Unit_incharge_approval', max_length=3, blank=True, null=True)  # Field name made lowercase.
-
+    
     class Meta:
         managed = False
         db_table = 'cdvormonthly'
 
 
 class Cdvorweekly(models.Model):
-    date = models.DateTimeField()
+    date = models.DateField()
+    time = models.TimeField(blank=True, null=True)
     a = models.ForeignKey(Airport, models.DO_NOTHING)
     emp = models.ForeignKey('Engineer', models.DO_NOTHING, blank=True, null=True)
     f_id = models.CharField(max_length=10)
     p_id = models.AutoField(primary_key=True)
-    s_verify = models.IntegerField(blank=True, null=True)
     status = models.CharField(max_length=30)
     ps_5v = models.IntegerField(db_column='PS_5V', blank=True, null=True)  # Field name made lowercase.
     ps_12v = models.IntegerField(db_column='PS_12V', blank=True, null=True)  # Field name made lowercase.
@@ -161,11 +177,25 @@ class Cdvorweekly(models.Model):
     sideband_frequency = models.IntegerField(blank=True, null=True)
     remarks = models.TextField(db_column='REMARKS', blank=True, null=True)  # Field name made lowercase.
     unit_incharge_approval = models.CharField(db_column='Unit_incharge_approval', max_length=3, blank=True, null=True)  # Field name made lowercase.
+    approval_date = models.DateField(blank=True, null=True)
+    approval_time = models.TimeField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'cdvorweekly'
+    
+class Cdvorwlogs(models.Model):
+    log_id = models.AutoField(primary_key=True)
+    emp = models.ForeignKey('Engineer', models.DO_NOTHING)
+    p = models.ForeignKey('Datisdaily', models.DO_NOTHING)
+    value = models.CharField(max_length=30)
+    remarks = models.CharField(db_column='Remarks', max_length=100)  # Field name made lowercase.
+    date = models.DateField(db_column='Date')  # Field name made lowercase.
+    time = models.TimeField()
 
+    class Meta:
+        managed = False
+        db_table = 'cdvorwlogs'
 
 class Communication(models.Model):
     f_id = models.IntegerField(primary_key=True)

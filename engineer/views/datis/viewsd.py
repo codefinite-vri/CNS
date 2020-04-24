@@ -45,6 +45,7 @@ def routebackdatisd(request, id) :
     ddr =0            
     statusd = ""
     datisd_deadline = ""
+     
         #!!!!!!!!!!!!!!!!!datis daily!!!!!!!!!!!!!!!!!!!!!!!!
     currdate = date.today()
     currtime = datetime.now().strftime("%H:%M:%S")            

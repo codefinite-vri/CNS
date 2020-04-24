@@ -14,6 +14,7 @@ from engineer.views.dscn import viewsd as dscnviewsd
 from engineer.views.dscn import viewsm as dscnviewsm
 from engineer.views.dscn import viewsw as dscnviewsw
 from engineer.views.cdvor import viewsd as cdvorviewsd
+from engineer.views.cdvor import viewsw as cdvorviewsw
 
 urlpatterns = [
     path('',views.login),
@@ -57,8 +58,7 @@ urlpatterns = [
     path('dscndaily/<int:id>',dscnviewsd.dscnd),
     path('dscndailyrep/<int:id>',dscnviewsd.dscndrep),
     path('dscnrepsub/<int:id>',dscnviewsd.dscndrepsub),
-    #path('routebackdsd/<int:id>',dscnviewsd.routebackdscnd),
-    path('editdscnd/<int:p_id>',dscnviewsd.editdscndaily),
+    path('editdscnd/<int:dscndaily_id>',dscnviewsd.editdscndaily),
     path('updscnrepsub/<int:id>',dscnviewsd.updscndaily),
     path('dscndailylogs/<int:id>',dscnviewsd.dscndailylogs),
    
@@ -118,7 +118,18 @@ urlpatterns = [
     path('repsubcderrors/<int:p_id>/<int:id>',cdvorviewsd.repsuberrors),
     path('finalcdrepsub/<int:p_id>/<int:id>',cdvorviewsd.finalrepsub),
     path('homecd/<int:id>/<int:p_id>',cdvorviewsd.homecd),
-    
+
+    path('cdvorweeklyrep/<int:id>',cdvorviewsw.cdvorwrep),
+    path('cdvorwrepsub/<int:id>',cdvorviewsw.cdvorwrepsubw),
+    path('editcdvorw/<int:p_id>',cdvorviewsw.editcdvorweekly),
+    path('cdvorweekly/<int:id>',cdvorviewsw.cdvorw),
+    path('repsubcwerrors/<int:p_id>/<int:id>',cdvorviewsw.repsubwerrors),
+    path('upcdvorwrepsub/<int:id>',cdvorviewsw.upcdvorweekly),
+    path('cdvorweeklyrec/<int:id>',cdvorviewsw.cdvorweeklyrec),
+    path('homecw/<int:id>/<int:p_id>',cdvorviewsw.homew),
+    path('finalcwrepsub/<int:p_id>/<int:id>',cdvorviewsw.finalwrepsub),
+
+
     # path('engineer/',include('supervisor.urls'))
     # path('employee/',views.employee)
     # path('officer/',views.officer)
