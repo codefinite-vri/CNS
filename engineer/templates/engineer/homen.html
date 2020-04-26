@@ -146,20 +146,20 @@
 						  <!--   CDVOR Weekly-->
 				        {% if cwr == 0 %} 
   	                    {% if currdate > wdate %}
-	                    	<tr data-href='/datisweeklyrep/{{ id }}' >
+	                    	<tr data-href='/cdvorweeklyrep/{{ id }}' >
 		                       	<td>{{ cdvorwsub_deadline }}</td>    
 		                   		<td>CDVOR Weekly</td>
 		                      	<td>Pending</td>
 		                    </tr>
 						  {% elif cdvorwsub_deadline == currdate %}
 						    {% if status == "PENDING" %}
-	                      	<tr data-href='/datisweekly/{{ id }}' >
+	                      	<tr data-href='/cdvorweekly/{{ id }}' >
 		                      <td>{{ cdvorwsub_deadline }}</td>    
 		                      <td>CDVOR Weekly</td>
 		                      <td>Pending</td>
 							</tr>
 							{% else %}
-							<tr data-href='/datisweeklyrep/{{ id }}' >
+							<tr data-href='/cdvorweeklyrep/{{ id }}' >
 								<td>{{ cdvorwsub_deadline }}</td>    
 								<td>CDVOR Weekly</td>
 								<td>Pending</td>
@@ -167,7 +167,7 @@
 							  {% endif %}
 							  {% elif cdvorwsub_on == currdate %}
 							  {% if status == "PENDING" %}
-							<tr data-href='/datisweekly/{{ id }}' >
+							<tr data-href='/cdvorweekly/{{ id }}' >
 								<td>{{ cdvorwsub_deadline }}</td>    
 								<td>CDVOR Weekly</td>
 								<td>Pending</td>
@@ -178,19 +178,68 @@
 	                      
 	                      {% if cwr == 1 and cdvorwsub_on == currdate %}
 						     {% if status == "COMPLETED"  %}  
-						    <tr data-href='/datisweeklyrec/{{ id }}' > 
+						    <tr data-href='/cdvorweeklyrec/{{ id }}' > 
 		                      <td>{{ cdvorwsub_deadline }}</td>    
 		                      <td>CDVOR Weekly</td>
 		                      <td>Completed</td>
 							</tr>
 							{% else %}
-							<tr data-href='/datisweeklyrec/{{ id }}' > 
+							<tr data-href='/cdvorweeklyrec/{{ id }}' > 
 								<td>{{ cdvorwsub_deadline }}</td>    
 								<td>CDVOR Weekly</td>
 								<td>Completed with errors</td>
 							</tr>
 				  			  {% endif %}
-	                         {% endif %} 
+							 {% endif %} 
+							 
+						<!--   CDVOR Monthly-->
+						{% if cmr == 0 %} 
+  	                    {% if currdate > wdatem %}
+	                    	<tr data-href='/cdvormonthlyrep/{{ id }}' >
+		                       	<td>{{ cdvormsub_deadline }}</td>    
+		                   		<td>CDVOR Monthly</td>
+		                      	<td>Pending</td>
+		                    </tr>
+						  {% elif cdvormsub_deadline == currdate %}
+						    {% if statusm == "PENDING" %}
+	                      	<tr data-href='/cdvormonthly/{{ id }}' >
+		                      <td>{{ cdvormsub_deadline }}</td>    
+		                      <td>CDVOR Monthly</td>
+		                      <td>Pending</td>
+							</tr>
+							{% else %}
+							<tr data-href='/cdvormonthlyrep/{{ id }}' >
+								<td>{{ cdvormsub_deadline }}</td>    
+								<td>CDVOR Monthly</td>
+								<td>Pending</td>
+							</tr>
+							  {% endif %}
+							  {% elif cdvormsub_on == currdate %}
+							  {% if statusm == "PENDING" %}
+							<tr data-href='/cdvormonthly/{{ id }}' >
+								<td>{{ cdvormsub_deadline }}</td>    
+								<td>CDVOR Monthly</td>
+								<td>Pending</td>
+							</tr>	
+				                {% endif %}
+					  	     {% endif %} 
+	                      {% endif %}
+	                      
+	                      {% if cmr == 1 and cdvormsub_on == currdate %}
+						     {% if statusm == "COMPLETED"  %}  
+						    <tr data-href='/cdvormonthlyrec/{{ id }}' > 
+		                      <td>{{ cdvormsub_deadline }}</td>    
+		                      <td>CDVOR Monthly</td>
+		                      <td>Completed</td>
+							</tr>
+							{% else %}
+							<tr data-href='/cdvormonthlyrec/{{ id }}' > 
+								<td>{{ cdvormsub_deadline }}</td>    
+								<td>CDVOR Monthly</td>
+								<td>Completed with errors</td>
+							</tr>
+				  			  {% endif %}
+	                         {% endif %}	 
 					</table>
 			    </div>
 
@@ -227,7 +276,7 @@
 					    			<td><button class="btn standards" onclick="window.location.href='/cdvordailyrec/{{ id }}'">MORE DETAILS</button></td>
 				    		</tr>
 				    		
-		    		 		<tr data-href='#'>
+		    		 	<!--	<tr data-href='#'>
 				    			<td>02.04.2020</td>    
 	                            <td><button disabled class="btn standards" onclick="window.location.href='#'">VHF</button></td>
 	                            <td>{{ vhfdsub_on }}</td>
@@ -241,7 +290,7 @@
 				    			<td><button class="btn standards"data-toggle="modal" data-target="#dscndaily">STANDARDS</button></td>
 				    			<td><button class="btn standards" href="#">MORE DETAILS</button></td> 
 				    		</tr>
-				    		
+						-->
 				    	</table>
 					</div>
 
@@ -259,32 +308,32 @@
 								<td>{{ wdate }}</td>
 								{% if cwr == 1 and cdvorwsub_on == currdate %}
 								{% if status == "COMPLETED" or status == "COMPLETED WITH ERRORS" %}
-								<td><button disabled class="btn standards" onclick="window.location.href='/datisweeklyrec/{{ id }}'">CDVOR</button></td>
+								<td><button disabled class="btn standards" onclick="window.location.href='/cdvorweeklyrec/{{ id }}'">CDVOR</button></td>
 								{% else %}
-								<td><button class="btn standards" onclick="window.location.href='/datisweekly/{{ id }}'">CDVOR</button></td>
+								<td><button class="btn standards" onclick="window.location.href='/cdvorweekly/{{ id }}'">CDVOR</button></td>
 								{% endif %}	 
 								{% elif cwr == 0 %}
 								 {% if currdate > wdate %}
-								 <td><button class="btn standards" onclick="window.location.href='/datisweeklyrep/{{ id }}'">CDVOR</button></td>
+								 <td><button class="btn standards" onclick="window.location.href='/cdvorweeklyrep/{{ id }}'">CDVOR</button></td>
 							   {% elif cdvorwsub_deadline == currdate %}
 								 {% if status == "PENDING" %}
-								 <td><button class="btn standards" onclick="window.location.href='/datisweekly/{{ id }}'">CDVOR</button></td>
+								 <td><button class="btn standards" onclick="window.location.href='/cdvorweekly/{{ id }}'">CDVOR</button></td>
 							    {% else %}
-								<td><button class="btn standards" onclick="window.location.href='/datisweeklyrep/{{ id }}'">CDVOR</button></td>
+								<td><button class="btn standards" onclick="window.location.href='/cdvorweeklyrep/{{ id }}'">CDVOR</button></td>
 								{% endif %}
 								{% elif cdvorwsub_on == currdate %}
 								 {% if status == "PENDING" %}
-								 <td><button class="btn standards" onclick="window.location.href='/datisweekly/{{ id }}'">CDVOR</button></td>
+								 <td><button class="btn standards" onclick="window.location.href='/cdvorweekly/{{ id }}'">CDVOR</button></td>
 								  {% endif %}
 								 {% else %}
-								<td><button class="btn standards" onclick="window.location.href='/datisweeklyrep/{{ id }}'">CDVOR</button></td>
+								<td><button class="btn standards" onclick="window.location.href='/cdvorweeklyrep/{{ id }}'">CDVOR</button></td>
 								{% endif %}
 							    {% endif %}
 								<td>{{ cdvorwsub_on }}</td>
-			         			<td><button class="btn standards" data-toggle="modal" data-target="#datisweekly">STANDARDS</button></td>
+			         			<td><button class="btn standards" data-toggle="modal" data-target="#cdvorweekly">STANDARDS</button></td>
 								 <td><button class="btn standards" onclick="window.location.href='/cdvorweeklyrec/{{ id }}'">MORE DETAILS</button></td>
 					     	</tr>
-				    		 <tr data-href='#'>
+				    <!--		 <tr data-href='#'>
 				    			<td>01.04.2020</td>
 				    			<td><button disabled class="btn standards" onclick="window.location.href='#'">VHF RX</button></td>
 				    			<td>01.04.2020</td>
@@ -297,7 +346,7 @@
 				    			<td>01.04.2020</td>
 				    			<td></td>
 				    			<td><button class="btn standards" href="#">MORE DETAILS</button></td>
-				    		</tr>
+				    		</tr> -->
 				    	</table>
 					</div>
 
@@ -311,14 +360,36 @@
 				    			<th>Standards</th>
 				    			<th>Previous Records</th>
 				    		</tr>
-				    		<tr data-href='#'>
-				    			<td>01.04.2020</td>
-				    			<td><button disabled class="btn standards" onclick="window.location.href='#'">CDVOR</button></td>
-				    			<td>01.04.2020</td>
-				    			<td> </td>
-				    			<td><button class="btn standards" href="#">MORE DETAILS</button></td>
-				    		</tr>
-				    		 <tr data-href='#'>
+				    		<tr>
+								<td>{{ wdatem }}</td>
+								{% if cmr == 1 and cdvormsub_on == currdate %}
+								{% if statusm == "COMPLETED" or statusm == "COMPLETED WITH ERRORS" %}
+								<td><button disabled class="btn standards" onclick="window.location.href='/cdvormonthlyrec/{{ id }}'">CDVOR</button></td>
+								{% else %}
+								<td><button class="btn standards" onclick="window.location.href='/cdvormonthly/{{ id }}'">CDVOR</button></td>
+								{% endif %}	 
+								{% elif cmr == 0 %}
+								 {% if currdate > wdatem %}
+								 <td><button class="btn standards" onclick="window.location.href='/cdvormonthlyrep/{{ id }}'">CDVOR</button></td>
+							   {% elif cdvormsub_deadline == currdate %}
+								 {% if statusm == "PENDING" %}
+								 <td><button class="btn standards" onclick="window.location.href='/cdvormonthly/{{ id }}'">CDVOR</button></td>
+							    {% else %}
+								<td><button class="btn standards" onclick="window.location.href='/cdvormonthlyrep/{{ id }}'">CDVOR</button></td>
+								{% endif %}
+								{% elif cdvormsub_on == currdate %}
+								 {% if statusm == "PENDING" %}
+								 <td><button class="btn standards" onclick="window.location.href='/cdvormonthly/{{ id }}'">CDVOR</button></td>
+								  {% endif %}
+								 {% else %}
+								<td><button class="btn standards" onclick="window.location.href='/cdvormonthlyrep/{{ id }}'">CDVOR</button></td>
+								{% endif %}
+							    {% endif %}
+								<td>{{ cdvormsub_on }}</td>
+			         			<td><button class="btn standards" data-toggle="modal" data-target="#cdvormonthly">STANDARDS</button></td>
+								 <td><button class="btn standards" onclick="window.location.href='/cdvormonthlyrec/{{ id }}'">MORE DETAILS</button></td>
+					     	</tr>
+				    <!--		 <tr data-href='#'>
 				    			<td>{{ vhfmsub_deadline }}</td>    
 		                        <td><button disabled class="btn standards" onclick="window.location.href='#'">VHF</button></td>
 		                        <td>{{ vhfmsub_on }}</td>  
@@ -331,7 +402,7 @@
 				    			<td>01.04.2020</td>
 				    			<td> </td>
 				    			<td><button class="btn standards" href="#">MORE DETAILS</button></td>
-				    		</tr>
+				    		</tr> -->
 				    	</table>
 					</div>
 				</div>
@@ -360,14 +431,19 @@
 								{% if coms.status == "COMPLETED" or coms.status == "COMPLETED WITH ERRORS" %}
 								{% if coms.type == "Cdvordaily" %}
 									<tr data-href="/homecd/{{ id }}/{{ coms.token }}">
-										{% else %}
-								<tr data-href="/homew/{{ id }}/{{ coms.token }}">
+								{% elif coms.type == "Cdvorweekly" %}
+									<tr data-href="/homecw/{{ id }}/{{ coms.token }}">
+								{% else %}
+									<tr data-href="/homecm/{{ id }}/{{ coms.token }}">		
 								{% endif %}
+
 									<td>{{ coms.date }}<br>{{ coms.time }}</td>
 									{% if coms.type == "Cdvordaily" %}
 									<td>Cdvor Daily</td>
-									{% else %}
+									{% elif coms.type == "Cdvorweekly" %}
 									<td>Cdvor Weekly</td>
+									{% else %}
+									<td>Cdvor Monthly</td>
 							     	{% endif %}
 									<td>Pending Approval</td>
 									{% endif %}
@@ -392,14 +468,18 @@
 								{% if coms.unit_incharge_approval == "YES" %}
 								{% if coms.type == "Cdvordaily" %}
 									<tr data-href="/homecd/{{ id }}/{{ coms.token }}">
-										{% else %}
-								<tr data-href="/homew/{{ id }}/{{ coms.token }}">
+								{% elif coms.type == "Cdvorweekly" %}
+								<tr data-href="/homecw/{{ id }}/{{ coms.token }}">
+								{% else %}
+								<tr data-href="/homecm/{{ id }}/{{ coms.token }}">
 								{% endif %}
 									<td>{{ coms.date }}<br>{{ coms.time }}</td>
 									{% if coms.type == "Cdvordaily" %}
 									<td>Cdvor Daily</td>
-									{% else %}
+									{% elif coms.type == "Cdvorweekly" %}
 									<td>Cdvor Weekly</td>
+									{% else %}
+									<td>Cdvor Monthly</td>
 							     	{% endif %}
 									<td>Approved</td>
 									{% endif %}
@@ -424,14 +504,18 @@
 								{% if coms.unit_incharge_approval == "NO" %}
 								{% if coms.type == "Cdvordaily" %}
 									<tr data-href="/homecd/{{ id }}/{{ coms.token }}">
-										{% else %}
-								<tr data-href="/datisweekly/{{ id }}/{{ coms.token }}">
+								{% elif coms.type == "Cdvorweekly" %}
+								<tr data-href="/cdvorweekly/{{ id }}/{{ coms.token }}">
+								{% else %}
+								<tr data-href="/homecm/{{ id }}/{{ coms.token }}">	
 								{% endif %}
 									<td>{{ coms.date }}<br>{{ coms.time }}</td>
 									{% if coms.type == "Cdvordaily" %}
 									<td>Cdvor Daily</td>
-									{% else %}
+									{% elif coms.type == "Cdvorweekly" %}
 									<td>Cdvor Weekly</td>
+									{% else %}
+									<td>Cdvor Monthly</td>
 							     	{% endif %}
 									<td>Declined</td>
 									{% endif %}
@@ -509,11 +593,11 @@
 				      </div>
 				    </div>
 				</div>
-				<div class="modal fade" id="datisweekly">
+				<div class="modal fade" id="cdvorweekly">
 				    <div class="modal-dialog">
 				      <div class="modal-content">
 				        <div class="modal-header">
-				          <h4 class="modal-title">Standards - Datis Weekly</h4>
+				          <h4 class="modal-title">Standards - CDVOR Weekly</h4>
 				          <button type="button" class="close" data-dismiss="modal">&times;</button>
 				        </div>
 				        <div class="modal-body">
@@ -523,22 +607,27 @@
 				          		<th>NORMAL VALUE</th>
 				          	</tr>
 				          	<tr>
-				          		<td>UPS Input</td>
-				          		<td>200-230V</td>
-				          	</tr>
-				          	
-								<tr>
-				          		<td>UPS Output</td>
-				          		<td>230V</td>
-				          	</tr>
-				          		<tr>
-				          		<td>Dust Free</td>
-				          		<td>OK</td>
-				          	</tr>
-				          		<tr>
-				          		<td>LAN Status</td>
-				          		<td>OK</td>
-				          	</tr>
+                                <td>PS 5V</td>
+                                <td>4.75 - 5.25 </td>
+                            </tr>
+                            
+                                <tr>
+                                <td>PS 12V</td>
+                                <td>11.5 - 12.5</td>
+                            </tr>
+                                <tr>
+                                <td>PS 28V</td>
+                                <td>27 - 29</td>
+                            </tr>
+                                <tr>
+                                <td>Outside Temperature</td>
+                                <td>-25 C - 70 C</td>
+                            </tr>
+                                <tr>
+                                <td>Sideband Frequency</td>        
+                                <td>10001 Hz</td>
+                            </tr>
+                            
 				          	<!--	<tr>
 				          		<td>Time Sync</td>
 				          		<td>OK</td>
@@ -559,7 +648,77 @@
 				      </div>
 				    </div>
 				</div>
-				<div class="modal fade" id="vhfdaily">
+				<div class="modal fade" id="cdvormonthly">
+				    <div class="modal-dialog">
+				      <div class="modal-content">
+				        <div class="modal-header">
+				          <h4 class="modal-title">Standards - CDVOR Monthly	</h4>
+				          <button type="button" class="close" data-dismiss="modal">&times;</button>
+				        </div>
+						<div class="modal-body">
+							<table class="table table-bordered table-condensed table-striped table-hover todaytasks">
+								<tr>
+									<th>VALUE LABEL</th>
+									<th>NORMAL VALUE</th>
+								</tr>
+								<tr>
+									<td>Measured Bearing 1</td>
+									<td> 0</td>
+								</tr>
+								
+									<tr>
+									<td>Measured Bearing 2</td>
+									<td> 7.5</td>
+								</tr>
+									<tr>
+									<td>Measured Bearing 3</td>
+									<td> 15</td>
+								</tr>
+									<tr>
+									<td>Measured Bearing 4</td>
+									<td> 22.5</td>
+								</tr>
+									<tr>
+									<td>Measured Bearing 5</td>
+									<td> 30</td>
+								</tr>
+									<tr>
+									<td>Error Spread</td>
+									<td>Minimum as possible, typically 0</td>
+								</tr>
+				          	<!--	<tr>
+				          		<td>Date and time of servers wrt GPS CLK</td>
+				          		<td>Correct</td>
+				          	</tr>
+				          		<tr>
+				          		<td>Status of Disk Array</td>
+				          		<td>OK</td>
+				          	</tr>
+				          		<tr>
+				          		<td>Status of VHF TX used for ATIS</td>
+				          		<td>On-Line</td>
+				          	</tr>
+				          		<tr>
+				          		<td>Status of VHF RX used for ATIS</td>
+				          		<td>On-Line</td>
+				          	</tr>
+				          		<tr>
+				          		<td>DATIS update</td>
+				          		<td>OK</td>
+				          	</tr>
+				          		<tr>
+				          		<td>Audio Quality of Datis Announcement</td>
+				          		<td>Good</td>
+				          	</tr>-->
+				          </table>
+				        </div>
+				        <div class="modal-footer">
+				          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				        </div>  
+				      </div>
+				    </div>
+				</div>
+			<!--	<div class="modal fade" id="vhfdaily">
 				    <div class="modal-dialog">
 				      <div class="modal-content">
 				        <div class="modal-header">
@@ -736,7 +895,7 @@
 				        </div>  
 				      </div>
 				    </div>
-				</div>
+				</div> -->
 	</div>
 	</div>
 </div>

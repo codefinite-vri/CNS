@@ -34,6 +34,9 @@ def login(request):
             return logEng(request,request.session.get('uid'))
          elif dept == 'N':
             return logEngN(request, request.session.get('uid'))
+         #elif dept == 'S':
+          #  return logEngS(request, request.session.get('uid'))
+   
 
     if request.session.has_key('uid') and request.session.get('type')=='s':
         return run_sup(request,request.session.get('uid'))

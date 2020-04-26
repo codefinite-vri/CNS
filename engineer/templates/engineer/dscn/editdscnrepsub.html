@@ -397,6 +397,19 @@
 	<!--ADDITION-->
 <script>
 $(function(){
+	$('#sat_led').css('border-color', '#CED4DA');
+  $('#odu_led').css('border-color', '#CED4DA');
+  $('#alarm_led').css('border-color', '#CED4DA');
+  $('#power_led').css('border-color', '#CED4DA');
+  $('#v35_led').css('border-color', '#CED4DA');
+  $('#ip_voltage').css('border-color', '#CED4DA');
+  $('#op_voltage').css('border-color', '#CED4DA');
+  $('#battery_voltage').css('border-color', '#CED4DA');
+  $('#cof').css('border-color', '#CED4DA');
+
+
+  $('#procedure').css('border-color', '#CED4DA');
+
             if($("#sat_led").val()=="STEADY ON"){
             	 $('#sat_led').css('border-color', 'pale-green');
             }else{
@@ -415,7 +428,7 @@ $(function(){
                $('#alarm_led').css('border-color', 'red');
             }
 
-            if($("#spower_led").val()=="STEADY ON"){
+            if($("#power_led").val()=="STEADY ON"){
             	 $('#power_led').css('border-color', 'pale-green');
             }else{
                $('#power_led').css('border-color', 'red');

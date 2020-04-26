@@ -329,18 +329,80 @@
 	<!--ADDITION-->
 <script>
 $(function(){
-	 $('#room_temp').css('border-color', '#CED4DA');
+	 $('#Cleaning_DSCN_associated_eqpt').css('border-color', '#CED4DA');
+  $('#Battery_backup_time_of_UPS1nUPS2').css('border-color', '#CED4DA');
+  $('#UPS_battery_voltage_on_load').css('border-color', '#CED4DA');
+  $('#Antenna_n_Cable_check').css('border-color', '#CED4DA');
+  $('#Earth_resistance').css('border-color', '#CED4DA');
+  $('#EorN_voltage').css('border-color', '#CED4DA');
+  $('#Eqpt_status_after_check').css('border-color', '#CED4DA');
+
 	 $('#procedure').css('border-color', '#CED4DA');
 	});
 
- $("#room_temp").on("keyup",function(){
-            if($("#room_temp").val()==""){
-            	 $('#room_temp').css('border-color', 'red');
-                return false;
-            }else{
-               $('#room_temp').css('border-color', '#CED4DA');
-            }
-        });
+ $("#Cleaning_DSCN_associated_eqpt").on("keyup",function(){
+      if($("#Cleaning_DSCN_associated_eqpt").val()==""){
+           $('#Cleaning_DSCN_associated_eqpt').css('border-color', 'red');
+          return false;
+      }else{
+         $('#Cleaning_DSCN_associated_eqpt').css('border-color', '#CED4DA');
+      }
+  });
+
+  $("#Battery_backup_time_of_UPS1nUPS2").on("keyup",function(){
+      if($("#Battery_backup_time_of_UPS1nUPS2").val()==""){
+           $('#Battery_backup_time_of_UPS1nUPS2').css('border-color', 'red');
+          return false;
+      }else{
+         $('#Battery_backup_time_of_UPS1nUPS2').css('border-color', '#CED4DA');
+      }
+  });
+
+  $("#UPS_battery_voltage_on_load").on("keyup",function(){
+      if($("#UPS_battery_voltage_on_load").val()==""){
+           $('#UPS_battery_voltage_on_load').css('border-color', 'red');
+          return false;
+      }else{
+         $('#UPS_battery_voltage_on_load').css('border-color', '#CED4DA');
+      }
+  });
+
+  $("#Antenna_n_Cable_check").on("keyup",function(){
+      if($("#Antenna_n_Cable_check").val()==""){
+           $('#Antenna_n_Cable_check').css('border-color', 'red');
+          return false;
+      }else{
+         $('#Antenna_n_Cable_check').css('border-color', '#CED4DA');
+      }
+  });
+
+  $("#Earth_resistance").on("keyup",function(){
+      if($("#Earth_resistance").val()==""){
+           $('#Earth_resistance').css('border-color', 'red');
+          return false;
+      }else{
+         $('#Earth_resistance').css('border-color', '#CED4DA');
+      }
+  });
+
+  $("#EorN_voltage").on("keyup",function(){
+      if($("#EorN_voltage").val()==""){
+           $('#EorN_voltage').css('border-color', 'red');
+          return false;
+      }else{
+         $('#EorN_voltage').css('border-color', '#CED4DA');
+      }
+  });
+
+  $("#Eqpt_status_after_check").on("keyup",function(){
+      if($("#Eqpt_status_after_check").val()==""){
+           $('#Eqpt_status_after_check').css('border-color', 'red');
+          return false;
+      }else{
+         $('#Eqpt_status_after_check').css('border-color', '#CED4DA');
+      }
+  });
+ 
  $("#procedure").on("keyup",function(){
             if($("#procedure").val()==""){
             	 $('#procedure').css('border-color', 'red');

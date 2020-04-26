@@ -431,12 +431,47 @@
 <script>
 
 
-$("#room_temp").on("keyup",function(){
-    if($("#room_temp").val()==""){
-        $('#room_temp').css('border-color', 'red');
+$("#azimuth_angle").on("keyup",function(){
+    if($("#azimuth_angle").val()==""){
+        $('#azimuth_angle').css('border-color', 'red');
             return false;
     }else{
-        $('#room_temp').css('border-color', '#ced4da');
+        $('#azimuth_angle').css('border-color', '#ced4da');
+    }
+});
+
+$("#number_30hz_modulation").on("keyup",function(){
+    if($("#number_30hz_modulation").val()==""){
+        $('#number_30hz_modulation').css('border-color', 'red');
+            return false;
+    }else{
+        $('#number_30hz_modulation').css('border-color', '#ced4da');
+    }
+});
+
+$("#number_9960hz_modulation").on("keyup",function(){
+    if($("#number_9960hz_modulation").val()==""){
+        $('#number_9960hz_modulation').css('border-color', 'red');
+            return false;
+    }else{
+        $('#number_9960hz_modulation').css('border-color', '#ced4da');
+    }
+});
+$("#number_9960hz_deviation").on("keyup",function(){
+    if($("#number_9960hz_deviation").val()==""){
+        $('#number_9960hz_deviation').css('border-color', 'red');
+            return false;
+    }else{
+        $('#number_9960hz_deviation').css('border-color', '#ced4da');
+    }
+});
+
+$("#field_intensity").on("keyup",function(){
+    if($("#field_intensity").val()==""){
+        $('#field_intensity').css('border-color', 'red');
+            return false;
+    }else{
+        $('#field_intensity').css('border-color', '#ced4da');
     }
 });
 </script>

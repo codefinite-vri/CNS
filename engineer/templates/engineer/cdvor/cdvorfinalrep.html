@@ -105,26 +105,48 @@
 
 <script>
 $(function(){
-     $('#room_temp').css('border-color', '#CED4DA');
+  if($("#azimuth_angle").val()<"25"){
+            	 $('#azimuth_angle').css('border-color', 'pale-green');
+            }else{
+               $('#azimuth_angle').css('border-color', 'red');
+            }
+
+            if($("#number_30hz_modulation").val()>="28" && $("#number_30hz_modulation").val()<"31"){
+            	 $('#number_30hz_modulation').css('border-color', 'pale-green');
+            }else{
+               $('#number_30hz_modulation').css('border-color', 'red');
+            }
+
+            if($("#number_9960hz_modulation").val()>="28" && $("#number_9960hz_modulation").val()<"31"){
+            	 $('#number_9960hz_modulation').css('border-color', 'pale-green');
+            }else{
+               $('#number_9960hz_modulation').css('border-color', 'red');
+            }
+
+             if($("#number_9960hz_deviation").val()>="15" && $("#number_9960hz_deviation").val()<"18"){
+            	 $('#number_9960hz_deviation').css('border-color', 'pale-green');
+            }else{
+               $('#number_9960hz_deviation').css('border-color', 'red');
+            }
+
+             if($("#field_intensity").val()>= -1 && $("#field_intensity").val()<"2"){
+            	 $('#field_intensity').css('border-color', 'pale-green');
+            }else{
+               $('#field_intensity').css('border-color', 'red');
+            }
+          
      $('#procedure').css('border-color', '#CED4DA');
     });
 
- $("#room_temp").on("keyup",function(){
-            if($("#room_temp").val()==""){
-                 $('#room_temp').css('border-color', 'red');
-                return false;
-            }else{
-               $('#room_temp').css('border-color', '#CED4DA');
-            }
-        });
-        $("#procedure").on("keyup",function(){
-            if($("#procedure").val()==""){
-               $('#procedure').css('border-color', 'red');
-                return false;
-            }else{
-               $('#procedure').css('border-color', '#CED4DA');
-            }
-        });
+ 
+  $("#procedure").on("keyup",function(){
+      if($("#procedure").val()==""){
+         $('#procedure').css('border-color', 'red');
+          return false;
+      }else{
+         $('#procedure').css('border-color', '#CED4DA');
+      }
+  });
 </script>
 </body>        
 </html>

@@ -102,7 +102,7 @@
                 
                 <div class="form-group row has-warning"style="padding-left:0" >
                   <textarea class="form-control form-control-sm" rows="5" id="procedure" placeholder="Please specify the reason why error prevails in brief" name='remarks' required></textarea>
-                  <!--<input type="textarea" class="form-control " id="room_temp" name="Maintenance Procedure"  style="height:200px;" required>-->
+                  <!--<input type="textarea" class="form-control " id="Cleaning_DSCN_associated_eqpt" name="Maintenance Procedure"  style="height:200px;" required>-->
                  
               </div>
                 <!--<div class="form-group row has-warning" >
@@ -121,26 +121,27 @@
 
 <script>
 $(function(){
-     $('#room_temp').css('border-color', '#CED4DA');
-     $('#procedure').css('border-color', '#CED4DA');
+  $('#Cleaning_DSCN_associated_eqpt').css('border-color', '#CED4DA');
+  $('#Battery_backup_time_of_UPS1nUPS2').css('border-color', '#CED4DA');
+  $('#UPS_battery_voltage_on_load').css('border-color', '#CED4DA');
+  $('#Antenna_n_Cable_check').css('border-color', '#CED4DA');
+  $('#Earth_resistance').css('border-color', '#CED4DA');
+  $('#EorN_voltage').css('border-color', '#CED4DA');
+  $('#Eqpt_status_after_check').css('border-color', '#CED4DA');
+
+  $('#procedure').css('border-color', '#CED4DA');
     });
 
- $("#room_temp").on("keyup",function(){
-            if($("#room_temp").val()==""){
-                 $('#room_temp').css('border-color', 'red');
-                return false;
-            }else{
-               $('#room_temp').css('border-color', '#CED4DA');
-            }
-        });
-        $("#procedure").on("keyup",function(){
-            if($("#procedure").val()==""){
-               $('#procedure').css('border-color', 'red');
-                return false;
-            }else{
-               $('#procedure').css('border-color', '#CED4DA');
-            }
-        });
+  
+  
+  $("#procedure").on("keyup",function(){
+      if($("#procedure").val()==""){
+         $('#procedure').css('border-color', 'red');
+          return false;
+      }else{
+         $('#procedure').css('border-color', '#CED4DA');
+      }
+  });
 </script>
 </body>        
 </html>

@@ -296,7 +296,7 @@ def homew(request, id, p_id) :
         f = 1
 
     supdetails = models.Supervisor.objects.all().values('name','contact','email').filter(dept='N')
-    cdvorwlogs = models.Cdvorwlogs.objects.all().filter(date=date.today()).order_by('-log_id') 
+    cdvorwlogs = models.Cdvorwlogs.objects.all().filter(p_id=p_id).order_by('-log_id') 
     if cdvor_w :
        return render(request,'engineer/cdvor/cdvorweeklyrep.html',{'cdvorwlogs':cdvorwlogs,'supdetails':supdetails,'cdvor_w':cdvor_w,'id':id,'cdvorw':cdvorw,'f':f}) 
     else :

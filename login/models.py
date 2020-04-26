@@ -129,12 +129,12 @@ class Cdvordlogs(models.Model):
 
 
 class Cdvormonthly(models.Model):
-    date = models.DateTimeField()
+    p_id = models.AutoField(primary_key=True)
+    date = models.DateField()
+    time = models.TimeField()
     a = models.ForeignKey(Airport, models.DO_NOTHING)
     emp = models.ForeignKey('Engineer', models.DO_NOTHING, blank=True, null=True)
     f_id = models.CharField(max_length=10)
-    p_id = models.AutoField(primary_key=True)
-    s_verify = models.IntegerField(blank=True, null=True)
     status = models.CharField(max_length=30)
     measured_bearing_1 = models.FloatField(blank=True, null=True)
     bearing_deviation_1 = models.FloatField(blank=True, null=True)
@@ -142,17 +142,32 @@ class Cdvormonthly(models.Model):
     bearing_deviation_2 = models.FloatField(blank=True, null=True)
     measured_bearing_3 = models.FloatField(blank=True, null=True)
     bearing_deviation_3 = models.FloatField(blank=True, null=True)
-    measured_deviation_4 = models.FloatField(blank=True, null=True)
+    measured_bearing_4 = models.FloatField(blank=True, null=True)
     bearing_deviation_4 = models.FloatField(blank=True, null=True)
-    measured_deviation_5 = models.FloatField(blank=True, null=True)
+    measured_bearing_5 = models.FloatField(blank=True, null=True)
     bearing_deviation_5 = models.FloatField(blank=True, null=True)
     error_spread = models.FloatField(blank=True, null=True)
     remarks = models.TextField(db_column='REMARKS', blank=True, null=True)  # Field name made lowercase.
     unit_incharge_approval = models.CharField(db_column='Unit_incharge_approval', max_length=3, blank=True, null=True)  # Field name made lowercase.
-    
+    approval_date = models.DateField(blank=True, null=True)
+    approval_time = models.TimeField(blank=True, null=True)
+
     class Meta:
         managed = False
         db_table = 'cdvormonthly'
+
+class Cdvormlogs(models.Model):
+    log_id = models.AutoField(primary_key=True)
+    emp = models.ForeignKey('Engineer', models.DO_NOTHING)
+    p = models.ForeignKey('Cdvormonthly', models.DO_NOTHING)
+    value = models.CharField(max_length=30)
+    remarks = models.CharField(max_length=100)
+    date = models.DateField()
+    time = models.TimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'cdvormlogs'        
 
 
 class Cdvorweekly(models.Model):
