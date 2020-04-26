@@ -63,6 +63,7 @@ urlpatterns = [
     path('finalddrepsub/<int:p_id>/<int:id>',dscnviewsd.finalddrepsub),
     path('repsubdsderrors/<int:p_id>/<int:id>',dscnviewsd.repsubdsderrors),
     path('dscndailyrec/<int:id>',dscnviewsd.dscndailyrec),
+    path('homedsd/<int:id>/<int:p_id>',dscnviewsd.homedsd),
     
     #weekly
     path('dscnweekly/<int:id>',dscnviewsw.dscnw),
@@ -81,6 +82,7 @@ urlpatterns = [
     path('dscnmonthlyrec/<int:id>',dscnviewsm.dscnmonthlyrec),
     path('repsubdmderrors/<int:p_id>/<int:id>',dscnviewsm.repsubdmderrors),
     path('finalmrepsub/<int:p_id>/<int:id>',dscnviewsm.finalmrepsub),
+    path('homedm/<int:id>/<int:p_id>',dscnviewsm.homedm),
     
     #datis
    #daily 

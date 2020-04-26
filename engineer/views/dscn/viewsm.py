@@ -208,3 +208,29 @@ def finalmrepsub(request,p_id,id) :
     else : 
         return render(request,'login/login.html')
 
+def homedm(request, id, p_id) :
+ if request.session.has_key('uid'):
+   uid=request.session['uid'] 
+   if int(uid) == int(id):
+     cursor = connection.cursor() 
+     currdate = date.today()
+     dscn_m = models.Dscnmonthly.objects.all().filter(emp_id=id)
+     dscnm = dscn_m.order_by('-p_id')
+     dscn_m = dscn_m.filter(p_id=p_id)     
+     status = dscn_m.values('status')[0]['status']
+     f=0 
+     if status == "COMPLETED WITH ERRORS" or status == "PENDING" :
+         f = 1 
+     if dscn_m :
+        dscnmlogs = models.Dscnmlogs.objects.all().filter(p_id=p_id).order_by('-log_id')
+        supdetails = models.Supervisor.objects.all()
+        supdetails = supdetails.values('name','contact','email').filter(dept='C')
+        return render(request,'engineer/dscn/dscnmonthly.html',{'supdetails':supdetails,'dscn_m':dscn_m,'id':id,'dscnm':dscnm,'dscnmlogs':dscnmlogs,'f':f}) 
+     else :
+        messages.add_message(request,30, 'You cannot make changes to pending report!')
+        return routebackdatisd(request, id)
+   else :
+       return routebackdatisd(request, uid)
+ else : 
+   return render(request,'login/login.html')
+

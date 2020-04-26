@@ -391,7 +391,7 @@ def homed(request, id, p_id) :
      if status == "COMPLETED WITH ERRORS" or status == "PENDING" :
          f = 1 
      if datis_d :
-        datisdlogs = models.Datisdlogs.objects.all().filter(date=date.today()).order_by('-log_id')
+        datisdlogs = models.Datisdlogs.objects.all().filter(p_id=p_id).order_by('-log_id')
         supdetails = models.Supervisor.objects.all()
         supdetails = supdetails.values('name','contact','email').filter(dept='C')
         return render(request,'engineer/datis/datisdailyrep.html',{'supdetails':supdetails,'datis_d':datis_d,'id':id,'datisd':datisd,'datisdlogs':datisdlogs,'f':f}) 

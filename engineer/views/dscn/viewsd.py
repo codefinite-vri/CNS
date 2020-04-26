@@ -8,6 +8,32 @@ from login import views
 from operator import itemgetter
 # Create your views here.
   
+def homedsd(request, id, p_id) :
+ if request.session.has_key('uid'):
+   uid=request.session['uid'] 
+   if int(uid) == int(id):
+     cursor = connection.cursor() 
+     currdate = date.today()
+     dscn_d = models.Dscndaily.objects.all().filter(emp_id=id)
+     dscnd = dscn_d.order_by('-p_id')
+     dscn_d = dscn_d.filter(p_id=p_id)     
+     status = dscn_d.values('status')[0]['status']
+     f=0 
+     if status == "COMPLETED WITH ERRORS" or status == "PENDING" :
+         f = 1 
+     if dscn_d :
+        dscndlogs = models.Dscndlogs.objects.all().filter(p_id=p_id).order_by('-log_id')
+        supdetails = models.Supervisor.objects.all()
+        supdetails = supdetails.values('name','contact','email').filter(dept='C')
+        return render(request,'engineer/dscn/dscndailyrep.html',{'supdetails':supdetails,'dscn_d':dscn_d,'id':id,'dscnd':dscnd,'dscndlogs':dscndlogs,'f':f}) 
+     else :
+        messages.add_message(request,30, 'You cannot make changes to pending report!')
+        return routebackdatisd(request, id)
+   else :
+       return routebackdatisd(request, uid)
+ else : 
+   return render(request,'login/login.html')
+
 
 def dscndailyrec(request, id) :
   if request.session.has_key('uid'):

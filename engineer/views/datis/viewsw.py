@@ -54,7 +54,7 @@ def homew(request, id, p_id) :
         f = 1
 
     supdetails = models.Supervisor.objects.all().values('name','contact','email').filter(dept='C')
-    datiswlogs = models.Datiswlogs.objects.all().filter(date=date.today()).order_by('-log_id') 
+    datiswlogs = models.Datiswlogs.objects.all().filter(p_id=p_id).order_by('-log_id') 
     if datis_w :
        return render(request,'engineer/datis/datisweeklyrep.html',{'datiswlogs':datiswlogs,'supdetails':supdetails,'datis_w':datis_w,'id':id,'datisw':datisw,'f':f}) 
     else :

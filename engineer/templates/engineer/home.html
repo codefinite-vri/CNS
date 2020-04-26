@@ -554,12 +554,12 @@
 								{% if coms.status == "COMPLETED" or coms.status == "COMPLETED WITH ERRORS" %}
 								{% if coms.type == "Datisdaily" %}
 									<tr data-href="/homed/{{ id }}/{{ coms.token }}">
-										{% elif coms.tpye == "Datisweekly" %}
+										{% elif coms.type == "Datisweekly" %}
 								<tr data-href="/homew/{{ id }}/{{ coms.token }}">
 									{% elif coms.type == "Dscndaily" %}
 									<tr data-href="/homedsd/{{ id }}/{{ coms.token }}">
 										{% elif coms.type == "Dscnmonthly" %}
-										<tr data-href="/homedsm/{{ id }}/{{ coms.token }}">
+										<tr data-href="/homedm/{{ id }}/{{ coms.token }}">
 								
 								{% endif %}
 								<td>{{ coms.time }}<br>{{ coms.date }}</td>
@@ -596,12 +596,12 @@
 								{% if coms.unit_incharge_approval == "YES" %}
 								{% if coms.type == "Datisdaily" %}
 									<tr data-href="/homed/{{ id }}/{{ coms.token }}">
-										{% elif coms.tpye == "Datisweekly" %}
+										{% elif coms.type == "Datisweekly" %}
 								<tr data-href="/homew/{{ id }}/{{ coms.token }}">
 									{% elif coms.type == "Dscndaily" %}
 									<tr data-href="/homedsd/{{ id }}/{{ coms.token }}">
 										{% elif coms.type == "Dscnmonthly" %}
-										<tr data-href="/homedsm/{{ id }}/{{ coms.token }}">
+										<tr data-href="/homedm/{{ id }}/{{ coms.token }}">
 								
 								{% endif %}
 								<td>{{ coms.time }}<br>{{ coms.date }}</td>
@@ -639,12 +639,12 @@
 								{% if coms.unit_incharge_approval == "NO" %}
 								{% if coms.type == "Datisdaily" %}
 								<tr data-href="/homed/{{ id }}/{{ coms.token }}">
-									{% elif coms.tpye == "Datisweekly" %}
+									{% elif coms.type == "Datisweekly" %}
 							<tr data-href="/homew/{{ id }}/{{ coms.token }}">
 								{% elif coms.type == "Dscndaily" %}
 								<tr data-href="/homedsd/{{ id }}/{{ coms.token }}">
 									{% elif coms.type == "Dscnmonthly" %}
-									<tr data-href="/homedsm/{{ id }}/{{ coms.token }}">
+									<tr data-href="/homedm/{{ id }}/{{ coms.token }}">
 							   {% endif %}
 							<td>{{ coms.time }}<br>{{ coms.date }}</td>
 								{% if coms.type == "Datisdaily" %}
