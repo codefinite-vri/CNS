@@ -498,7 +498,6 @@ class Dscnmonthly(models.Model):
     eqpt_status_after_check = models.CharField(max_length=5, blank=True, null=True)
     remarks = models.TextField(db_column='REMARKS', blank=True, null=True)  # Field name made lowercase.
     unit_incharge_approval = models.CharField(db_column='Unit_incharge_approval', max_length=3, blank=True, null=True)  # Field name made lowercase.
-    s_verify = models.IntegerField(blank=True, null=True)
     status = models.CharField(max_length=30)
     approval_date = models.DateField(blank=True, null=True)
     approval_time = models.TimeField(blank=True, null=True)
@@ -508,6 +507,18 @@ class Dscnmonthly(models.Model):
         db_table = 'dscnmonthly'
         unique_together = (('date', 'a'),)
 
+class Dscnmlogs(models.Model):
+    log_id = models.AutoField(primary_key=True)
+    emp = models.ForeignKey('Engineer', models.DO_NOTHING)
+    remarks = models.CharField(max_length=100)
+    value = models.CharField(max_length=30)
+    date = models.DateField()
+    time = models.TimeField()
+    p = models.ForeignKey(Dscndaily, models.DO_NOTHING, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'dscnmlogs'
 
 class Dscnweekly(models.Model):
     p_id = models.AutoField(primary_key=True)
@@ -525,7 +536,6 @@ class Dscnweekly(models.Model):
     unit_incharge_approval = models.CharField(db_column='Unit_incharge_approval', max_length=3, blank=True, null=True)  # Field name made lowercase.
     approval_date = models.DateField(blank=True, null=True)
     approval_time = models.TimeField(blank=True, null=True)
-    s_verify = models.IntegerField(blank=True, null=True)
     status = models.CharField(max_length=30)
 
     class Meta:
@@ -533,6 +543,18 @@ class Dscnweekly(models.Model):
         db_table = 'dscnweekly'
         unique_together = (('date', 'a'),)
 
+class Dscnwlogs(models.Model):
+    log_id = models.AutoField(primary_key=True)
+    emp = models.ForeignKey('Engineer', models.DO_NOTHING)
+    remarks = models.CharField(max_length=100)
+    value = models.CharField(max_length=30)
+    date = models.DateField()
+    time = models.TimeField()
+    p = models.ForeignKey(Dscndaily, models.DO_NOTHING, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'dscnwlogs'
 
 class Employee(models.Model):
     emp_id = models.IntegerField(primary_key=True)

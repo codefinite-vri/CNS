@@ -200,8 +200,8 @@
 							{% endif %}
 							 {% endif %}  
 							 {% if statusdsd == "COMPLETED WITH ERRORS" and dsdr == 1 %}	
-							 <tr data-href='/dsdndailyrec/{{ id }}'>
-								 <td>{{ dscdndsub_on }}</td>                
+							 <tr data-href='/dscndailyrec/{{ id }}'>
+								 <td>{{ dscndsub_on }}</td>                
 								  <td>DSCN DAILY</td>
 								  <td>Completed with errors</td>
 							 </tr>
@@ -300,7 +300,57 @@
 								<td>Completed with errors</td>
 							</tr>
 				  			  {% endif %}
-	                         {% endif %} 
+							 {% endif %} 
+							 
+							 	  <!-- Dscn monthly-->
+								   {% if dsmr == 0 %} 
+								   {% if currdate > wdatedm %}
+									   <tr data-href='/dscnmonthlyrep/{{ id }}' >
+											  <td>{{ dscnmsub_deadline }}</td>    
+											  <td>DSCN Monthly</td>
+											 <td>Pending</td>
+									   </tr>
+									 {% elif dscnmsub_deadline == currdate %}
+									   {% if statusdm == "PENDING" %}
+										 <tr data-href='/dscnmonthly/{{ id }}' >
+										 <td>{{ dscnmsub_deadline }}</td>    
+										 <td>DSCN Monthly</td>
+										 <td>Pending</td>
+									   </tr>
+									   {% else %}
+									   <tr data-href='/dscnmonthlyrep/{{ id }}' >
+										   <td>{{ dscnmsub_deadline }}</td>    
+										   <td>DSCN Monthly</td>
+										   <td>Pending</td>
+									   </tr>
+										 {% endif %}
+										 {% elif dscnmsub_on == currdate %}
+										 {% if statusdm == "PENDING" %}
+									   <tr data-href='/dscnmonthly/{{ id }}' >
+										   <td>{{ dscnmsub_deadline }}</td>    
+										   <td>DSCN Monthly</td>
+										   <td>Pending</td>
+									   </tr>	
+										   {% endif %}
+										  {% endif %} 
+									 {% endif %}
+									 
+									 {% if dsmr == 1 and dscnmsub_on == currdate %}
+										{% if statusdm == "COMPLETED"  %}  
+									   <tr data-href='/dscnmonthlyrec/{{ id }}' > 
+										 <td>{{ dscnmsub_deadline }}</td>    
+										 <td>DSCN Monthly</td>
+										 <td>Completed</td>
+									   </tr>
+									   {% else %}
+									   <tr data-href='/dscnmonthlyrec/{{ id }}' > 
+										   <td>{{ dscnmsub_deadline }}</td>    
+										   <td>DSCN Monthly</td>
+										   <td>Completed with errors</td>
+									   </tr>
+										   {% endif %}
+										{% endif %} 
+							   
 					</table>
 			    </div>
 
@@ -424,14 +474,45 @@
 					<div id="Monthly" class="tabcontent">
   						<h3 class="dateset">Monthly</h3>
   						<table class="table table-bordered table-condensed table-striped table-hover todaytasks">
-  							<tr>	
+							<tr>	
 				    			<th>Deadline</th>
 				    			<th>Task Name</th>
 				    			<th>Last submitted on</th>
 				    			<th>Standards</th>
 				    			<th>Previous Records</th>
 				    		</tr>
-				    		<tr data-href='#'>
+				    	
+							   <tr>
+								<td>{{ wdatedm }}</td>
+								{% if dsmr == 1 and dscnmsub_on == currdate %}
+								{% if statusdm == "COMPLETED" or statusdm == "COMPLETED WITH ERRORS" %}
+								<td><button disabled class="btn standards" onclick="window.location.href='/dscnmonthlyrec/{{ id }}'">DSCN</button></td>
+								{% else %}
+								<td><button class="btn standards" onclick="window.location.href='/dscnmonthly/{{ id }}'">DSCN</button></td>
+								{% endif %}	 
+								{% elif dsmr == 0 %}
+								 {% if currdate > wdate %}
+								 <td><button class="btn standards" onclick="window.location.href='/dscnmonthlyrep/{{ id }}'">DSCN</button></td>
+							   {% elif dscnmsub_deadline == currdate %}
+								 {% if statusdm == "PENDING" %}
+								 <td><button class="btn standards" onclick="window.location.href='/dscnmonthly/{{ id }}'">DCSN</button></td>
+							    {% else %}
+								<td><button class="btn standards" onclick="window.location.href='/dscnmonthlyrep/{{ id }}'">DCSN</button></td>
+								{% endif %}
+								{% elif dscnmsub_on == currdate %}
+								 {% if statusdm == "PENDING" %}
+								 <td><button class="btn standards" onclick="window.location.href='/dscnmonthly/{{ id }}'">DCSN</button></td>
+								  {% endif %}
+								 {% else %}
+								<td><button class="btn standards" onclick="window.location.href='/dscnmonthlyrep/{{ id }}'">DSCN</button></td>
+								{% endif %}
+							    {% endif %}
+								<td>{{ dscnmsub_on }}</td>
+			         			<td><button class="btn standards" data-toggle="modal" data-target="#dscnmonthlyly">STANDARDS</button></td>
+								 <td><button class="btn standards" onclick="window.location.href='/dscnmonthlyrec/{{ id }}'">MORE DETAILS</button></td>
+					     	</tr>
+				    	
+  							<tr data-href='#'>
 				    			<td>01.04.2020</td>
 				    			<td><button disabled class="btn standards" onclick="window.location.href='#'">DATIS</button></td>
 				    			<td>01.04.2020</td>
@@ -444,13 +525,6 @@
 		                        <td>{{ vhfmsub_on }}</td>  
 				    			<td><button class="btn standards" data-toggle="modal" data-target="#vhfmonthly">STANDARDS</button></td>
 				    			<td><button class="btn standards" href="/vhfmonthly/{{ id }}">MORE DETAILS</button></td>
-				    		</tr>
-				    		<tr data-href='#'>
-				    			<td>01.04.2020</td>
-				    			<td><button disabled class="btn standards" onclick="window.location.href='#'">DSCN</button></td>
-				    			<td>01.04.2020</td>
-				    			<td> </td>
-				    			<td><button class="btn standards" href="#">MORE DETAILS</button></td>
 				    		</tr>
 				    	</table>
 					</div>
@@ -484,6 +558,9 @@
 								<tr data-href="/homew/{{ id }}/{{ coms.token }}">
 									{% elif coms.type == "Dscndaily" %}
 									<tr data-href="/homedsd/{{ id }}/{{ coms.token }}">
+										{% elif coms.type == "Dscnmonthly" %}
+										<tr data-href="/homedsm/{{ id }}/{{ coms.token }}">
+								
 								{% endif %}
 								<td>{{ coms.time }}<br>{{ coms.date }}</td>
 									{% if coms.type == "Datisdaily" %}
@@ -492,6 +569,8 @@
 									<td>Datis Weekly</td>
 									{% elif coms.type == "Dscndaily" %}
 									<td>Dscn Daily</td>
+									{% elif coms.type == "Dscnmonthly" %}
+									<td>Dscn Monthly</td>
 							     	{% endif %}
 									<td>{{ coms.status }}</td>
 								
@@ -521,6 +600,9 @@
 								<tr data-href="/homew/{{ id }}/{{ coms.token }}">
 									{% elif coms.type == "Dscndaily" %}
 									<tr data-href="/homedsd/{{ id }}/{{ coms.token }}">
+										{% elif coms.type == "Dscnmonthly" %}
+										<tr data-href="/homedsm/{{ id }}/{{ coms.token }}">
+								
 								{% endif %}
 								<td>{{ coms.time }}<br>{{ coms.date }}</td>
 									{% if coms.type == "Datisdaily" %}
@@ -529,6 +611,8 @@
 									<td>Datis Weekly</td>
 									{% elif coms.type == "Dscndaily" %}
 									<td>Dscn Daily</td>
+									{% elif coms.type == "Dscnmonthly" %}
+									<td>Dscn Monthly</td>
 							     	{% endif %}
 									<td>{{ coms.status }}</td>
 								
@@ -559,7 +643,9 @@
 							<tr data-href="/homew/{{ id }}/{{ coms.token }}">
 								{% elif coms.type == "Dscndaily" %}
 								<tr data-href="/homedsd/{{ id }}/{{ coms.token }}">
-							{% endif %}
+									{% elif coms.type == "Dscnmonthly" %}
+									<tr data-href="/homedsm/{{ id }}/{{ coms.token }}">
+							   {% endif %}
 							<td>{{ coms.time }}<br>{{ coms.date }}</td>
 								{% if coms.type == "Datisdaily" %}
 								<td>Datis Daily</td>
@@ -567,6 +653,8 @@
 								<td>Datis Weekly</td>
 								{% elif coms.type == "Dscndaily" %}
 								<td>Dscn Daily</td>
+								{% elif coms.type == "Dscnmonthly" %}
+								<td>Dscn Monthly</td>
 								 {% endif %}
 								 <td>{{ coms.status }}</td>
 								

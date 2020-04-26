@@ -9,13 +9,17 @@ from operator import itemgetter
 # Create your views here.
   
 
-def dscndailylogs(request, id) :
+def dscndailyrec(request, id) :
   if request.session.has_key('uid'):
+    uid=request.session['uid'] 
+    if int(uid) == int(id):
      cursor = connection.cursor() 
      dscn_d = models.Dscndaily.objects.all()
-     dscn_d = dscn_d.values('dscndaily_id','date','time','sat_led','odu_led','io_led','alarm_led','power_led','v35_led','ip_voltage','op_voltage','battery_voltage','coro_function','remarks','unit_incharge_approval')
-     f=1
-     return render(request,'engineer/dscn/dscndailyrep.html',{'dscn_d':dscn_d,'id':id,'f':f})
+     dscn_d = dscn_d.values('p_id','date','time','status','sat_led','odu_led','io_led','alarm_led','power_led','v35_led','ip_voltage','op_voltage','battery_voltage','coro_function','unit_incharge_approval','approval_date','approval_time')
+     dscn_d = dscn_d.filter(emp_id=id).order_by('-p_id')     
+     return render(request,'engineer/dscn/dscndrecords.html',{'dscn_d':dscn_d,'id':id})
+    else :
+     return routebackdatisd(request, uid)
   else :
      return render(request,'login/login.html')
    
@@ -355,4 +359,47 @@ def updscndaily(request, id) :
     
      return render(request,'engineer/dscn/dscndailyrep.html',{'dscn_d':dscn_d,'id':emp_id,'dscndlogs':dscndlogs,'supdetails':supdetails,'dscnd':dscnd})
       
-       
+def repsubdsderrors(request,p_id,id) :
+ if request.session.has_key('uid'): 
+   uid=request.session['uid'] 
+   if int(uid) == int(id) :
+    cursor = connection.cursor() 
+    dscnd = models.Dscndaily.objects.all()
+    dscnd = dscnd.values('p_id','date','time','status','sat_led','odu_led','io_led','alarm_led','power_led','v35_led','ip_voltage','op_voltage','battery_voltage','coro_function')
+    dscnd = dscnd.filter(p_id=p_id)
+    return render(request,'engineer/dscn/dscnfinalrep.html',{'dscnd':dscnd,'p_id':p_id,'id':id}) 
+   else :
+    return routebackdatisd(request, uid)  
+ else : 
+    return render(request,'login/login.html')
+
+def finalddrepsub(request,p_id,id) :
+    f=1
+    cursor = connection.cursor()
+    currdate= date.today()
+    currtime = datetime.now().strftime("%H:%M:%S")
+    value = request.POST['remarks']
+    remarks = "Final submit with errors"
+    val = (id,p_id,remarks,value,currdate,currtime)
+    sql = "INSERT INTO dscndlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
+    cursor.execute(sql,val)
+    cursor.execute("update dscndaily set status = %s where p_id = %s",["COMPLETED WITH ERRORS",p_id])
+    cursor.execute("update dscndaily set unit_incharge_approval = %s where p_id = %s",[None,p_id])
+    
+    if request.session.has_key('uid'):
+        cursor = connection.cursor() 
+        currdate = date.today()
+        dscn_d = models.Dscndaily.objects.all()
+        dscn_d = dscn_d.values('p_id','date','time','status','sat_led','odu_led','io_led','alarm_led','power_led','v35_led','ip_voltage','op_voltage','battery_voltage','coro_function')
+        dscn_d = dscn_d.filter(emp_id=id)
+        dscnd = dscn_d.order_by('-p_id')
+        dscn_d = dscn_d.filter(date=currdate)     
+        dscndlogs = models.Dscndlogs.objects.all()
+        dscndlogs = dscndlogs.filter(date=date.today()).order_by('-log_id')    
+        supdetails = models.Supervisor.objects.all()
+        supdetails = supdetails.values('name','contact','email').filter(dept='C')
+        return render(request,'engineer/dscn/dscndailyrep.html',{'supdetails':supdetails,'dscn_d':dscn_d,'id':id,'f':f,'dscnd':dscnd,'dscndlogs':dscndlogs}) 
+    else : 
+        return render(request,'login/login.html')
+    
+        

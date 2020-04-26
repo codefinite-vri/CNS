@@ -60,8 +60,10 @@ urlpatterns = [
     path('dscnrepsub/<int:id>',dscnviewsd.dscndrepsub),
     path('editdscnd/<int:dscndaily_id>',dscnviewsd.editdscndaily),
     path('updscnrepsub/<int:id>',dscnviewsd.updscndaily),
-    path('dscndailylogs/<int:id>',dscnviewsd.dscndailylogs),
-   
+    path('finalddrepsub/<int:p_id>/<int:id>',dscnviewsd.finalddrepsub),
+    path('repsubdsderrors/<int:p_id>/<int:id>',dscnviewsd.repsubdsderrors),
+    path('dscndailyrec/<int:id>',dscnviewsd.dscndailyrec),
+    
     #weekly
     path('dscnweekly/<int:id>',dscnviewsw.dscnw),
     path('dscnweeklyrep/<int:id>',dscnviewsw.dscnwrep),
@@ -74,10 +76,12 @@ urlpatterns = [
     path('dscnmonthly/<int:id>',dscnviewsm.dscnm),
     path('dscnmonthlyrep/<int:id>',dscnviewsm.dscnmrep),
     path('dscnmrepsub/<int:id>',dscnviewsm.dscnmrepsub),
-    path('dscnmonthlylogs/<int:id>',dscnviewsm.dscnmonthlylogs),
-    path('editdscnm/<int:dscnmonthly_id>',dscnviewsm.editdscnmonthly),
+    path('editdscnm/<int:p_id>',dscnviewsm.editdscnmonthly),
     path('updscnmrepsub/<int:id>',dscnviewsm.updscnmonthly),
-   
+    path('dscnmonthlyrec/<int:id>',dscnviewsm.dscnmonthlyrec),
+    path('repsubdmderrors/<int:p_id>/<int:id>',dscnviewsm.repsubdmderrors),
+    path('finalmrepsub/<int:p_id>/<int:id>',dscnviewsm.finalmrepsub),
+    
     #datis
    #daily 
     path('datisdaily/<int:id>',datviewsd.datisd),
