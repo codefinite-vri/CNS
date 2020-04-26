@@ -136,7 +136,7 @@
 							<div class="form-group row has-warning">
 							  <label for="coro_function" class="col-sm-6 col-form-label">CorO Function</label>
 							  <div>
-							    <select required class="form-control form-control-sm" id="coro_function" name="cof">
+							    <select required class="form-control form-control-sm" id="cof" name="cof">
 							    	  <option value="" disabled="disabled" selected="selected">Please select an option</option>
 									  <option value="OK">OK</option>
 									  <option value="NOT OK">NOT OK</option>
@@ -438,12 +438,30 @@
 <script>
 
 
-$("#room_temp").on("keyup",function(){
-    if($("#room_temp").val()==""){
-        $('#room_temp').css('border-color', 'red');
+$("#ip_voltage").on("keyup",function(){
+    if($("#ip_voltage").val()==""){
+        $('#ip_voltage').css('border-color', 'red');
             return false;
     }else{
-        $('#room_temp').css('border-color', '#ced4da');
+        $('#ip_voltage').css('border-color', '#ced4da');
+    }
+});
+
+$("#op_voltage").on("keyup",function(){
+    if($("#op_voltage").val()==""){
+        $('#op_voltage').css('border-color', 'red');
+            return false;
+    }else{
+        $('#op_voltage').css('border-color', '#ced4da');
+    }
+});
+
+$("#battery_voltage").on("keyup",function(){
+    if($("#battery_voltage").val()==""){
+        $('#battery_voltage').css('border-color', 'red');
+            return false;
+    }else{
+        $('#battery_voltage').css('border-color', '#ced4da');
     }
 });
 </script>

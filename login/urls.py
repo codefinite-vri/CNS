@@ -58,7 +58,7 @@ urlpatterns = [
     path('dscndaily/<int:id>',dscnviewsd.dscnd),
     path('dscndailyrep/<int:id>',dscnviewsd.dscndrep),
     path('dscnrepsub/<int:id>',dscnviewsd.dscndrepsub),
-    path('editdscnd/<int:dscndaily_id>',dscnviewsd.editdscndaily),
+    path('editdscnd/<int:p_id>',dscnviewsd.editdscndaily),
     path('updscnrepsub/<int:id>',dscnviewsd.updscndaily),
     path('finalddrepsub/<int:p_id>/<int:id>',dscnviewsd.finalddrepsub),
     path('repsubdsderrors/<int:p_id>/<int:id>',dscnviewsd.repsubdsderrors),

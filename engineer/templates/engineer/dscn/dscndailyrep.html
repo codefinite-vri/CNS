@@ -137,7 +137,7 @@
                             <div class="form-group row has-warning">
                               <label for="coro_function" class="col-sm-6 col-form-label">CorO Function*</label>
                               <div>
-                                <input type="text" class="form-control form-control-sm" id="status_of_serverB" name="cof" readonly="true" value="{{ dscnd.coro_function }}">
+                                <input type="text" class="form-control form-control-sm" id="cof" name="cof" readonly="true" value="{{ dscnd.coro_function }}">
                               </div>
                                <hr>                              
 							 </div>
@@ -393,34 +393,58 @@
 	</div>
 <script>
 	$(function(){
-            if($("#room_temp").val()<"25"){
-            	 $('#room_temp').css('border-color', 'pale-green');
+            if($("#sat_led").val()=="STEADY ON"){
+            	 $('#sat_led').css('border-color', 'pale-green');
             }else{
-               $('#room_temp').css('border-color', 'red');
+               $('#sat_led').css('border-color', 'red');
             }
 
-            if($("#status_of_AC").val()=="SVCBL"){
-            	 $('#status_of_AC').css('border-color', 'pale-green');
+            if($("#odu_led").val()=="STEADY ON"){
+            	 $('#odu_led').css('border-color', 'pale-green');
             }else{
-               $('#status_of_AC').css('border-color', 'red');
+               $('#odu_led').css('border-color', 'red');
             }
 
-            if($("#status_of_UPS").val()=="NORMAL"){
-            	 $('#status_of_UPS').css('border-color', 'pale-green');
+            if($("#alarm_led").val()=="OFF"){
+            	 $('#alarm_led').css('border-color', 'pale-green');
             }else{
-               $('#status_of_UPS').css('border-color', 'red');
+               $('#alarm_led').css('border-color', 'red');
             }
 
-            if($("#status_of_serverB").val()=="MAINS" && $("#status_of_serverA").val()=="STANDBY" ){
-            	 $('#status_of_serverB').css('border-color', 'pale-green');
-            	 $('#status_of_serverA').css('border-color', 'pale-green');
-            }
-            else if($("#status_of_serverA").val()=="MAINS" && $("#status_of_serverB").val()=="STANDBY" ){
-            	 $('#status_of_serverA').css('border-color', 'pale-green');
-            	 $('#status_of_serverB').css('border-color', 'pale-green');
+            if($("#power_led").val()=="STEADY ON"){
+            	 $('#power_led').css('border-color', 'pale-green');
             }else{
-               $('#status_of_serverA').css('border-color', 'red');
-               $('#status_of_serverB').css('border-color', 'red');
+               $('#power_led').css('border-color', 'red');
+            }
+
+            if($("#v35_led").val()=="RX/TX BLINKING" ){
+            	 $('#v35_led').css('border-color', 'pale-green');
+            }else{
+               $('#v35_led').css('border-color', 'red');
+            }
+
+            if($("#ip_voltage").val()>"219"){
+            	 $('#ip_voltage').css('border-color', 'pale-green');
+            }else{
+               $('ip_voltage').css('border-color', 'red');
+            }
+
+            if($("#op_voltage").val()>"219" && $("#op_voltage").val()<"241"){
+            	 $('#op_voltage').css('border-color', 'pale-green');
+            }else{
+               $('op_voltage').css('border-color', 'red');
+            }
+
+            if($("#battery_voltage").val()>"180" && $("#battery_voltage").val()<"250"){
+            	 $('#battery_voltage').css('border-color', 'pale-green');
+            }else{
+               $('#battery_voltage').css('border-color', 'red');
+            }
+
+            if($("#cof").val()=="OK" ){
+            	 $('#cof').css('border-color', 'pale-green');
+            }else{
+               $('#cof').css('border-color', 'red');
             }
            
         });
