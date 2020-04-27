@@ -180,6 +180,7 @@
                     <th>PS 28V</th>
                     <th>Outside Temperature</th>
                     <th>Sideband Frequency</th>
+                    <th>Test</th>
                 </tr>
             </thead>
             <tbody>
@@ -192,6 +193,11 @@
                   <td>{{ cdvorw.ps_28v }}</td>
                   <td>{{ cdvorw.outside_temp }}</td>
                   <td>{{ cdvorw.sideband_frequency }}</td>
+                  {% if cdvorw.ps_5v >= 4.75 and cdvorw.ps_5v <= 5.25 and cdvorw.ps_12v >= 11.5 and cdvorw.ps_12v <= 12.5 and cdvorw.ps_28v >= 27 and cdvorw.ps_28v <= 29 and cdvorw.outside_temp >= -25 and cdvorw.outside_temp <= 70 and cdvorw.sideband_frequency == 10001 %}
+                  <td>Pass</td>
+                 {% else %}
+                  <td>Fail</td>
+               {% endif %}
              </tr>
                {% endfor %}
              </tbody>
@@ -273,20 +279,44 @@
     <!--ADDITION-->
 <script>
 
-$("#UPS_ip").on("keyup",function(){
-    if($("#UPS_ip").val()==""){
-        $('#UPS_ip').css('border-color', 'red');
+$("#ps_28v").on("keyup",function(){
+    if($("#ps_28v").val()==""){
+        $('#ps_28v').css('border-color', 'red');
             return false;
     }else{
-        $('#UPS_ip').css('border-color', '#ced4da');
+        $('#ps_28v').css('border-color', '#ced4da');
     }
 });
-$("#UPS_op").on("keyup",function(){
-    if($("#UPS_op").val()==""){
-        $('#UPS_op').css('border-color', 'red');
+$("#ps_12v").on("keyup",function(){
+    if($("#ps_12v").val()==""){
+        $('#ps_12v').css('border-color', 'red');
             return false;
     }else{
-        $('#UPS_op').css('border-color', '#ced4da');
+        $('#ps_12v').css('border-color', '#ced4da');
+    }
+});
+$("#ps_5v").on("keyup",function(){
+    if($("#ps_5v").val()==""){
+        $('#ps_5v').css('border-color', 'red');
+            return false;
+    }else{
+        $('#ps_5v').css('border-color', '#ced4da');
+    }
+});
+$("#outside_temp").on("keyup",function(){
+    if($("#outside_temp").val()==""){
+        $('#outside_temp').css('border-color', 'red');
+            return false;
+    }else{
+        $('#outside_temp').css('border-color', '#ced4da');
+    }
+});
+$("#sideband_frequency").on("keyup",function(){
+    if($("#sideband_frequency").val()==""){
+        $('#sideband_frequency').css('border-color', 'red');
+            return false;
+    }else{
+        $('#sideband_frequency').css('border-color', '#ced4da');
     }
 });
 </script>

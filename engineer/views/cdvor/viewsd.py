@@ -235,13 +235,12 @@ def routebackcdvord(request, id) :
         
     if currdate > wdate :  #if it goes beyond 7 days
         cwr = 0
-    print(flag)     
+    print(status)     
     if flag :    
         if  temp1 < temp : #report submitted after deadline
             cdvorwsub_deadline = temp1    
             if status == "COMPLETED" or status == "COMPLETED WITH ERRORS" :
                 cwr=1
-                print(temp1)  
             elif status == "PENDING" :
                 cwr=0
             
@@ -259,7 +258,7 @@ def routebackcdvord(request, id) :
             elif status == "PENDING" :
                 cwr=0
     #!!!!!!!!!!!!!!!!!!!!!!!!!!!cdvor monthly!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    
+    print(cwr)
     p_id = models.Cdvormonthly.objects.all()
     p_id = p_id.values('p_id')
     p_id = p_id.order_by('-p_id')
@@ -341,7 +340,7 @@ def routebackcdvord(request, id) :
     com=sorted(com,key=itemgetter('date'),reverse=True)
     for i in com:
         i.update({'token':i['p_id']})
-    return render(request,'./engineer/homen.html',{'com':com,'wdate':wdate,'supdetails':supdetails,'statusd':statusd,'status':status,'cdr':cdr,'cwr':cwr,'currdate':currdate,'name':name1,'id':id,'empdet':empdetails,'cdvordsub_on':cdvordsub_on,'cdvord_deadline':cdvord_deadline,'cdvorwsub_on':cdvorwsub_on,'cdvorwsub_deadline':cdvorwsub_deadline,'statusm':statusm,'cmr':cmr,'wdatem':wdatem,'cdvormsub_on':cdvormsub_on,'cdvormsub_deadline':cdvormsub_deadline})
+    return render(request,'./engineer/homen.html',{'cmr':cmr,'com':com,'wdate':wdate,'supdetails':supdetails,'statusd':statusd,'status':status,'cdr':cdr,'cwr':cwr,'currdate':currdate,'name':name1,'id':id,'empdet':empdetails,'cdvordsub_on':cdvordsub_on,'cdvord_deadline':cdvord_deadline,'cdvorwsub_on':cdvorwsub_on,'cdvorwsub_deadline':cdvorwsub_deadline,'statusm':statusm,'cmr':cmr,'wdatem':wdatem,'cdvormsub_on':cdvormsub_on,'cdvormsub_deadline':cdvormsub_deadline})
   else :
     return render(request,'login/login.html')  
 

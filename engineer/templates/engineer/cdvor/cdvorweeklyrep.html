@@ -27,11 +27,7 @@
       <div class="col-sm-7">
         {% for cdvorw in cdvor_w %}
           {% if f != 1 %}
-            {% if cdvorw.ps_5v >= 4.75 and cdvor.ps_5v <= 5.25 %}  
-              {% if cdvorw.ps_12v >= 11.5 and cdvorw.ps_12v <= 12.5 %}
-                {% if cdvorw.ps_28v >= 27 and cdvorw.ps_28v <= 29 %}
-                  {% if cdvorw.outside_temp >= -25 and cdvorw.outside_temp <= 70 %}     
-                    {% if cdvorw.sideband_frequency == 10001 %}  
+            {% if cdvorw.ps_5v >= 4.75 and cdvorw.ps_5v <= 5.25 and cdvorw.ps_12v >= 11.5 and cdvorw.ps_12v <= 12.5 and cdvorw.ps_28v >= 27 and cdvorw.ps_28v <= 29 and cdvorw.outside_temp >= -25 and cdvorw.outside_temp <= 70 and cdvorw.sideband_frequency == 10001 %}
                         <div class="alert alert-success">
                         <strong>Maintenance succesful!</strong> 
                         All entries matched with standard values.
@@ -40,27 +36,9 @@
                         <strong>Maintenance failed!!!</strong> 
                         Please try again.
                     {% endif %}
-                  {% else %}
-                    <div class="alert alert-danger">
-                    <strong>Maintenance failed!!!</strong> 
-                    Please try again.
-                  {% endif %}
-                {% else %}
-                    <div class="alert alert-danger">
-                    <strong>Maintenance failed!!!</strong> 
-                    Please try again.
+                  
                 {% endif %}
-              {% else %}
-                <div class="alert alert-danger">
-                <strong>Maintenance failed!!!</strong> 
-                Please try again.
-              {% endif %}
-            {% else %}
-              <div class="alert alert-danger">
-              <strong>Maintenance failed!!!</strong> 
-              Please try again.
-            {% endif %}
-          {% endif %}  
+              
           {% if f == 1 %}
 				<div class="alert alert-danger">
 				<strong>Report Submitted to the supervisor!</strong>
@@ -119,7 +97,7 @@
 
             <div class="row row1" style="align-items: right; padding-left: 27%; padding-bottom: 1%">
               {% if f != 1 %}
-                  {% if cdvorw.ps_5v >= 4.75 and cdvorw.ps_5v <= 5.25 and cdvorw.ps_12v >= 11.5 and cdvorw.ps_12v <= 12.5 and cdvorw.ps_28v >= 27 and cdvorw.ps_28v <= 29 and cdvorw.outside_temp >= -25 and cdvorw.outside_temp <= 70 and sideband_frequency == 10001 %}
+                  {% if cdvorw.ps_5v >= 4.75 and cdvorw.ps_5v <= 5.25 and cdvorw.ps_12v >= 11.5 and cdvorw.ps_12v <= 12.5 and cdvorw.ps_28v >= 27 and cdvorw.ps_28v <= 29 and cdvorw.outside_temp >= -25 and cdvorw.outside_temp <= 70 and cdvorw.sideband_frequency == 10001 %}
                   <p></p>
                  {% else %}
                   <p></p>
@@ -360,7 +338,7 @@
                     <th>Sideband frequency</th><!--
                     <th>Status of server A</th>
                     <th>Status of server B</th>-->
-                    <!--<th>Test</th>-->
+                    <th>Test</th>
                     <!--<th>Test</th>-->
                 </tr>
             </thead>
@@ -375,19 +353,12 @@
                   <td>{{ cdvorww.ps_28v }}</td>
                   <td>{{ cdvorww.outside_temp }}</td>
                   <td>{{ cdvorww.sideband_frequency }}</td>
-            <!--      {% if datisww.serveraorb == "A" or datisww.serveraorb == "B" %}  
-                  {% if datisww.ups_ip < 231 and datisww.ups_ip > 199 %}
-                  {% if datisww.ups_op == 230 and datisww.dust_free == "OK" and datisww.lan_status == "OK" %}
-                   <td>Pass</td>
+            
+                {% if cdvorww.ps_5v >= 4.75 and cdvorww.ps_5v <= 5.25 and cdvorww.ps_12v >= 11.5 and cdvorww.ps_12v <= 12.5 and cdvorww.ps_28v >= 27 and cdvorww.ps_28v <= 29 and cdvorww.outside_temp >= -25 and cdvorww.outside_temp <= 70 and cdvorww.sideband_frequency == 10001 %}
+                  <td>Pass</td>
                  {% else %}
                   <td>Fail</td>
                {% endif %}
-                {% else %}
-                <td>Fail</td>
-                {% endif %}
-                {% else %}
-                   <td>Fail</td>
-                {% endif %} -->
              </tr>
                {% endfor %}
              </tbody>
@@ -405,31 +376,36 @@
 
               
 <script>
-$(function(){
-    $('#serverAorB').css('border-color', 'pale-green');
 
-    if($("#UPS_ip").val()<"200" || $("#UPS_ip").val()>"230"){
-        $('#UPS_ip').css('border-color', 'red');
+$(function(){
+    if($("#ps_5v").val()>"5.25" || $("#ps_5v").val()<"4.75"){
+        $('#ps_5v').css('border-color', 'red');
     }else{
-        $('#UPS_ip').css('border-color', 'pale-green');
+        $('#ps_5v').css('border-color', 'pale-green');
 	}
 
-    if($("#UPS_op").val()!="230"){
-        $('#UPS_op').css('border-color', 'red');
+    if($("#ps_12v").val()>"12.5" || $("#ps_12v").val()<"11.5" ){
+        $('#ps_12v').css('border-color', 'red');
     }else{
-        $('#UPS_op').css('border-color', 'pale-green');
+        $('#ps_12v').css('border-color', 'pale-green');
     }
 
-    if($("#Dust_free").val()!="OK"){
-        $('#Dust_free').css('border-color', 'red');
+    if($("#ps_28v").val()>"29" || $("#ps_28v").val()<"27"){
+        $('#ps_28v').css('border-color', 'red');
     }else{
-        $('#Dust_free').css('border-color', 'pale-green');
+        $('#ps_28v').css('border-color', 'pale-green');
     }
 
-    if($("#LAN_status").val()!="OK"){
-        $('#LAN_status').css('border-color', 'red');
+    if($("#outside_temp").val()<"-25" || $("#outside_temp").val()>"70"){
+        $('#outside_temp').css('border-color', 'red');
     }else{
-        $('#LAN_status').css('border-color', 'pale-green');
+        $('#outside_temp').css('border-color', 'pale-green');
+    }
+
+    if( $("#sideband_frequency").val()!="10001"){
+        $('#sideband_frequency').css('border-color', 'red');
+    }else{
+        $('#sideband_frequency').css('border-color', 'pale-green');
     }
 
 });

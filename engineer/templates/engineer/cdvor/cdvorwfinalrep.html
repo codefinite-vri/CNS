@@ -101,11 +101,9 @@
                 
                 <div class="form-group row has-warning"style="padding-left:0" >
                   <textarea class="form-control form-control-sm" rows="5" id="procedure" placeholder="Please specify the reason why error prevails in brief" name='remarks' required="required"></textarea>
-                  <!--<input type="textarea" class="form-control " id="room_temp" name="Maintenance Procedure"  style="height:200px;" required>-->
+                  
                  
               </div>
-                <!--<div class="form-group row has-warning" >
-                    <input required type="text" name="remarks" class="form-control form-control-sm" rows="5" id="procedure" placeholder="Please specify the reason why error prevails in brief.">-->
                     <hr>
                     <button class="btn submitbut">FINAL SUBMIT</button>
                   </div>
@@ -117,25 +115,52 @@
     </div>
 <script>
 $(function(){
-     $('#UPS_ip').css('border-color', '#CED4DA');
-     $('#UPS_op').css('border-color', '#CED4DA');
+     $('#ps_28v').css('border-color', '#CED4DA');
+     $('#ps_12v').css('border-color', '#CED4DA');
+     $('#ps_5v').css('border-color', '#CED4DA');
+     $('#outside_temp').css('border-color', '#CED4DA');
+     $('#sideband_frequency').css('border-color', '#CED4DA');
      $('#procedure').css('border-color', '#CED4DA');
     });
 
- $("#UPS_ip").on("keyup",function(){
-            if($("#UPS_ip").val()==""){
-                 $('#UPS_ip').css('border-color', 'red');
+ $("#ps_5v").on("keyup",function(){
+            if($("#ps_5v").val()==""){
+                 $('#ps_5v').css('border-color', 'red');
                 return false;
             }else{
-               $('#UPS_ip').css('border-color', '#CED4DA');
+               $('#ps_5v').css('border-color', '#CED4DA');
             }
         });
- $("#UPS_op").on("keyup",function(){
-            if($("#UPS_op").val()==""){
-                 $('#UPS_op').css('border-color', 'red');
+ $("#ps_12v").on("keyup",function(){
+            if($("#ps_12v").val()==""){
+                 $('#ps_12v').css('border-color', 'red');
                 return false;
             }else{
-               $('#UPS_op').css('border-color', '#CED4DA');
+               $('#ps_12v').css('border-color', '#CED4DA');
+            }
+        });
+ $("#ps_28v").on("keyup",function(){
+            if($("#ps_28v").val()==""){
+                 $('#ps_28v').css('border-color', 'red');
+                return false;
+            }else{
+               $('#ps_28v').css('border-color', '#CED4DA');
+            }
+        });
+ $("#outside_temp").on("keyup",function(){
+            if($("#outside_temp").val()==""){
+                 $('#outside_temp').css('border-color', 'red');
+                return false;
+            }else{
+               $('#outside_temp').css('border-color', '#CED4DA');
+            }
+        });
+ $("#sideband_frequency").on("keyup",function(){
+            if($("#sideband_frequency").val()==""){
+                 $('#sideband_frequency').css('border-color', 'red');
+                return false;
+            }else{
+               $('#sideband_frequency').css('border-color', '#CED4DA');
             }
         });
  

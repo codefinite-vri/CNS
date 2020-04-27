@@ -629,45 +629,45 @@ def datisdrepsubm(request, id) :
           f=2   
           status = "PENDING"
     cursor.execute("update datisdaily set status = %s where p_id = %s",[status,p_id])
-    f=0
-    if roomtemp > '24' :
-         remarks = "Temperature exceeds 24 degrees"
-         val = (id,p_id,remarks,roomtemp,currdate,currtime)
-         sql = "INSERT INTO datisdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
-         cursor.execute(sql,val)
-    if statusofac != 'SVCBL' :
-         remarks = "Status of ac not correct"
-         val = (id,p_id,remarks,statusofac,currdate,currtime)
-         sql = "INSERT INTO datisdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
-         cursor.execute(sql,val)
-         print(statusofac)
-    if statusofups != 'NORMAL' :
-         remarks = "Status of ups not NORMAL"
-         val = (id,p_id,remarks,statusofups,currdate,currtime)
-         sql = "INSERT INTO datisdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
-         cursor.execute(sql,val)
-    if statusofservera != 'MAINS' and statusofservera != 'STANDBY' :
-         remarks = "Status of ServerA is not MAINS/STANDBY"
-         val = (id,p_id,remarks,statusofservera,currdate,currtime)
-         sql = "INSERT INTO datisdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
-         cursor.execute(sql,val)
-    if statusofserverb != 'MAINS' and statusofserverb != 'STANDBY':
-         remarks = "Status of ServerB is not MAINS/STANDBY"
-         val = (id,p_id,remarks,statusofserverb,currdate,currtime)
-         sql = "INSERT INTO datisdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
-         cursor.execute(sql,val)
-    if statusofservera == "MAINS" and statusofserverb == "MAINS" :
-         remarks = "Status of ServerA and serverB is on MAINS"
-         val = (id,p_id,remarks,statusofserverb,currdate,currtime)
-         sql = "INSERT INTO datisdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
-         cursor.execute(sql,val)
-    
-    if statusofservera == "STANDBY" and statusofserverb == "STANDBY" :
-         remarks = "Status of ServerA and ServerB is on STANDBY"
-         val = (id,p_id,remarks,statusofserverb,currdate,currtime)
-         sql = "INSERT INTO datisdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
-         cursor.execute(sql,val)
-    
+    if f== 2:
+        if roomtemp > '24' :
+            remarks = "Temperature exceeds 24 degrees"
+            val = (id,p_id,remarks,roomtemp,currdate,currtime)
+            sql = "INSERT INTO datisdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
+            cursor.execute(sql,val)
+        if statusofac != 'SVCBL' :
+            remarks = "Status of ac not correct"
+            val = (id,p_id,remarks,statusofac,currdate,currtime)
+            sql = "INSERT INTO datisdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
+            cursor.execute(sql,val)
+            print(statusofac)
+        if statusofups != 'NORMAL' :
+            remarks = "Status of ups not NORMAL"
+            val = (id,p_id,remarks,statusofups,currdate,currtime)
+            sql = "INSERT INTO datisdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
+            cursor.execute(sql,val)
+        if statusofservera != 'MAINS' and statusofservera != 'STANDBY' :
+            remarks = "Status of ServerA is not MAINS/STANDBY"
+            val = (id,p_id,remarks,statusofservera,currdate,currtime)
+            sql = "INSERT INTO datisdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
+            cursor.execute(sql,val)
+        if statusofserverb != 'MAINS' and statusofserverb != 'STANDBY':
+            remarks = "Status of ServerB is not MAINS/STANDBY"
+            val = (id,p_id,remarks,statusofserverb,currdate,currtime)
+            sql = "INSERT INTO datisdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
+            cursor.execute(sql,val)
+        if statusofservera == "MAINS" and statusofserverb == "MAINS" :
+            remarks = "Status of ServerA and serverB is on MAINS"
+            val = (id,p_id,remarks,statusofserverb,currdate,currtime)
+            sql = "INSERT INTO datisdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
+            cursor.execute(sql,val)
+        
+        if statusofservera == "STANDBY" and statusofserverb == "STANDBY" :
+            remarks = "Status of ServerA and ServerB is on STANDBY"
+            val = (id,p_id,remarks,statusofserverb,currdate,currtime)
+            sql = "INSERT INTO datisdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
+            cursor.execute(sql,val)
+        
     datis_d = models.Datisdaily.objects.all()
     datis_d = datis_d.values('p_id','date','time','status','room_temp','status_of_ac','status_of_ups','status_of_servera','status_of_serverb','remarks')
     datis_d = datis_d.filter(emp_id=id)  

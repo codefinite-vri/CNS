@@ -37,7 +37,7 @@
                   <th>PS 28V</th>
                   <th>Outside Temperature</th>
                   <th>Sideband Frequency</th>
-                <!--  <th>Test</th>  -->
+                <th>Test</th> 
                   <th>Approval Status</th>
                   <th>Approval Date</th>
                   <th>Approval time</th>
@@ -63,19 +63,11 @@
                   <td>{{ cdvorw.ps_28v }}</td>
                   <td>{{ cdvorw.outside_temp }}</td>
                   <td>{{ cdvorw.sideband_frequency }}</td>
-                 <!-- {% if datisw.serveraorb == "A" or datisw.serveraorb == "B" %}  
-                  {% if datisw.ups_ip < 231 and datisw.ups_ip > 199 %}
-                  {% if datisw.ups_op == 230 and datisw.dust_free == "OK" and datisw.lan_status == "OK" %}
+                  {% if cdvorw.ps_5v >= 4.75 and cdvorw.ps_5v <= 5.25 and cdvorw.ps_12v >= 11.5 and cdvorw.ps_12v <= 12.5 and cdvorw.ps_28v >= 27 and cdvorw.ps_28v <= 29 and cdvorw.outside_temp >= -25 and cdvorw.outside_temp <= 70 and cdvorw.sideband_frequency == 10001 %}
                   <td>Pass</td>
                  {% else %}
                   <td>Fail</td>
                {% endif %}
-                {% else %}
-                <td>Fail</td>
-                {% endif %}
-                {% else %}
-                   <td>Fail</td>
-                {% endif %} -->
                   <td>{{ cdvorw.unit_incharge_approval }}</td>
                   <td>{{ cdvorw.approval_date }}</td>
                   <td>{{ cdvorw.approval_time }}</td>

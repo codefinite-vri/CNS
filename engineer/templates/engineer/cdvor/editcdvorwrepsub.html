@@ -220,7 +220,7 @@
                     <th>PS 28V</th>
                     <th>Outside Temperature</th>
                     <th>Sideband Frequency</th>
-                 <!--   <th>Test</th>  -->
+                    <th>Test</th> 
                    
                 </tr>
             </thead>
@@ -235,19 +235,11 @@
                   <td>{{ cdvorw.ps_28v }}</td>
                   <td>{{ cdvorw.outside_temp }}</td>
                   <td>{{ cdvorw.sideband_frequency }}</td>
-          <!--        {% if datisw.serveraorb == "A" or datisw.serveraorb == "B" %}  
-                  {% if datisw.ups_ip < 231 and datisw.ups_ip > 199 %}
-                  {% if datisw.ups_op == 230 and datisw.dust_free == "OK" and datisw.lan_status == "OK" %}
-                   <td>Pass</td>
+                  {% if cdvorw.ps_5v >= 4.75 and cdvorw.ps_5v <= 5.25 and cdvorw.ps_12v >= 11.5 and cdvorw.ps_12v <= 12.5 and cdvorw.ps_28v >= 27 and cdvorw.ps_28v <= 29 and cdvorw.outside_temp >= -25 and cdvorw.outside_temp <= 70 and cdvorw.sideband_frequency == 10001 %}
+                  <td>Pass</td>
                  {% else %}
                   <td>Fail</td>
                {% endif %}
-                {% else %}
-                <td>Fail</td>
-                {% endif %}
-                {% else %}
-                   <td>Fail</td>
-                {% endif %} -->
              </tr>
                {% endfor %}
              </tbody>
@@ -333,30 +325,56 @@
     <!--ADDITION-->
 <script>
 $(function(){
-     $('#UPS_ip').css('border-color', '#CED4DA');
-     $('#UPS_op').css('border-color', '#CED4DA');
+     $('#ps_28v').css('border-color', '#CED4DA');
+     $('#ps_12v').css('border-color', '#CED4DA');
+     $('#ps_5v').css('border-color', '#CED4DA');
+     $('#outside_temp').css('border-color', '#CED4DA');
+     $('#sideband_frequency').css('border-color', '#CED4DA');
      $('#procedure').css('border-color', '#CED4DA');
     });
 
-$("#UPS_ip").on("keyup",function(){
-    if($("#UPS_ip").val()==""){
-        $('#UPS_ip').css('border-color', 'red');
-            return false;
-    }else{
-        $('#UPS_ip').css('border-color', '#ced4da');
-    }
-});
-
-$("#UPS_op").on("keyup",function(){
-    if($("#UPS_op").val()==""){
-        $('#UPS_op').css('border-color', 'red');
-            return false;
-    }else{
-        $('#UPS_op').css('border-color', '#ced4da');
-    }
-});
-
-$("#procedure").on("keyup",function(){
+ $("#ps_5v").on("keyup",function(){
+            if($("#ps_5v").val()==""){
+                 $('#ps_5v').css('border-color', 'red');
+                return false;
+            }else{
+               $('#ps_5v').css('border-color', '#CED4DA');
+            }
+        });
+ $("#ps_12v").on("keyup",function(){
+            if($("#ps_12v").val()==""){
+                 $('#ps_12v').css('border-color', 'red');
+                return false;
+            }else{
+               $('#ps_12v').css('border-color', '#CED4DA');
+            }
+        });
+ $("#ps_28v").on("keyup",function(){
+            if($("#ps_28v").val()==""){
+                 $('#ps_28v').css('border-color', 'red');
+                return false;
+            }else{
+               $('#ps_28v').css('border-color', '#CED4DA');
+            }
+        });
+ $("#outside_temp").on("keyup",function(){
+            if($("#outside_temp").val()==""){
+                 $('#outside_temp').css('border-color', 'red');
+                return false;
+            }else{
+               $('#outside_temp').css('border-color', '#CED4DA');
+            }
+        });
+ $("#sideband_frequency").on("keyup",function(){
+            if($("#sideband_frequency").val()==""){
+                 $('#sideband_frequency').css('border-color', 'red');
+                return false;
+            }else{
+               $('#sideband_frequency').css('border-color', '#CED4DA');
+            }
+        });
+ 
+ $("#procedure").on("keyup",function(){
             if($("#procedure").val()==""){
                $('#procedure').css('border-color', 'red');
                 return false;

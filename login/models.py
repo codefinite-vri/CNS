@@ -178,8 +178,8 @@ class Cdvorweekly(models.Model):
     f_id = models.CharField(max_length=10)
     p_id = models.AutoField(primary_key=True)
     status = models.CharField(max_length=30)
-    ps_5v = models.IntegerField(db_column='PS_5V', blank=True, null=True)  # Field name made lowercase.
-    ps_12v = models.IntegerField(db_column='PS_12V', blank=True, null=True)  # Field name made lowercase.
+    ps_5v = models.FloatField(db_column='PS_5V', blank=True, null=True)  # Field name made lowercase.
+    ps_12v = models.FloatField(db_column='PS_12V', blank=True, null=True)  # Field name made lowercase.
     ps_negative_12v = models.IntegerField(db_column='PS_negative_12V', blank=True, null=True)  # Field name made lowercase.
     ps_28v = models.IntegerField(db_column='PS_28V', blank=True, null=True)  # Field name made lowercase.
     ps_48v = models.IntegerField(db_column='PS_48V', blank=True, null=True)  # Field name made lowercase.

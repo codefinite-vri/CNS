@@ -27,8 +27,7 @@ def cdvorwrepsubw(request, id):
         a_id = a_id.values('a_id').filter(emp_id=id)[0]['a_id'] 
         currtime = datetime.now().strftime("%H:%M:%S")
         emp_id = models.Engineer.objects.all()
-        if request.session['uid'] == id:
-            emp_id = emp_id.values('emp_id').filter(emp_id=id)[0]['emp_id']
+        emp_id = emp_id.values('emp_id').filter(emp_id=id)[0]['emp_id']
         currdate= date.today()
         cursor = connection.cursor() 
         ps_5v =''
