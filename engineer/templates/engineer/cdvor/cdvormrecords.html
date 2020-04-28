@@ -43,7 +43,7 @@
                   <th>Measured Bearing 5</th>
                   <th>Bearing Deviation 5</th>
                   <th>Error Spread</th>
-                  <!--  <th>Test</th>  -->
+                  <th>Test</th>  
                   <th>Approval Status</th>
                   <th>Approval Date</th>
                   <th>Approval time</th>
@@ -75,19 +75,11 @@
                   <td>{{ cdvorm.measured_bearing_5 }}</td>
                   <td>{{ cdvorm.bearing_deviation_5 }}</td>
                   <td>{{ cdvorm.error_spread }}</td>
-                  <!-- {% if datisw.serveraorb == "A" or datisw.serveraorb == "B" %}  
-                  {% if datisw.ups_ip < 231 and datisw.ups_ip > 199 %}
-                  {% if datisw.ups_op == 230 and datisw.dust_free == "OK" and datisw.lan_status == "OK" %}
-                  <td>Pass</td>
+                  {% if cdvorm.bearing_deviation_1 < 1 and cdvorm.bearing_deviation_2 < 1 and cdvorm.bearing_deviation_3 < 1 and cdvorm.bearing_deviation_4 < 1 and cdvorm.bearing_deviation_5 < 1 and cdvorm.error_spread < 0.5 %}
+                   <td>Pass</td>
                  {% else %}
                   <td>Fail</td>
                {% endif %}
-                {% else %}
-                <td>Fail</td>
-                {% endif %}
-                {% else %}
-                   <td>Fail</td>
-                {% endif %} -->
                   <td>{{ cdvorm.unit_incharge_approval }}</td>
                   <td>{{ cdvorm.approval_date }}</td>
                   <td>{{ cdvorm.approval_time }}</td>

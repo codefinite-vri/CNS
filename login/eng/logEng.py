@@ -386,8 +386,73 @@ def logEngN(request, id):
                 cwr=1  
             elif status == "PENDING" :
                 cwr=0
-        print(cwr)   
-    print(cdvorwsub_on) 
+    #!!!!!!!!!!!!!!!!!!!!!!!!!!!cdvor monthly!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    print(cwr)
+    p_id = models.Cdvormonthly.objects.all()
+    p_id = p_id.values('p_id')
+    p_id = p_id.order_by('-p_id')
+    p_id = p_id.values('p_id').filter(a_id=1)[0]['p_id']
+    currdate = date.today()
+    wdatem = models.Cdvormonthly.objects.all()
+    wdatem = wdatem.values('date')
+    wdatem = wdatem.order_by('-date')
+    wdate1 = wdatem
+    wdatem = wdatem.values('date').filter(a_id=1)[0]['date']
+    wdate1 = wdate1.values('date').filter(a_id=1)[1]['date']
+    wdatem = str(wdatem)
+    wdatem = datetime.strptime(wdatem, "%Y-%m-%d").date()
+    temp = wdatem
+    temp1 = wdate1 + timedelta(days=30)
+    wdatem = wdatem + timedelta(days=30) 
+    cmr = 0
+    cdvormsub_on = temp
+    cdvormsub_deadline =  wdatem 
+    statusm = ""  # status
+    statusm = models.Cdvormonthly.objects.all()
+    statusm = statusm.values('date','status','unit_incharge_approval')
+    statusm = statusm.order_by('-date')
+    uia = statusm
+    uia = uia.values('unit_incharge_approval')
+    uia = uia.values('unit_incharge_approval').filter(a_id=1)[0]['unit_incharge_approval']
+    statusm = statusm.values('status')
+    statusm = statusm.values('status').filter(a_id=1)[0]['status']
+    flag = cursor.execute("select date from cdvormonthly where date = %s",[date.today()])    
+    if currdate > wdatem and flag == 0 :  #if it goes beyond 30 days
+        pending = wdatem 
+        while pending <= (currdate - timedelta(days=1)) :
+            f = cursor.execute("select date from cdvormlogs where date = %s",[pending])    
+            if f == 0 : 
+                remarks = "Report not submitted"
+                value = "No Entry" 
+                val = (id,p_id,remarks,value,pending,currtime)
+                sql = "INSERT INTO cdvormlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s ,%s, %s,%s)"
+                cursor.execute(sql,val)
+            pending = pending + timedelta(days=1)    
+        cmr = 0
+         
+    if flag :    
+        if  temp1 < temp : #report submitted after deadline
+            cdvormsub_deadline = temp1    
+            if statusm == "COMPLETED" or statusm == "COMPLETED WITH ERRORS" :
+                cmr=1  
+            elif statusm == "PENDING" :
+                cmr=0
+            
+        elif temp == temp1 and temp == currdate : # report submitted on a day same as deadline
+            cdvormsub_deadline = temp    
+            if statusm == "COMPLETED" or statusm == "COMPLETED WITH ERRORS" :
+                cmr=1  
+            elif statusm == "PENDING" :
+                cmr=0
+            
+        elif temp1 < wdate and temp1 > temp : #report submitted before the deadline 
+            cdvormsub_deadline = temp1   
+            if statusm == "COMPLETED" or statusm == "COMPLETED WITH ERRORS" :
+                cmr=1  
+            elif statusm == "PENDING" :
+                cmr=0
+    
+    print(statusm)
     cdvordaily=[entry for entry in models.Cdvordaily.objects.filter(emp_id=id).values().order_by('-date')]
     for item in cdvordaily:
         item.update( {"type":"Cdvordaily"})
@@ -395,8 +460,14 @@ def logEngN(request, id):
     cdvorweekly=[entry for entry in models.Cdvorweekly.objects.filter(emp_id=id).values().order_by('-date')]
     for item in cdvorweekly:
         item.update( {"type":"Cdvorweekly"})
-    com=cdvordaily+[i for i in cdvorweekly]
+
+    cdvormonthly=[entry for entry in models.Cdvormonthly.objects.filter(emp_id=id).values().order_by('-date')]
+    for item in cdvormonthly:
+        item.update( {"type":"Cdvormonthly"})
+
+    com=cdvordaily+[i for i in cdvorweekly] + [i for i in cdvormonthly]
     com=sorted(com,key=itemgetter('date'),reverse=True)
     for i in com:
         i.update({'token':i['p_id']})
-    return render(request,'./engineer/homen.html',{'com':com,'wdate':wdate,'supdetails':supdetails,'statusd':statusd,'status':status,'cdr':cdr,'cwr':cwr,'currdate':currdate,'name':name1,'id':id,'empdet':empdetails,'cdvordsub_on':cdvordsub_on,'cdvord_deadline':cdvord_deadline,'cdvorwsub_on':cdvorwsub_on,'cdvorwsub_deadline':cdvorwsub_deadline})
+    return render(request,'./engineer/homen.html',{'cmr':cmr,'com':com,'wdate':wdate,'supdetails':supdetails,'statusd':statusd,'status':status,'cdr':cdr,'cwr':cwr,'currdate':currdate,'name':name1,'id':id,'empdet':empdetails,'cdvordsub_on':cdvordsub_on,'cdvord_deadline':cdvord_deadline,'cdvorwsub_on':cdvorwsub_on,'cdvorwsub_deadline':cdvorwsub_deadline,'statusm':statusm,'cmr':cmr,'wdatem':wdatem,'cdvormsub_on':cdvormsub_on,'cdvormsub_deadline':cdvormsub_deadline})
+  

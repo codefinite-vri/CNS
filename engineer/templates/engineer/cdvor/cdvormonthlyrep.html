@@ -31,7 +31,7 @@
               {% if cdvorm.bearing_deviation_2 < 1 %}
                 {% if cdvorm.bearing_deviation_3 < 1 %}
                   {% if cdvorm.bearing_deviation_4 < 1 %}     
-                    {% if cdvorm.bearing_deviation_5 < 1 and error_spread < 0.5 %}  
+                    {% if cdvorm.bearing_deviation_5 < 1 and cdvorm.error_spread < 0.5 %}  
                         <div class="alert alert-success">
                         <strong>Maintenance succesful!</strong> 
                         All entries matched with standard values.
@@ -183,36 +183,6 @@
         </div>
         {% endfor %}
     </div>
-<!--
-                {% if datisw.serveraorb == "A" or datisw.serveraorb == "B" %}  
-                {% if datisw.ups_ip < 231 and datisw.ups_ip > 199 %}
-                {% if datisw.ups_op == 230 and datisw.dust_free == "OK" and datisw.lan_status == "OK" %}
-                <p></p>
-                 {% else %}
-                 {% if f == 1 %}
-                 <p></p>
-                 {% else %}
-             <button style="width: 100px; margin-right: 10%;"class="btn submitbut" onclick="window.location.href='/editdatisw/{{ datisw.p_id }}'">Edit</button>
-               <button class="btn submitbut" onclick="window.location.href='/repsubwerrors/{{ datisw.p_id }}/{{ id }}'">SUBMIT WITH ERRORS</button>
-               {% endif %}
-               {% endif %}
-               {% else %}
-               {% if f == 1 %}
-               <p></p>
-               <button style="width: 100px; margin-right: 10%;"class="btn submitbut" onclick="window.location.href='/editdatisw/{{ datisw.p_id }}'">EDIT</button>
-               <button  class="btn submitbut" onclick="window.location.href='/repsubwerrors/{{ datisw.p_id }}/{{ id }}'">SUBMIT WITH ERRORS</button>
-               {% endif %}
-               {% endif %}
-                 {% else %}
-                 {% if f == 1 %}
-                 <p></p>
-                 {% else %}  
-                <button style="width: 100px; margin-right: 10%;"class="btn submitbut" onclick="window.location.href='/editdatisw/{{ datisw.p_id }}'">EDIT</button>
-                <button  class="btn submitbut"onclick="window.location.href='/repsubwerrors/{{ datisw.p_id }}/{{ id }}'">SUBMIT WITH ERRORS</button>
-                 {% endif %}
-               {% endif %}-->
-              
-           
             
            <div class="col-sm-5" >
                 <div class="sidebar s" >
@@ -307,18 +277,6 @@
                                 <td>Minimum as possible, typically 0</td>
                             </tr>
                             
-                            <!--    <tr>
-                                <td>Time Sync</td>
-                                <td>OK</td>
-                            </tr>
-                               <tr>
-                                <td>Quality of Audio</td>
-                                <td>OK</td>
-                            </tr>
-                                <tr>
-                                <td>PTT Off Interval</td>
-                                <td>OK</td>
-                            </tr>-->
                           </table>
                         </div>
                         <div class="modal-footer">
@@ -412,11 +370,7 @@
                     <th>Measured Bearing 4</th>
                     <th>Measured Bearing 5</th>
                     <th>Error Spread</th>
-                    <!--
-                    <th>Status of server A</th>
-                    <th>Status of server B</th>-->
-                    <!--<th>Test</th>-->
-                    <!--<th>Test</th>-->
+                    <th>Test</th>
                 </tr>
             </thead>
             <tbody>
@@ -431,20 +385,12 @@
                   <td>{{ cdvormm.measured_bearing_4 }}</td>
                   <td>{{ cdvormm.measured_bearing_5 }}</td>
                   <td>{{ cdvormm.error_spread }}</td>
-            <!--      {% if datisww.serveraorb == "A" or datisww.serveraorb == "B" %}  
-                  {% if datisww.ups_ip < 231 and datisww.ups_ip > 199 %}
-                  {% if datisww.ups_op == 230 and datisww.dust_free == "OK" and datisww.lan_status == "OK" %}
+                  {% if cdvormm.bearing_deviation_1 < 1 and cdvormm.bearing_deviation_2 < 1 and cdvormm.bearing_deviation_3 < 1 and cdvormm.bearing_deviation_4 < 1 and cdvormm.bearing_deviation_5 < 1 and cdvormm.error_spread < 0.5 %}
                    <td>Pass</td>
                  {% else %}
                   <td>Fail</td>
                {% endif %}
-                {% else %}
-                <td>Fail</td>
-                {% endif %}
-                {% else %}
-                   <td>Fail</td>
-                {% endif %} -->
-             </tr>
+               </tr>
                {% endfor %}
              </tbody>
                           </table>
@@ -462,30 +408,40 @@
               
 <script>
 $(function(){
-    $('#serverAorB').css('border-color', 'pale-green');
-
-    if($("#UPS_ip").val()<"200" || $("#UPS_ip").val()>"230"){
-        $('#UPS_ip').css('border-color', 'red');
+    if($("#bearing_deviation_1").val()>="1"){
+        $('#measured_bearing_1').css('border-color', 'red');
     }else{
-        $('#UPS_ip').css('border-color', 'pale-green');
-	}
-
-    if($("#UPS_op").val()!="230"){
-        $('#UPS_op').css('border-color', 'red');
-    }else{
-        $('#UPS_op').css('border-color', 'pale-green');
+        $('#measured_bearing_1').css('border-color', 'pale-green');
     }
 
-    if($("#Dust_free").val()!="OK"){
-        $('#Dust_free').css('border-color', 'red');
+    if($("#bearing_deviation_2").val()>="1"){
+        $('#measured_bearing_2').css('border-color', 'red');
     }else{
-        $('#Dust_free').css('border-color', 'pale-green');
+        $('#measured_bearing_2').css('border-color', 'pale-green');
+    }
+    
+    if($("#bearing_deviation_3").val()>="1"){
+        $('#measured_bearing_3').css('border-color', 'red');
+    }else{
+        $('#measured_bearing_3').css('border-color', 'pale-green');
+    }
+   
+    if($("#bearing_deviation_4").val()>="1"){
+        $('#measured_bearing_4').css('border-color', 'red');
+    }else{
+        $('#measured_bearing_4').css('border-color', 'pale-green');
     }
 
-    if($("#LAN_status").val()!="OK"){
-        $('#LAN_status').css('border-color', 'red');
+     if($("#bearing_deviation_5").val()>="1"){
+        $('#measured_bearing_5').css('border-color', 'red');
     }else{
-        $('#LAN_status').css('border-color', 'pale-green');
+        $('#measured_bearing_5').css('border-color', 'pale-green');
+    }
+
+     if($("#error_spread").val()>="0.5"){
+        $('#error_spread').css('border-color', 'red');
+    }else{
+        $('#error_spread').css('border-color', 'pale-green');
     }
 
 });

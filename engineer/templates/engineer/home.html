@@ -262,7 +262,7 @@
 		                      	<td>Pending</td>
 		                    </tr>
 						  {% elif datiswsub_deadline == currdate %}
-						    {% if status == "PENDING" %}
+						    {% if status == "PENDING" and datiswsub_on == currdate %}
 	                      	<tr data-href='/datisweekly/{{ id }}' >
 		                      <td>{{ datiswsub_deadline }}</td>    
 		                      <td>DATIS Weekly</td>
@@ -437,7 +437,7 @@
 								 {% if currdate > wdate %}
 								 <td><button class="btn standards" onclick="window.location.href='/datisweeklyrep/{{ id }}'">DATIS</button></td>
 							   {% elif datiswsub_deadline == currdate %}
-								 {% if status == "PENDING" %}
+								 {% if status == "PENDING" and datiswsub_on == currdate %}
 								 <td><button class="btn standards" onclick="window.location.href='/datisweekly/{{ id }}'">DATIS</button></td>
 							    {% else %}
 								<td><button class="btn standards" onclick="window.location.href='/datisweeklyrep/{{ id }}'">DATIS</button></td>
@@ -494,7 +494,7 @@
 								 {% if currdate > wdate %}
 								 <td><button class="btn standards" onclick="window.location.href='/dscnmonthlyrep/{{ id }}'">DSCN</button></td>
 							   {% elif dscnmsub_deadline == currdate %}
-								 {% if statusdm == "PENDING" %}
+								 {% if statusdm == "PENDING" and dscnmsub_on == currdate %}
 								 <td><button class="btn standards" onclick="window.location.href='/dscnmonthly/{{ id }}'">DCSN</button></td>
 							    {% else %}
 								<td><button class="btn standards" onclick="window.location.href='/dscnmonthlyrep/{{ id }}'">DCSN</button></td>

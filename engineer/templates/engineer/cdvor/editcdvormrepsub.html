@@ -184,18 +184,6 @@
                                 <td>Minimum as possible, typically 0</td>
                             </tr>
 
-                             <!--    <tr>
-                                <td>Time Sync</td>
-                                <td>OK</td>
-                            </tr>
-                               <tr>
-                                <td>Quality of Audio</td>
-                                <td>OK</td>
-                            </tr>
-                                <tr>
-                                <td>PTT Off Interval</td>
-                                <td>OK</td>
-                            </tr>-->
                           </table>
                         </div>
                         <div class="modal-footer">
@@ -220,16 +208,12 @@
                     <th>Date</th>
                     <th>Time</th>
                     <th>Measured Bearing 1</th>
-                   
                     <th>Measured Bearing 2</th>
-                   
                     <th>Measured Bearing 3</th>
-                   
                     <th>Measured Bearing 4</th>
-                   
                     <th>Measured Bearing 5</th>
-                   
                     <th>Error Spread</th>
+                    <th>Test</th>
                 </tr>
             </thead>
             <tbody>
@@ -238,16 +222,17 @@
                  <td>{{ cdvorm.date }}</td>
                  <td>{{ cdvorm.time  }}</td>   
                  <td>{{ cdvorm.measured_bearing_1 }}</td></td>>
-                 
                  <td>{{ cdvorm.measured_bearing_2 }}</td>
-                 
-                  <td>{{ cdvorm.measured_bearing_3 }}</td>
-                 
+                 <td>{{ cdvorm.measured_bearing_3 }}</td>
                   <td>{{ cdvorm.measured_bearing_4 }}</td>
-                 
                   <td>{{ cdvorm.measured_bearing_5 }}</td>
-                 
                   <td>{{ cdvorm.error_spread }}</td>
+                  {% if cdvorm.bearing_deviation_1 < 1 and cdvorm.bearing_deviation_2 < 1 and cdvorm.bearing_deviation_3 < 1 and cdvorm.bearing_deviation_4 < 1 and cdvorm.bearing_deviation_5 < 1 and cdvorm.error_spread < 0.5 %}
+                   <td>Pass</td>
+                 {% else %}
+                  <td>Fail</td>
+               {% endif %}
+               </tr>
              </tr>
                {% endfor %}
              </tbody>
@@ -333,26 +318,51 @@
     <!--ADDITION-->
 <script>
 $(function(){
-     $('#UPS_ip').css('border-color', '#CED4DA');
-     $('#UPS_op').css('border-color', '#CED4DA');
+     $('#measured_bearing_1').css('border-color', '#CED4DA');
+     $('#measured_bearing_2').css('border-color', '#CED4DA');
+     $('#measured_bearing_3').css('border-color', '#CED4DA');
+     $('#measured_bearing_4').css('border-color', '#CED4DA');
+     $('#measured_bearing_5').css('border-color', '#CED4DA');
      $('#procedure').css('border-color', '#CED4DA');
     });
-
-$("#UPS_ip").on("keyup",function(){
-    if($("#UPS_ip").val()==""){
-        $('#UPS_ip').css('border-color', 'red');
+$("#measured_bearing_1").on("keyup",function(){
+    if($("#measured_bearing_1").val()==""){
+        $('#measured_bearing_1').css('border-color', 'red');
             return false;
     }else{
-        $('#UPS_ip').css('border-color', '#ced4da');
+        $('#measured_bearing_1').css('border-color', '#ced4da');
     }
 });
-
-$("#UPS_op").on("keyup",function(){
-    if($("#UPS_op").val()==""){
-        $('#UPS_op').css('border-color', 'red');
+$("#measured_bearing_2").on("keyup",function(){
+    if($("#measured_bearing_2").val()==""){
+        $('#measured_bearing_2').css('border-color', 'red');
             return false;
     }else{
-        $('#UPS_op').css('border-color', '#ced4da');
+        $('#measured_bearing_2').css('border-color', '#ced4da');
+    }
+});
+$("#measured_bearing_3").on("keyup",function(){
+    if($("#measured_bearing_3").val()==""){
+        $('#measured_bearing_3').css('border-color', 'red');
+            return false;
+    }else{
+        $('#measured_bearing_3').css('border-color', '#ced4da');
+    }
+});
+$("#measured_bearing_4").on("keyup",function(){
+    if($("#measured_bearing_4").val()==""){
+        $('#measured_bearing_4').css('border-color', 'red');
+            return false;
+    }else{
+        $('#measured_bearing_4').css('border-color', '#ced4da');
+    }
+});
+$("#measured_bearing_5").on("keyup",function(){
+    if($("#measured_bearing_5").val()==""){
+        $('#measured_bearing_5').css('border-color', 'red');
+            return false;
+    }else{
+        $('#measured_bearing_5').css('border-color', '#ced4da');
     }
 });
 

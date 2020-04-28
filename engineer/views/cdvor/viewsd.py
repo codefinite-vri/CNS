@@ -235,7 +235,7 @@ def routebackcdvord(request, id) :
         
     if currdate > wdate :  #if it goes beyond 7 days
         cwr = 0
-    print(status)     
+    print(flag)     
     if flag :    
         if  temp1 < temp : #report submitted after deadline
             cdvorwsub_deadline = temp1    

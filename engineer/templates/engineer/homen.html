@@ -152,9 +152,9 @@
 		                      	<td>Pending</td>
 		                    </tr>
 						  {% elif cdvorwsub_deadline == currdate %}
-						    {% if status == "PENDING" %}
+						    {% if status == "PENDING" and cdvorwsub_on == currdate %}
 	                      	<tr data-href='/cdvorweekly/{{ id }}' >
-		                      <td>{{ cdvorwsub_deadline }}</td>    
+								<td>{{ cdvorwsub_deadline }}</td>    
 		                      <td>CDVOR Weekly</td>
 		                      <td>Pending</td>
 							</tr>
@@ -168,6 +168,7 @@
 							  {% elif cdvorwsub_on == currdate %}
 							  {% if status == "PENDING" %}
 							<tr data-href='/cdvorweekly/{{ id }}' >
+								
 								<td>{{ cdvorwsub_deadline }}</td>    
 								<td>CDVOR Weekly</td>
 								<td>Pending</td>
@@ -201,7 +202,7 @@
 		                      	<td>Pending</td>
 		                    </tr>
 						  {% elif cdvormsub_deadline == currdate %}
-						    {% if statusm == "PENDING" %}
+						    {% if statusm == "PENDING" and cdvormsub_on == currdate %}
 	                      	<tr data-href='/cdvormonthly/{{ id }}' >
 		                      <td>{{ cdvormsub_deadline }}</td>    
 		                      <td>CDVOR Monthly</td>
@@ -316,7 +317,7 @@
 								 {% if currdate > wdate %}
 								 <td><button class="btn standards" onclick="window.location.href='/cdvorweeklyrep/{{ id }}'">CDVOR</button></td>
 							   {% elif cdvorwsub_deadline == currdate %}
-								 {% if status == "PENDING" %}
+								 {% if status == "PENDING" and cdvorwsub_on == currdate %}
 								 <td><button class="btn standards" onclick="window.location.href='/cdvorweekly/{{ id }}'">CDVOR</button></td>
 							    {% else %}
 								<td><button class="btn standards" onclick="window.location.href='/cdvorweeklyrep/{{ id }}'">CDVOR</button></td>
@@ -372,7 +373,7 @@
 								 {% if currdate > wdatem %}
 								 <td><button class="btn standards" onclick="window.location.href='/cdvormonthlyrep/{{ id }}'">CDVOR</button></td>
 							   {% elif cdvormsub_deadline == currdate %}
-								 {% if statusm == "PENDING" %}
+								 {% if statusm == "PENDING" and cdvormsub_on == currdate %}
 								 <td><button class="btn standards" onclick="window.location.href='/cdvormonthly/{{ id }}'">CDVOR</button></td>
 							    {% else %}
 								<td><button class="btn standards" onclick="window.location.href='/cdvormonthlyrep/{{ id }}'">CDVOR</button></td>
