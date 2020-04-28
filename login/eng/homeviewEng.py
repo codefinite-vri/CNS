@@ -570,3 +570,216 @@ def dhomeviewn(request,id) :
         i.update({'token':i['p_id']})
     return render(request,'./engineer/homen.html',{'com':com,'wdate':wdate,'supdetails':supdetails,'statusd':statusd,'status':status,'cdr':cdr,'cwr':cwr,'currdate':currdate,'name':name1,'id':id,'empdet':empdetails,'cdvordsub_on':cdvordsub_on,'cdvord_deadline':cdvord_deadline,'cdvorwsub_on':cdvorwsub_on,'cdvorwsub_deadline':cdvorwsub_deadline,'statusm':statusm,'cmr':cmr,'wdatem':wdatem,'cdvormsub_on':cdvormsub_on,'cdvormsub_deadline':cdvormsub_deadline})
     
+def dhomeviews(request,id) :  
+    request.session['uid']= id
+    cursor = connection.cursor() 
+    s0 = models.Engineer.objects.all()
+    s0 = s0.values('a_id')
+    s0 = s0.filter(emp_id=id)
+
+    _q = models.Airport.objects
+    _q = _q.filter(a_id__in=s0)
+    name1 = _q.all()
+                
+    q = models.Engineer.objects
+    q = q.values('name','designation','a_id')
+    q = q.filter(emp_id=id)
+    empdetails = q.all()
+    ddr =0           
+    supdetails = models.Supervisor.objects.all()
+    supdetails = supdetails.values('name','contact','email').filter(dept='S')
+    statusd = "" 
+        #!!!!!!!!!!!!!!!!!scctv daily!!!!!!!!!!!!!!!!!!!!!!!!
+    uia = None
+    currdate = date.today()
+    currtime = datetime.now().strftime("%H:%M:%S")
+    scctvdsub_on = cursor.execute("select date from scctvdaily where date = %s",[date.today()])    
+    if scctvdsub_on :
+        statusd = models.Scctvdaily.objects.all()
+        statusd = statusd.values('date','status')
+        statusd = statusd.order_by('-date')
+        statusd = statusd.values('status')
+        statusd = statusd.values('status').filter(a_id=1)[0]['status']
+        if statusd == "PENDING" :
+            scctvdsub_on = currdate
+            scctvd_deadline = currdate
+            ddr=0
+        elif statusd == "COMPLETED" :
+            scctvd_deadline = currdate + timedelta(days=1)
+            scctvdsub_on = currdate
+            ddr = 1 
+        elif statusd == "COMPLETED WITH ERRORS" :
+            scctvd_deadline = currdate + timedelta(days=1)
+            scctvdsub_on = currdate
+            ddr = 1
+    else :
+        scctvd_deadline = models.Scctvdaily.objects.all()
+        scctvd_deadline = scctvd_deadline.values('date')
+        scctvd_deadline = scctvd_deadline.order_by('-date')
+        scctvd_deadline = scctvd_deadline.values('date').filter(a_id=1)[0]['date']
+        scctvdsub_on = scctvd_deadline
+        scctvd_deadline = scctvd_deadline + timedelta(days=2)
+        tempdate = scctvdsub_on + timedelta(days=1)
+        i = 1 
+        while i == 1 and tempdate != date.today() : 
+         if (scctvd_deadline <= date.today()) :    
+            remarks = "---Report not submitted---"
+            statusd = "PENDING"
+            val = (tempdate,currtime,'1',id,statusd,'2',remarks)
+            sql = "INSERT INTO scctvdaily (date,time,a_id,emp_id,status,f_id,remarks) values (%s ,%s,%s,%s,%s, %s,%s)"
+            cursor.execute(sql,val)  
+            scctvdsub_on = date.today()-timedelta(days=1)    
+            tempdate = tempdate + timedelta(days=1)
+         else : 
+            break
+        scctvd_deadline = date.today()
+          
+    #!!!!!!!!!!!!!!!!!!!!!!!scctv weekly!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    p_id = models.Scctvweekly.objects.all()
+    p_id = p_id.values('p_id')
+    p_id = p_id.order_by('-p_id')
+    p_id = p_id.values('p_id').filter(a_id=1)[0]['p_id']
+    currdate = date.today()
+    wdate = models.Scctvweekly.objects.all()
+    wdate = wdate.values('date')
+    wdate = wdate.order_by('-date')
+    wdate1 = wdate
+    wdate = wdate.values('date').filter(a_id=1)[0]['date']
+    wdate1 = wdate1.values('date').filter(a_id=1)[1]['date']
+    wdate = str(wdate)
+    wdate = datetime.strptime(wdate, "%Y-%m-%d").date()
+    temp = wdate
+    temp1 = wdate1 + timedelta(days=7)
+    wdate = wdate + timedelta(days=7) 
+    dwr = 0
+    scctvwsub_on = temp
+    scctvwsub_deadline =  wdate 
+    status = ""
+    status = models.Scctvweekly.objects.all()
+    status = status.values('date','status','unit_incharge_approval')
+    status = status.order_by('-date')
+    uia = status
+    uia = uia.values('unit_incharge_approval')
+    uia = uia.values('unit_incharge_approval').filter(a_id=1)[0]['unit_incharge_approval']
+    status = status.values('status')
+    status = status.values('status').filter(a_id=1)[0]['status']
+    flag = cursor.execute("select date from scctvweekly where date = %s",[date.today()])    
+    if currdate > wdate and flag == 0 :  #if it goes beyond 7 days
+        pending = wdate 
+        while pending <= (currdate - timedelta(days=1)) :
+            f = cursor.execute("select date from scctvwlogs where date = %s",[pending])    
+            if f == 0 : 
+                remarks = "Report not submitted"
+                value = "No Entry" 
+                val = (id,p_id,remarks,value,pending,currtime)
+                sql = "INSERT INTO scctvwlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s ,%s, %s,%s)"
+                cursor.execute(sql,val)
+            pending = pending + timedelta(days=1)    
+        dwr = 0
+         
+    if flag :    
+        if  temp1 < temp : #report submitted after deadline
+            scctvwsub_deadline = temp1    
+            if status == "COMPLETED" or status == "COMPLETED WITH ERRORS" :
+                dwr=1  
+            elif status == "PENDING" :
+                dwr=0
+            
+        elif temp == temp1 and temp == currdate : # report submitted on a day same as deadline
+            scctvwsub_deadline = temp    
+            if status == "COMPLETED" or status == "COMPLETED WITH ERRORS" :
+                dwr=1  
+            elif status == "PENDING" :
+                dwr=0
+            
+        elif temp1 < wdate and temp1 > temp : #report submitted before the deadline 
+            scctvwsub_deadline = temp1   
+            if status == "COMPLETED" or status == "COMPLETED WITH ERRORS" :
+                dwr=1  
+            elif status == "PENDING" :
+                dwr=0
+   
+    wdatem = models.Scctvmonthly.objects.all()
+    wdatem = wdatem.values('date')
+    wdatem = wdatem.order_by('-date')
+    wdate1 = wdatem
+    wdatem = wdatem.values('date').filter(a_id=1)[0]['date']
+    wdate1 = wdate1.values('date').filter(a_id=1)[1]['date']
+    wdatem = str(wdatem)
+    wdatem = datetime.strptime(wdatem, "%Y-%m-%d").date()
+    temp = wdatem
+    temp1 = wdate1 + timedelta(days=30)
+    wdatem = wdatem + timedelta(days=30) 
+    dsmr = 0
+    scctvmsub_on = temp
+    scctvmsub_deadline =  wdatem 
+    statusdm = ""
+    statusdm = models.Scctvmonthly.objects.all()
+    statusdm = statusdm.values('date','status','unit_incharge_approval')
+    statusdm = statusdm.order_by('-date')
+    uia = statusdm
+    uia = uia.values('unit_incharge_approval')
+    uia = uia.values('unit_incharge_approval').filter(a_id=1)[0]['unit_incharge_approval']
+    statusdm = statusdm.values('status')
+    statusdm = statusdm.values('status').filter(a_id=1)[0]['status']
+    flag = cursor.execute("select date from scctvmonthly where date = %s",[date.today()])    
+    if currdate > wdatem and flag == 0 :  #if it goes beyond 7 days
+        pending = wdatem 
+        while pending <= (currdate - timedelta(days=1)) :
+            f = cursor.execute("select date from scctvmlogs where date = %s",[pending])    
+            if f == 0 : 
+                remarks = "Report not submitted"
+                value = "No Entry" 
+                val = (id,p_id,remarks,value,pending,currtime)
+                sql = "INSERT INTO scctvmlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s ,%s, %s,%s)"
+                cursor.execute(sql,val)
+            pending = pending + timedelta(days=1)    
+        dsmr = 0
+        
+    if flag :    
+        if  temp1 < temp : #report submitted after deadline
+            scctvm_deadline = temp1    
+            if statusdm == "COMPLETED" or statusdm == "COMPLETED WITH ERRORS" :
+                dsmr=1  
+            elif statusdm == "PENDING" :
+                dsmr=0
+            
+        elif temp == temp1 and temp == currdate : # report submitted on a day same as deadline
+            scctvmsub_deadline = temp    
+            if statusdm == "COMPLETED" or statusdm == "COMPLETED WITH ERRORS" :
+                dsmr=1  
+            elif statusdm == "PENDING" :
+                dsmr=0
+            
+        elif temp1 < wdatem and temp1 > temp : #report submitted before the deadline 
+            scctvmsub_deadline = temp1   
+            if statusdm == "COMPLETED" or statusdm == "COMPLETED WITH ERRORS" :
+                dsmr=1  
+            elif statusdm == "PENDING" :
+                dsmr=0
+    print(dsmr)
+    print(scctvmsub_on)        
+        
+    print(wdatem)
+    
+    
+    
+    
+    Scctvdaily=[entry for entry in models.Scctvdaily.objects.filter(emp_id=id).values().order_by('-date')]
+    for item in Scctvdaily:
+        item.update( {"type":"scctvdaily"})
+                
+    scctvweekly=[entry for entry in models.Scctvweekly.objects.filter(emp_id=id).values().order_by('-date')]
+    for item in scctvweekly:
+        item.update( {"type":"scctvweekly"})
+    
+    scctvmonthly=[entry for entry in models.Scctvmonthly.objects.filter(emp_id=id).values().order_by('-date')]
+    for item in scctvmonthly:
+        item.update( {"type":"scctvmonthly"})
+    com=Scctvdaily+[i for i in scctvweekly]+[i for i in scctvmonthly]
+    com=sorted(com,key=itemgetter('date'),reverse=True)
+    for i in com:
+        i.update({'token':i['p_id']})
+    print(com)
+        # return render(request,'./engineer/F.html',{'status':status,'Scctvmsub_deadline':Scctvmsub_deadline,'Scctvmsub_on':Scctvmsub_on,'dsmr':dsmr,'dswr':dswr,'Scctvwsub_on':Scctvwsub_on,'Scctvwsub_deadline':Scctvwsub_deadline,'Scctvd_deadline':Scctvd_deadline,'Scctvdsub_on':Scctvdsub_on,'dsdr':dsdr,'ddr':ddr,'dwr':dwr,'vdr':vdr,'vmr':vmr,'vyr':vyr,'currdate':currdate,'name':name1,'id':id,'empdet':empdetails,'Scctvdsub_on':Scctvdsub_on,'Scctvd_deadline':Scctvd_deadline,'Scctvwsub_on':Scctvwsub_on,'Scctvwsub_deadline':Scctvwsub_deadline,'vhfdsub_on':vhfdsub_on,'vhfd_deadline':vhfd_deadline,'vhfmsub_on':vhfmsub_on,'vhfmsub_deadline':vhfmsub_deadline,'vhfysub_on':vhfysub_on,'vhfysub_deadline':vhfysub_deadline})'''
+    return render(request,'./engineer/homes.html',{'com':com,'wdate':wdate,'wdatem':wdatem,'supdetails':supdetails,'statusd':statusd,'statusdm':statusdm,'status':status,'ddr':ddr,'dwr':dwr,'dmr':dsmr,'currdate':currdate,'name':name1,'id':id,'empdet':empdetails,'scctvdsub_on':scctvdsub_on,'scctvd_deadline':scctvd_deadline,'scctvwsub_on':scctvwsub_on,'scctvwsub_deadline':scctvwsub_deadline,'scctvmsub_on':scctvmsub_on,'scctvmsub_deadline':scctvmsub_deadline})

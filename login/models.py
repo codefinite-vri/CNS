@@ -743,14 +743,14 @@ class Ndbweekly(models.Model):
 
 
 class Scctvdaily(models.Model):
-    date = models.DateTimeField()
+    date = models.DateField()
     a = models.ForeignKey(Airport, models.DO_NOTHING)
-    emp = models.ForeignKey(Engineer, models.DO_NOTHING, blank=True, null=True)
+    emp = models.ForeignKey('Engineer', models.DO_NOTHING, blank=True, null=True)
     f_id = models.CharField(max_length=10)
     ups_battery_indication = models.CharField(db_column='UPS_battery_indication', max_length=20, blank=True, null=True)  # Field name made lowercase.
     servers_on_condition = models.CharField(db_column='Servers_ON_condition', max_length=10, blank=True, null=True)  # Field name made lowercase.
     nas_status_in_vmsorvrm = models.CharField(db_column='NAS_status_in_VMSorVRM', max_length=10, blank=True, null=True)  # Field name made lowercase.
-    recording_active_status_vrs_server = models.IntegerField(db_column='recording_active_status_VRS_server', blank=True, null=True)  # Field name made lowercase.
+    recording_active_status_vrs_server = models.CharField(db_column='recording_active_status_VRS_server', max_length=11, blank=True, null=True)  # Field name made lowercase.
     recording_active_status_rrs_server = models.CharField(db_column='recording_active_status_RRS_server', max_length=20, blank=True, null=True)  # Field name made lowercase.
     database_status_vms = models.CharField(db_column='database_status_VMS', max_length=10, blank=True, null=True)  # Field name made lowercase.
     cameras_ivms = models.CharField(db_column='cameras_IVMS', max_length=10, blank=True, null=True)  # Field name made lowercase.
@@ -760,17 +760,31 @@ class Scctvdaily(models.Model):
     approval_date = models.DateField(blank=True, null=True)
     approval_time = models.TimeField(blank=True, null=True)
     p_id = models.AutoField(primary_key=True)
-    s_verify = models.IntegerField(blank=True, null=True)
     status = models.CharField(max_length=30)
+    time = models.TimeField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'scctvdaily'
-        unique_together = (('date', 'a'),)
+
+
+class Scctvdlogs(models.Model):
+    emp = models.ForeignKey(Engineer, models.DO_NOTHING)
+    value = models.CharField(max_length=30)
+    remarks = models.CharField(max_length=30)
+    log_id = models.AutoField(primary_key=True)
+    p = models.ForeignKey(Scctvdaily, models.DO_NOTHING)
+    date = models.DateField()
+    time = models.TimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'scctvdlogs'
 
 
 class Scctvmonthly(models.Model):
-    date = models.DateTimeField()
+    date = models.DateField()
+    time = models.TimeField()
     a = models.ForeignKey(Airport, models.DO_NOTHING)
     emp = models.ForeignKey(Engineer, models.DO_NOTHING, blank=True, null=True)
     f_id = models.CharField(max_length=10)
@@ -790,7 +804,6 @@ class Scctvmonthly(models.Model):
     approval_date = models.DateField(blank=True, null=True)
     approval_time = models.TimeField(blank=True, null=True)
     p_id = models.AutoField(primary_key=True)
-    s_verify = models.IntegerField(blank=True, null=True)
     status = models.CharField(max_length=30)
 
     class Meta:
@@ -798,9 +811,21 @@ class Scctvmonthly(models.Model):
         db_table = 'scctvmonthly'
         unique_together = (('date', 'a'),)
 
+class Scctvmlogs(models.Model):
+    emp = models.ForeignKey(Engineer, models.DO_NOTHING)
+    value = models.CharField(max_length=30)
+    remarks = models.CharField(max_length=30)
+    log_id = models.AutoField(primary_key=True)
+    p = models.ForeignKey(Scctvmonthly, models.DO_NOTHING)
+    date = models.DateField()
+    time = models.TimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'scctvmlogs'
 
 class Scctvweekly(models.Model):
-    date = models.DateTimeField()
+    date = models.DateField()
     a = models.ForeignKey(Airport, models.DO_NOTHING)
     emp = models.ForeignKey(Engineer, models.DO_NOTHING, blank=True, null=True)
     f_id = models.CharField(max_length=10)
@@ -817,12 +842,26 @@ class Scctvweekly(models.Model):
     approval_date = models.DateField(blank=True, null=True)
     approval_time = models.TimeField(blank=True, null=True)
     p_id = models.AutoField(primary_key=True)
-    s_verify = models.IntegerField(blank=True, null=True)
     status = models.CharField(max_length=30)
+    time = models.TimeField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'scctvweekly'
+
+
+class Scctvwlogs(models.Model):
+    p = models.ForeignKey(Scctvweekly, models.DO_NOTHING)
+    log_id = models.AutoField(primary_key=True)
+    date = models.DateField()
+    time = models.TimeField()
+    value = models.CharField(max_length=30)
+    remarks = models.CharField(max_length=30)
+    emp = models.ForeignKey(Engineer, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'scctvwlogs'
 
 
 class Supervisor(models.Model):

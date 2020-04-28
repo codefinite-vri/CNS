@@ -11,15 +11,15 @@ from supervisor.views import main
 from login.sup.homeviewSup import run_sup as run_sup
 from login.eng.homeviewEng import dhomeview as dhomeview
 from login.eng.homeviewEng import dhomeviewn as dhomeviewn
+from login.eng.homeviewEng import dhomeviews as dhomeviews
 from login.eng.logEng import logEng as logEng
 from login.eng.logEng import logEngN as logEngN
+from login.eng.logEng import logEngS as logEngS
 from head.views import dispMap as dispMap
-
-# Create your views here.
-
 from django.http import HttpResponse
 from . import models
 from django.db import connection
+
 # Create your views here.
 def login(request):
     # key=frt.generate_key()
@@ -34,8 +34,8 @@ def login(request):
             return logEng(request,request.session.get('uid'))
          elif dept == 'N':
             return logEngN(request, request.session.get('uid'))
-         #elif dept == 'S':
-          #  return logEngS(request, request.session.get('uid'))
+         elif dept == 'S':
+            return logEngS(request, request.session.get('uid'))
    
 
     if request.session.has_key('uid') and request.session.get('type')=='s':
@@ -77,9 +77,9 @@ def validate(request):
                     request.session['type']='e'
                     return dhomeviewn(request,id)
                 
-                '''elif dept =="S" :
+                elif dept =="S" :
                     request.session['type']='e'
-                    return dhomeviews(request,id)'''
+                    return dhomeviews(request,id)
                        
                     
     elif b=='21' :
@@ -163,10 +163,4 @@ def validate(request):
             
 
 
-
-def std(request,id) :
-     if request.session.has_key('uid'):
-        return render(request,'login/standards.html')  
-     else :
-        return render(request,'login/login.html')     
 

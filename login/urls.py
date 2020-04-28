@@ -16,11 +16,13 @@ from engineer.views.dscn import viewsw as dscnviewsw
 from engineer.views.cdvor import viewsd as cdvorviewsd
 from engineer.views.cdvor import viewsw as cdvorviewsw
 from engineer.views.cdvor import viewsm as cdvorviewsm
+from engineer.views.scctv import viewsd as scctvviewsd
+from engineer.views.scctv import viewsw as scctvviewsw
+from engineer.views.scctv import viewsm as scctvviewsm
 
 urlpatterns = [
     path('',views.login),
     path('validate/',views.validate),
-    # path('engineer/',eviews.test),
     path('schoice/',include('supervisor.urls')),
     path('',views.login),
     path('validate/',views.validate),
@@ -145,7 +147,47 @@ urlpatterns = [
     path('finalcmrepsub/<int:p_id>/<int:id>',cdvorviewsm.finalmrepsub),
     path('cdvormonthly/<int:id>',cdvorviewsm.cdvorm),
     path('cdvormonthlyrec/<int:id>',cdvorviewsm.cdvormonthlyrec),
-    path('homecm/<int:id>/<int:p_id>',cdvorviewsm.homem)
+    path('homecm/<int:id>/<int:p_id>',cdvorviewsm.homem),
+
+    #sccttv
+    #daily
+    path('scctvdaily/<int:id>',scctvviewsd.scctvd),
+    path('scctvdailyrep/<int:id>',scctvviewsd.scctvdrep),
+    path('scctvrepsub/<int:id>',scctvviewsd.scctvdrepsubm),
+    path('editscctvd/<int:p_id>',scctvviewsd.editscctvdaily),
+    path('upscctvrepsub/<int:id>',scctvviewsd.upscctvdaily),
+    path('routebackss/<int:id>/',scctvviewsd.routebackscctvd),
+    path('logout/<int:id>',scctvviewsd.logoutd),
+    path('scctvdailyrec/<int:id>',scctvviewsd.scctvdailyrec),
+    path('repsubscctverrors/<int:p_id>/<int:id>',scctvviewsd.repsuberrors),
+    path('finalscctvrepsub/<int:p_id>/<int:id>',scctvviewsd.finalrepsub),
+    path('sent/',scctvviewsd.sent),
+    #added new route
+    path('scctvhomed/<int:id>/<int:p_id>',scctvviewsd.homed),
+    
+    #weekly
+    path('scctvweekly/<int:id>',scctvviewsw.scctvw),
+    path('scctvweeklyrep/<int:id>',scctvviewsw.scctvwrep),
+    path('scctvweeklyrec/<int:id>',scctvviewsw.scctvweeklyrec),
+    path('scctvwrepsub/<int:id>',scctvviewsw.scctvwrepsubw),
+    path('editscctvw/<int:p_id>',scctvviewsw.editscctvweekly),
+    path('upscctvwrepsub/<int:id>',scctvviewsw.upscctvweekly),
+    path('repsubscctvwerrors/<int:p_id>/<int:id>',scctvviewsw.repsubwerrors),
+    path('finalscctvwrepsub/<int:p_id>/<int:id>',scctvviewsw.finalwrepsub),
+    path('scctvhomew/<int:id>/<int:p_id>',scctvviewsw.homew),
+    path('scctvhomem/<int:id>/<int:p_id>',scctvviewsm.homem),
+    
+    #monthly
+    path('scctvmonthly/<int:id>',scctvviewsm.scctvm),
+    path('scctvmonthlyrep/<int:id>',scctvviewsm.scctvmrep),
+    path('finalmrepsub/<int:p_id>/<int:id>',scctvviewsm.finalmrepsub),
+    path('scctvmonthlyrec/<int:id>',scctvviewsm.scctvmrec),
+    path('scctvmrepsub/<int:id>',scctvviewsm.scctvmrepsub),
+    path('repscctvmsuberrors/<int:p_id>/<int:id>',scctvviewsm.repsuberrors),
+    path('editscctvm/<int:p_id>',scctvviewsm.editscctvmonthly),
+    path('upscctvmrepsub/<int:id>',scctvviewsm.upscctvmonthly),
+
+
     
     
    
