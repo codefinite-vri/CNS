@@ -175,17 +175,18 @@ urlpatterns = [
     path('repsubscctvwerrors/<int:p_id>/<int:id>',scctvviewsw.repsubwerrors),
     path('finalscctvwrepsub/<int:p_id>/<int:id>',scctvviewsw.finalwrepsub),
     path('scctvhomew/<int:id>/<int:p_id>',scctvviewsw.homew),
-    path('scctvhomem/<int:id>/<int:p_id>',scctvviewsm.homem),
     
     #monthly
     path('scctvmonthly/<int:id>',scctvviewsm.scctvm),
     path('scctvmonthlyrep/<int:id>',scctvviewsm.scctvmrep),
-    path('finalmrepsub/<int:p_id>/<int:id>',scctvviewsm.finalmrepsub),
+    path('finalsmrepsub/<int:p_id>/<int:id>',scctvviewsm.finalmrepsub),
     path('scctvmonthlyrec/<int:id>',scctvviewsm.scctvmrec),
     path('scctvmrepsub/<int:id>',scctvviewsm.scctvmrepsub),
     path('repscctvmsuberrors/<int:p_id>/<int:id>',scctvviewsm.repsuberrors),
     path('editscctvm/<int:p_id>',scctvviewsm.editscctvmonthly),
     path('upscctvmrepsub/<int:id>',scctvviewsm.upscctvmonthly),
+    path('scctvhomem/<int:id>/<int:p_id>',scctvviewsm.homem)
+    
 
 
     

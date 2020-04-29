@@ -34,7 +34,6 @@
                 <div class="col-sm-7">
     <form method='POST' action='/upscctvmrepsub/{{ id }}' id="form-v">
         {% csrf_token %}
-        }  <!--check-->
         <div class="card" style="text-align: center;">
                           <div class="card-body">
                             <h2 class="card-title">SCCTV MONTHLY MAINTENANCE ENTRY</h2>
@@ -87,7 +86,7 @@
             <label for="server_status" class="col-sm-6 col-form-label">Check all the server status</label>
             <div>
                 <select  required class="form-control form-control-sm" id="server_status" name="ser" value="{{ scctvm.server_status }}">
-                  <option value="{{ scctvm.server_status }}" disabled="disabled" selected="selected">Prev Value:{{ scctvm.server_status }}</option>
+                  <option value="{{ scctvm.server_status }}" selected="selected">Prev Value:{{ scctvm.server_status }}</option>
                   <option value="ON">ON</option>
                   <option value="OFF">OFF</option>
                 </select>
@@ -99,7 +98,7 @@
             <label for="cameras_in_vrs_server" class="col-sm-6 col-form-label">Check Camera/NAS status in VRS servers</label>
             <div>
                 <select  required class="form-control form-control-sm" id="cameras_in_vrs_server" name="vrs" value="{{ scctvm.cameras_in_vrs_server }}">
-                  <option value="{{ scctvm.cameras_in_vrs_server }}" disabled="disabled" selected="selected" value="{{ scctvm.cameras_in_vrs_server }}">Prev Value: {{ scctvm.cameras_in_vrs_server }}</option>
+                  <option value="{{ scctvm.cameras_in_vrs_server }}" selected="selected" value="{{ scctvm.cameras_in_vrs_server }}">Prev Value: {{ scctvm.cameras_in_vrs_server }}</option>
                   <option value="OK">OK</option>
                   <option value="NOT OK">NOT OK</option>
                 </select>
@@ -120,7 +119,7 @@
             <label for="ofclinkto_l2l3_switches" class="col-sm-6 col-form-label">OFC Link in all L2 and L3 switches</label>
             <div>
                 <select  required class="form-control form-control-sm" id="ofclinkto_l2l3_switches" name="ofc" value="{{ scctvm.ofclinkto_l2l3_switches }}">
-                  <option value="{{ scctvm.ofclinkto_l2l3_switches }}" disabled="disabled" selected="selected">Prev Value:{{ scctvm.ofclinkto_l2l3_switches }}</option>
+                  <option value="{{ scctvm.ofclinkto_l2l3_switches }}"  selected="selected">Prev Value:{{ scctvm.ofclinkto_l2l3_switches }}</option>
                   <option value="BLINKING GREEN">BLINKING GREEN</option>
                   <option value="OTHER">OTHER</option>
                 </select>
@@ -132,7 +131,7 @@
             <label for="cleaning_camera_eqpt" class="col-sm-6 col-form-label">Cleaning of Cameras and Equipment</label>
             <div>
                 <select  required class="form-control form-control-sm" id="cleaning_camera_eqpt" name="eqpt" value="{{ scctvm.cleaning_camera_eqpt }}">
-                  <option value="{{ scctvm.cleaning_camera_eqpt }}" disabled="disabled" selected="selected">Prev Value: {{ scctvm.cleaning_camera_eqpt }}</option>
+                  <option value="{{ scctvm.cleaning_camera_eqpt }}" selected="selected">Prev Value: {{ scctvm.cleaning_camera_eqpt }}</option>
                   <option value="CARRIED OUT">CARRIED OUT</option>
                   <option value="NOT CARRIED OUT">NOT CARRIED OUT</option>
                 </select>
@@ -143,8 +142,8 @@
         <div class="form-group row has-warning">
             <label for="user_rights_check" class="col-sm-6 col-form-label">Check username and passwords of all users</label>
             <div>
-                <select  required class="form-control form-control-sm" id="user_rights_check" name="user">
-                  <option value="{{ scctvm.user_rights_check }}" disabled="disabled" selected="selected">Prev Value: {{ scctvm.user_rights_check }}</option>
+                <select  required class="form-control form-control-sm" id="user_rights_check" name="user" value="{{ scctvm.user_rights_check }}">
+                  <option value="{{ scctvm.user_rights_check }}"  selected="selected">Prev Value: {{ scctvm.user_rights_check }}</option>
                   <option value="OK">OK</option>
                   <option value="NOT OK">NOT OK</option>
                 </select>
@@ -309,22 +308,22 @@
                 </tr>
             </thead>
             <tbody>
-                 {% for scctvm in scctv_m %}  <!--check-->
+                 {% for scctvmm in scctv_m %}  <!--check-->
                 <tr>
-                 <td>{{ scctvm.date }}</td>
-                  <td>{{ scctvm.time }}</td>
-                  <td>{{ scctvm.ups_ip_voltage }}</td>
-                  <td>{{ scctvm.ups_op_voltage }}</td>
-                  <td>{{ scctvm.ups_battery_op_voltage_acpwron }}</td>
-                  <td>{{ scctvm.ups_battery_op_voltage_acpwroff }}</td>
-                  <td>{{ scctvm.ups_battery_op_voltage_after15min_acpwroff }}</td>
-                  <td>{{ scctvm.server_status }}</td>
-                  <td>{{ scctvm.cameras_in_vrs_server }}</td>
-                  <td>{{ scctvm.nas_free_capacity }}</td>
-                  <td>{{ scctvm.ofclinkto_l2l3_switches }}</td>
-                  <td>{{ scctvm.cleaning_camera_eqpt }}</td>
-                  <td>{{ scctvm.user_rights_check }}</td>
-                    {% if scctvm.ups_ip_voltage <= 235 and  scctvm.ups_ip_voltage >= 225 and scctvm.ups_op_voltage <= 230 and scctvm.ups_op_voltage >= 220 and scctvm.ups_battery_op_voltage_acpwron <= 213 and scctvm.ups_battery_op_voltage_acpwron >= 203 and scctvm.ups_battery_op_voltage_acpwroff <= 191 and scctvm.ups_battery_op_voltage_acpwroff >= 181 and scctvm.ups_battery_op_voltage_after15min_acpwroff <= 181 and scctvm.ups_battery_op_voltage_after15min_acpwroff >= 171 and scctvm.server_status == "ON" and scctvm.cameras_in_vrs_server == "OK" and scctvm.nas_free_capacity != 0 and scctvm.ofclinkto_l2l3_switches == "BLINKING GREEN" and scctvm.cleaning_camera_eqpt == "CARRIED OUT" and scctvm.user_rights_check == "OK" %}
+                 <td>{{ scctvmm.date }}</td>
+                  <td>{{ scctvmm.time }}</td>
+                  <td>{{ scctvmm.ups_ip_voltage }}</td>
+                  <td>{{ scctvmm.ups_op_voltage }}</td>
+                  <td>{{ scctvmm.ups_battery_op_voltage_acpwron }}</td>
+                  <td>{{ scctvmm.ups_battery_op_voltage_acpwroff }}</td>
+                  <td>{{ scctvmm.ups_battery_op_voltage_after15min_acpwroff }}</td>
+                  <td>{{ scctvmm.server_status }}</td>
+                  <td>{{ scctvmm.cameras_in_vrs_server }}</td>
+                  <td>{{ scctvmm.nas_free_capacity }}</td>
+                  <td>{{ scctvmm.ofclinkto_l2l3_switches }}</td>
+                  <td>{{ scctvmm.cleaning_camera_eqpt }}</td>
+                  <td>{{ scctvmm.user_rights_check }}</td>
+                    {% if scctvmm.ups_ip_voltage <= 235 and  scctvmm.ups_ip_voltage >= 225 and scctvmm.ups_op_voltage <= 230 and scctvmm.ups_op_voltage >= 220 and scctvmm.ups_battery_op_voltage_acpwron <= 213 and scctvmm.ups_battery_op_voltage_acpwron >= 203 and scctvmm.ups_battery_op_voltage_acpwroff <= 191 and scctvmm.ups_battery_op_voltage_acpwroff >= 181 and scctvmm.ups_battery_op_voltage_after15min_acpwroff <= 181 and scctvmm.ups_battery_op_voltage_after15min_acpwroff >= 171 and scctvmm.server_status == "ON" and scctvmm.cameras_in_vrs_server == "OK" and scctvmm.nas_free_capacity != 0 and scctvmm.ofclinkto_l2l3_switches == "BLINKING GREEN" and scctvmm.cleaning_camera_eqpt == "CARRIED OUT" and scctvmm.user_rights_check == "OK" %}
              <td>Pass</td>
                  {% else %}
                   <td>Fail</td>

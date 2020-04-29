@@ -116,7 +116,7 @@ class Cdvordaily(models.Model):
 class Cdvordlogs(models.Model):
     log_id = models.AutoField(primary_key=True)
     emp = models.ForeignKey('Engineer', models.DO_NOTHING)
-    p = models.ForeignKey('Datisdaily', models.DO_NOTHING)
+    p = models.ForeignKey('Cdvordaily', models.DO_NOTHING)
     value = models.CharField(max_length=30)
     remarks = models.CharField(db_column='Remarks', max_length=100)  # Field name made lowercase.
     date = models.DateField(db_column='Date')  # Field name made lowercase.
@@ -202,7 +202,7 @@ class Cdvorweekly(models.Model):
 class Cdvorwlogs(models.Model):
     log_id = models.AutoField(primary_key=True)
     emp = models.ForeignKey('Engineer', models.DO_NOTHING)
-    p = models.ForeignKey('Datisdaily', models.DO_NOTHING)
+    p = models.ForeignKey('Cdvorweekly', models.DO_NOTHING)
     value = models.CharField(max_length=30)
     remarks = models.CharField(db_column='Remarks', max_length=100)  # Field name made lowercase.
     date = models.DateField(db_column='Date')  # Field name made lowercase.
@@ -529,7 +529,7 @@ class Dscnmlogs(models.Model):
     value = models.CharField(max_length=30)
     date = models.DateField()
     time = models.TimeField()
-    p = models.ForeignKey(Dscndaily, models.DO_NOTHING, blank=True, null=True)
+    p = models.ForeignKey(Dscnmonthly, models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -565,7 +565,7 @@ class Dscnwlogs(models.Model):
     value = models.CharField(max_length=30)
     date = models.DateField()
     time = models.TimeField()
-    p = models.ForeignKey(Dscndaily, models.DO_NOTHING, blank=True, null=True)
+    p = models.ForeignKey(Dscnweekly, models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = False

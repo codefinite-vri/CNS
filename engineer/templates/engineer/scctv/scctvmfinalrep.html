@@ -31,9 +31,8 @@
               <div class="alert alert-danger">
                 <strong>Maintenance failed!!!</strong> 
                 Please try again.
-    <form method='POST' action='/finalmrepsub/{{ p_id }}/{{ id }}'>
+    <form method='POST' action='/finalsmrepsub/{{ p_id }}/{{ id }}'>
         {% csrf_token %}
-          <!--chek-->
         <div class="card" style="text-align: center;">
                 <div class="card-body">
                   <h2 class="card-title">SCCTV MONTHLY MAINTENANCE ENTRY</h2>
@@ -80,6 +79,8 @@
                   </div>
 
                   <hr>  
+                  <div class="form-group row has-warning">
+                
                   <label for="server_status" class="col-sm-6 col-form-label">Check all the server status</label>
                   <div>
                       

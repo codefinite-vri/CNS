@@ -31,9 +31,10 @@ def scctvm(request, id) :
       supdetails = models.Supervisor.objects.all()
       supdetails = supdetails.values('name','contact','email').filter(dept='S')
       scctvmlogs = models.Scctvmlogs.objects.all()
-      scctvmlogs = scctvmlogs.filter(date=date.today()).order_by('-log_id')    
+      scctvmlogs = scctvmlogs.filter(date=date.today()).order_by('-log_id')
+      print(scctv_m)    
       if scctv_m :
-         return render(request,'engineer/scctv/scctvmonthlyrep.html',{'scctvmlogs':scctvmlogs,'supdetails':supdetails,'scctv_m':scctvm,'id':id,'scctvm':scctv_m[0]}) 
+         return render(request,'engineer/scctv/scctvmonthlyrep.html',{'scctvmlogs':scctvmlogs,'supdetails':supdetails,'scctv_m':scctv_m,'id':id,'scctvm':scctvm}) 
       else :
          return routebackscctvd(request, id)
   else : 
@@ -231,7 +232,7 @@ def scctvmrepsub(request, id):
    supdetails = models.Supervisor.objects.all()
    supdetails = supdetails.values('name','contact','email').filter(dept='S')
 
-   return render(request,'engineer/scctv/scctvmonthlyrep.html',{'scctv_m':scctvm,'id':id,'supdetails':supdetails,'scctvmlogs':scctvmlogs,'scctvm':scctv_m[0]}) 
+   return render(request,'engineer/scctv/scctvmonthlyrep.html',{'scctvm':scctvm,'id':id,'supdetails':supdetails,'scctvmlogs':scctvmlogs,'scctv_m':scctv_m}) 
        
 def editscctvmonthly(request,p_id):
   if request.session.has_key('uid'):
@@ -250,11 +251,12 @@ def editscctvmonthly(request,p_id):
      scctvmlogs = scctvmlogs.filter(date=date.today()).order_by('-log_id')    
      supdetails = models.Supervisor.objects.all()
      supdetails = supdetails.values('name','contact','email').filter(dept='S')
-     return render(request,'engineer/scctv/editscctvmrepsub.html',{'supdetails':supdetails,'scctvm':scctvm[0],'id':p_id,'scctv_m':scctv_m,'scctvmlogs':scctvmlogs}) 
+     return render(request,'engineer/scctv/editscctvmrepsub.html',{'supdetails':supdetails,'scctvm':scctv_m[0],'id':p_id,'scctv_m':scctv_m,'scctvmlogs':scctvmlogs}) 
    else :
      return routebackdatisd(request, uid)  
   else : 
      return render(request,'login/login.html')
+
 def scctvmrec(request, id):
  if request.session.has_key('uid'):
   uid=request.session['uid'] 
@@ -437,7 +439,7 @@ def upscctvmonthly(request, id):
    supdetails = models.Supervisor.objects.all()
    supdetails = supdetails.values('name','contact','email').filter(dept='S')
 
-   return render(request,'engineer/scctv/scctvmonthlyrep.html',{'scctv_m':scctvm,'id':id,'supdetails':supdetails,'scctvmlogs':scctvmlogs,'scctvm':scctv_m[0]}) 
+   return render(request,'engineer/scctv/scctvmonthlyrep.html',{'scctv_m':scctv_m,'id':emp_id,'supdetails':supdetails,'scctvmlogs':scctvmlogs,'scctvm':scctvm}) 
 
 
 def repsuberrors(request,p_id, id):
@@ -482,7 +484,7 @@ def finalmrepsub(request,p_id,id) :
         scctvmlogs = scctvmlogs.filter(date=date.today()).order_by('-log_id')    
         supdetails = models.Supervisor.objects.all()
         supdetails = supdetails.values('name','contact','email').filter(dept='S')
-        return render(request,'engineer/scctv/scctvmonthlyrep.html',{'supdetails':supdetails,'scctv_m':scctvm,'id':id,'f':f,'scctvm':scctv_m[0],'scctvmlogs':scctvmlogs}) 
+        return render(request,'engineer/scctv/scctvmonthlyrep.html',{'supdetails':supdetails,'scctv_m':scctv_m,'id':id,'f':f,'scctvm':scctvm,'scctvmlogs':scctvmlogs}) 
     else : 
         return render(request,'login/login.html')
 
@@ -503,7 +505,7 @@ def homem(request, id, p_id) :
         scctvmlogs = models.Scctvmlogs.objects.all().filter(p_id=p_id).order_by('-log_id')
         supdetails = models.Supervisor.objects.all()
         supdetails = supdetails.values('name','contact','email').filter(dept='S')
-        return render(request,'engineer/scctv/scctvmonthlyrep.html',{'supdetails':supdetails,'scctv_m':scctvm,'id':id,'scctvm':scctv_m[0],'scctvmlogs':scctvmlogs,'f':f}) 
+        return render(request,'engineer/scctv/scctvmonthlyrep.html',{'supdetails':supdetails,'scctv_m':scctv_m,'id':id,'scctvm':scctvm,'scctvmlogs':scctvmlogs,'f':f}) 
      else :
         messages.add_message(request,30, 'You cannot make changes to pending report!')
         return routebackscctv(request, id)
