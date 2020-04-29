@@ -30,7 +30,7 @@
             <div class="col-sm-6">
               <div class="alert alert-danger">
                 <strong>Maintenance failed!!!</strong> 
-                Please try again.
+                Submission to the Supervisor
                 <form method='POST' action='/finalscctvwrepsub/{{ p_id }}/{{ id }}'>
                 {% csrf_token %}
                 <div class="card" style="text-align: center;">
@@ -40,7 +40,7 @@
                     Recorded on:  DATE: {{ scctvw.date }}  |  TIME: {{ scctvw.time }}<br>
                                     <strong>STATUS: {{ scctvw.status }} </strong>
                 </div>
-                  <hr> ]
+                  <hr> 
      <div class="form-group row has-warning">
                    <label for="ups_ip_voltage" class="col-sm-6 col-form-label">UPS Input Voltage</label>
                   <div>
@@ -63,7 +63,8 @@
                   </div>
 
                   <hr>  
-                  <label for="server_status" class="col-sm-6 col-form-label">Check all the server status</label>
+                  <div class="form-group row has-warning">
+                 <label for="server_status" class="col-sm-6 col-form-label">Check all the server status</label>
                   <div>
                       
                       <input type="text" class="form-control form-control-sm" id="server_status" name="ser" readonly="true" value="{{ scctvw.server_status }}">

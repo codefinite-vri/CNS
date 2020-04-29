@@ -65,7 +65,7 @@
             <label for="ups_battery_status" class="col-sm-6 col-form-label">UPS Battery Status</label>
             <div>
                 <select  required class="form-control form-control-sm" id="ups_battery_status" name="upsbat" value="{{ scctvw.ups_battery_status }}">
-                    <option value="{{ scctvw.ups_battery_status }}" disabled="disabled" selected="selected">Prev Value:{{ scctvw.ups_battery_status }}</option>
+                    <option value="{{ scctvw.ups_battery_status }}" selected="selected">Prev Value:{{ scctvw.ups_battery_status }}</option>
                     <option value="FULL">FULL</option>
                     <option value="DISCHARGED">DISCHARGED</option>
                 </select>
@@ -77,7 +77,7 @@
             <label for="server_status" class="col-sm-6 col-form-label">Check all the server status</label>
             <div>
                 <select  required class="form-control form-control-sm" id="server_status" name="ser" value="{{ scctvw.server_status }}">
-                  <option value="{{ scctvw.server_status }}" disabled="disabled" selected="selected">Prev Value:{{ scctvw.server_status }}</option>
+                  <option value="{{ scctvw.server_status }}" selected="selected">Prev Value:{{ scctvw.server_status }}</option>
                   <option value="ON">ON</option>
                   <option value="OFF">OFF</option>
                 </select>
@@ -89,7 +89,7 @@
             <label for="camera_nas_status_in_vrs" class="col-sm-6 col-form-label">Check Camera/NAS status in VRS servers</label>
             <div>
                 <select value="{{ scctvw.camera_nas_status_in_vrs }}" required class="form-control form-control-sm" id="camera_nas_status_in_vrs" name="nas">
-                  <option value="{{ scctvw.camera_nas_status_in_vrs }}" disabled="disabled" selected="selected">Prev Value:{{ scctvw.camera_nas_status_in_vrs }}</option>
+                  <option value="{{ scctvw.camera_nas_status_in_vrs }}" selected="selected">Prev Value:{{ scctvw.camera_nas_status_in_vrs }}</option>
                   <option value="OK">OK</option>
                   <option value="NOT OK">NOT OK</option>
                 </select>
@@ -101,7 +101,7 @@
             <label for="workstns_n_client_softw_check" class="col-sm-6 col-form-label">Check all the workstations and its client software</label>
             <div>
                 <select  required class="form-control form-control-sm" id="workstns_n_client_softw_check" name="sw" value="{{ scctvw.workstns_n_client_softw_check }}">
-                  <option value="{{ scctvw.workstns_n_client_softw_check }}" disabled="disabled" selected="selected">Prev Value: {{ scctvw.workstns_n_client_softw_check }}</option>
+                  <option value="{{ scctvw.workstns_n_client_softw_check }}" selected="selected">Prev Value: {{ scctvw.workstns_n_client_softw_check }}</option>
                   <option value="OK">OK</option>
                   <option value="NOT OK">NOT OK</option>
                 </select>
@@ -113,7 +113,7 @@
             <label for="cameras_client_ivms_softw" class="col-sm-6 col-form-label">Check all cameras are working in client ivms Software</label>
             <div>
                 <select  required class="form-control form-control-sm" id="cameras_client_ivms_softw" name="ivms" value="{{ scctvw.cameras_client_ivms_softw }}">
-                  <option value="{{ scctvw.cameras_client_ivms_softw }}" disabled="disabled" selected="selected">Prev Value:{{ scctvw.cameras_client_ivms_softw }}</option>
+                  <option value="{{ scctvw.cameras_client_ivms_softw }}" selected="selected">Prev Value:{{ scctvw.cameras_client_ivms_softw }}</option>
                   <option value="OK">OK</option>
                   <option value="NOT OK">NOT OK</option>
                 </select>
@@ -275,14 +275,17 @@
                 {% for scctvw in scctv_w %}  <!--check-->
                 <tr>
                  
-                <td>{{ scctvww.date }}</td>
-                  <td>{{ scctvww.time }}</td>
-                 <td>{{ scctvww.serveraorb }}</td>
-                  <td>{{ scctvww.ups_ip }}</td>
-                  <td>{{ scctvww.ups_op }}</td>
-                  <td>{{ scctvww.dust_free }}</td>
-                  <td>{{ scctvww.lan_status }}</td>
-                   {% if scctvw.ups_ip_voltage <= 235 and  scctvw.ups_ip_voltage >= 225 and scctvw.ups_op_voltage <= 230 and scctvw.ups_op_voltage >= 220 and scctvw.ups_battery_status == "FULL" and scctvw.server_status == "ON" and scctvw.camera_nas_status_in_vrs == "OK" and scctvw.workstns_n_client_softw_check == "OK" and scctvw.cameras_client_ivms_softw == "OK" and scctvw.nas_free_capacity != 0 %}
+                <td>{{ scctvw.date }}</td>
+                  <td>{{ scctvw.time }}</td>
+                  <td>{{ scctvw.ups_ip_voltage }}</td>
+                  <td>{{ scctvw.ups_op_voltage }}</td>
+                  <td>{{ scctvw.ups_battery_status }}</td>
+                  <td>{{ scctvw.server_status }}</td>
+                  <td>{{ scctvw.camera_nas_status_in_vrs }}</td>
+                  <td>{{ scctvw.workstns_n_client_softw_check }}</td>
+                  <td>{{ scctvw.cameras_client_ivms_softw }}</td>
+                  <td>{{ scctvw.nas_free_capacity }}</td>
+                  {% if scctvw.ups_ip_voltage <= 235 and  scctvw.ups_ip_voltage >= 225 and scctvw.ups_op_voltage <= 230 and scctvw.ups_op_voltage >= 220 and scctvw.ups_battery_status == "FULL" and scctvw.server_status == "ON" and scctvw.camera_nas_status_in_vrs == "OK" and scctvw.workstns_n_client_softw_check == "OK" and scctvw.cameras_client_ivms_softw == "OK" and scctvw.nas_free_capacity != 0 %}
                    <td>Pass</td>
                  {% else %}
                   <td>Fail</td>
