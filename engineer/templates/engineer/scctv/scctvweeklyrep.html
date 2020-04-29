@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="{% static 'engineer/datisstyle.css' %}">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -27,7 +26,7 @@
       <div class="col-sm-7">
           <!--check-->
             {% if f != 1%}
-            {% if scctvw.ups_ip_voltage <= 235 and  scctvw.ups_ip_voltage >= 225 and scctvw.ups_op_voltage <= 230 and scctvw.ups_op_voltage >= 220 and scctvw.ups_battery_status == "FULL" and scctvw.server_status == "ON" and scctvw.camera_nas_status_in_vrs == "OK" and scctvw.workstns_n_client_softw_check == "OK" and scctvw.cameras_client_ivms_softw == "OK" and scctvwnas_free_capacity != 0 %}
+            {% if scctvw.ups_ip_voltage <= 235 and  scctvw.ups_ip_voltage >= 225 and scctvw.ups_op_voltage <= 230 and scctvw.ups_op_voltage >= 220 and scctvw.ups_battery_status == "FULL" and scctvw.server_status == "ON" and scctvw.camera_nas_status_in_vrs == "OK" and scctvw.workstns_n_client_softw_check == "OK" and scctvw.cameras_client_ivms_softw == "OK" and scctvw.nas_free_capacity != 0 %}
           <div class="alert alert-success">
                 <strong>Maintenance succesful!</strong> 
               All entries matched with standard values.
@@ -85,7 +84,7 @@
                   <div class="form-group row has-warning">
                    <label for="camera_NAS_status_in_VRS" class="col-sm-6 col-form-label">Check Camera/NAS status in VRS servers</label>
                   <div>
-                      <input type="text" class="form-control form-control-sm" id="camera_NAS_status_in_VRS" name="nas" readonly="true" value="{{ scctvw.camera_nas_status_in_vrs }}">
+                      <input type="text" class="form-control form-control-sm" id="camera_NAS_status_in_VRS" name="vrs" readonly="true" value="{{ scctvw.camera_nas_status_in_vrs }}">
                     </div>
                   </div>
 
@@ -287,30 +286,29 @@
                     <th>UPS Input Voltage</th>
                     <th>UPS Output Voltage</th>
                     <th>UPS Battery Status</th>
-                    <th>Check all the server status</th>
-                    <th>Check thevcamera/NAS status in VRS servers</th>
-                    <th>Check all the workstations and its client software</th>
-                    <th>Check all the cameras are working in client ivms software</th>
-                    <th>Check the NAS free capacity</th>
+                    <th>Server status</th>
+                    <th>Camera/NAS status in VRS</th>
+                    <th>Workstations and client software</th>
+                    <th>Cameras in client IVMS S/W</th>
+                    <th>NAS free capacity</th>
                     <th>Test</th>
                 </tr>
             </thead>
             <tbody>
-                {% for datisd in scctv_w %} <!--check-->
+                {% for scctvww in scctv_w %} <!--check-->
                 <tr>
                  
-                  <td>{{ datisd.date }}</td>
-					<td>{{ datisd.time }}</td>
-					<td>{{ datisd.ups_battery_indication }}</td>
-					<td>{{ datisd.servers_on_condition }}</td>
-					<td>{{ datisd.nas_status_in_vmsorvrm }}</td>
-					<td>{{ datisd.recording_active_status_vrs_server }}</td>
-					<td>{{ datisd.recording_active_status_rrs_server }}</td>
-					<td>{{ datisd.database_status_vms }}</td>
-					<td>{{ datisd.cameras_ivms }}</td>
-					<td>{{ datisd.eqpt_cleaning }}</td>
-					<!-- <td>{{ datisd.remarks }}</td> -->
-                   {% if scctvw.ups_ip_voltage <= 235 and  scctvw.ups_ip_voltage >= 225 and scctvw.ups_op_voltage <= 230 and scctvw.ups_op_voltage >= 220 and scctvw.ups_battery_status == "FULL" and scctvw.server_status == "ON" and scctvw.camera_nas_status_in_vrs == "OK" and scctvw.workstns_n_client_softw_check == "OK" and scctvw.cameras_client_ivms_softw == "OK" and scctvw.nas_free_capacity != 0 %}
+                <td>{{ scctvww.date }}</td>
+                  <td>{{ scctvww.time }}</td>
+                  <td>{{ scctvww.ups_ip_voltage }}</td>
+                  <td>{{ scctvww.ups_op_voltage }}</td>
+                  <td>{{ scctvww.ups_battery_status }}</td>
+                  <td>{{ scctvww.server_status }}</td>
+                  <td>{{ scctvww.camera_nas_status_in_vrs }}</td>
+                  <td>{{ scctvww.workstns_n_client_softw_check }}</td>
+                  <td>{{ scctvww.cameras_client_ivms_softw }}</td>
+                  <td>{{ scctvww.nas_free_capacity }}</td>
+                   {% if scctvww.ups_ip_voltage <= 235 and  scctvww.ups_ip_voltage >= 225 and scctvww.ups_op_voltage <= 230 and scctvww.ups_op_voltage >= 220 and scctvww.ups_battery_status == "FULL" and scctvww.server_status == "ON" and scctvww.camera_nas_status_in_vrs == "OK" and scctvww.workstns_n_client_softw_check == "OK" and scctvww.cameras_client_ivms_softw == "OK" and scctvww.nas_free_capacity != 0 %}
                    <td>Pass</td>
                  {% else %}
                   <td>Fail</td>
@@ -340,7 +338,7 @@ $(function(){
         $('#ups_ip_voltage').css('border-color', 'pale-green');
 	}
 
-    if($("#ups_op_voltage").val()<"220" || $("#ups_op_voltage").vale()>"230"){
+    if($("#ups_op_voltage").val()<"220" || $("#ups_op_voltage").val()>"230"){
         $('#ups_op_voltage').css('border-color', 'red');
     }else{
         $('#ups_op_voltage').css('border-color', 'pale-green');

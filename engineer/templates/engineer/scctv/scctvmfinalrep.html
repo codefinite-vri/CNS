@@ -38,8 +38,8 @@
                 <div class="card-body">
                   <h2 class="card-title">SCCTV MONTHLY MAINTENANCE ENTRY</h2>
                   <div class="alert alert-light" style="height: 40px; padding-top: 0px">
-                    Recorded on:  DATE: {{ datisdw.date }}  |  TIME: {{ datisdw.time }}<br>
-                                    <strong>STATUS: {{ datisdw.status }} </strong>
+                    Recorded on:  DATE: {{ scctvm.date }}  |  TIME: {{ scctvm.time }}<br>
+                                    <strong>STATUS: {{ scctvm.status }} </strong>
                 </div>
                   <hr> 
      <div class="form-group row has-warning">
@@ -99,7 +99,7 @@
                   <div class="form-group row has-warning">
                     <label for="nas_free_capacity" class="col-sm-6 col-form-label">Check NAS free capacity</label>
                     <div>
-                      <input type="text" class="form-control form-control-sm" id="nas_free_capacity" name="nas_free_capacity" readonly="true" value="{{ scctvm.nas_free_capacity }}">
+                      <input type="float" class="form-control form-control-sm" id="nas_free_capacity" name="nas_free_capacity" readonly="true" value="{{ scctvm.nas_free_capacity }}">
                     </div>
                   </div>
 

@@ -18,7 +18,7 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                   
-                    <a href='#' onclick="window.location.href='/scctvmonthly/{{ id }}'" class="taskbut"><img src="{% static '/images/task.png' %}"></a>  <!--check-->
+                    <a href='#' onclick="window.location.href='/scctvweekly/{{ id }}'" class="taskbut"><img src="{% static '/images/task.png' %}"></a>  <!--check-->
                 </li>
             </ul>
             <div class="title-header">PREVENTIVE MAINTENANCE LOG<img src="{% static '/images/aai.jpg' %}"></div>
@@ -31,10 +31,9 @@
               <div class="alert alert-danger">
                 <strong>Maintenance failed!!!</strong> 
                 Please try again.
-    <form method='POST' action='/finalscctvwrepsub/{{ p_id }}/{{ id }}'>
-        {% csrf_token %}
-          <!--chek-->
-        <div class="card" style="text-align: center;">
+                <form method='POST' action='/finalscctvwrepsub/{{ p_id }}/{{ id }}'>
+                {% csrf_token %}
+                <div class="card" style="text-align: center;">
                 <div class="card-body">
                   <h2 class="card-title">SCCTV WEEKLY MAINTENANCE ENTRY</h2>
                   <div class="alert alert-light" style="height: 40px; padding-top: 0px">

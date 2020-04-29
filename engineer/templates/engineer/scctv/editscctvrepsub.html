@@ -21,7 +21,7 @@
 			<ul class="navbar-nav">
 	    		<li class="nav-item">
 					{% for scctvdd in scctvd %}
-					<a href='#' onclick="window.location.href='/scctvdaily/{{ scctvdd.emp_id }}'" class="taskbut"><img src="{% static '/images/task.png' %}"></a>		      <!--check-->
+	      			<a href='#' onclick="window.location.href='/scctvdaily/{{ scctvdd.emp_id }}'" class="taskbut"><img src="{% static '/images/task.png' %}"></a>		      <!--check-->
 					  {% endfor %}
 				</li>
 				
@@ -51,7 +51,7 @@
 							  <label for="UPS_battery_indication" class="col-sm-6 col-form-label">UPS Battery Indication</label>
 							  <div>
 							   	  <select  required class="form-control form-control-sm" id="UPS_battery_indication" name="ups" value="{{ scctvdd.ups_battery_indication }}">
-							     	  <option value="{{ scctvdd.ups_battery_indication }}"  selected="selected">Prev Value:{{ scctvdd.ups_battery_indication }}</option>
+							     	  <option value="{{ scctvdd.ups_battery_indication }}" selected="selected">Prev Value:{{ scctvdd.ups_battery_indication }}</option>
 									  <option value="FULL">FULL</option>
 									  <option value="DISCHARGED">DISCHARGED</option>
 								</select>
@@ -63,7 +63,7 @@
 							  <label for="Servers_ON_condition" class="col-sm-6 col-form-label">Check all the servers are in ON condition</label>
 							  <div>
 							     <select  required class="form-control form-control-sm" id="Servers_ON_condition" name="ser" value="{{ scctvdd.servers_on_condition }}">
-							     	  <option value="{{ scctvdd.server_on_condition }}"  selected="selected">Prev Value:{{ scctvdd.servers_on_condition }}</option>
+							     	  <option value="{{ scctvdd.servers_on_condition }}"  selected="selected">Prev Value:{{ scctvdd.servers_on_condition }}</option>
 									  <option value="OK">OK</option>
 									  <option value="NOT OK">NOT OK</option>
 								</select>
@@ -75,7 +75,7 @@
 							  <label for="NAS_status_in_VMSorVRM" class="col-sm-6 col-form-label">Check the NAS status in VMS/VRM</label>
 							  <div>
 							    <select required class="form-control form-control-sm" id="NAS_status_in_VMSorVRM" name="vrm" value="{{ scctvdd.nas_status_in_vmsorvrm }}">
-							    	  <option value="{{ scctvdd.nas_status_in_vmsorvrm }}"  selected="selected">Prev Value:{{ scctvdd.nas_status_in_vmsorvrm}}</option>
+							    	  <option value="{{ scctvdd.nas_status_in_vmsorvrm }}" selected="selected">Prev Value:{{ scctvdd.nas_status_in_vmsorvrm}}</option>
 									  <option value="OK">OK</option>
 									  <option value="NOT OK">NOT OK</option>
 								</select>
@@ -85,10 +85,10 @@
 
 							  <hr>
 							  <div class="form-group row has-warning">
-							    <label for="recording_active_status_vrs_server" class="col-sm-6 col-form-label">Check Recording Active status VRS servers</label>
+							    <label for="recording_active_status_vrs_server" class="col-sm-6 col-form-label">Check Recording Active status of all VRS servers</label>
 							    <div>
 									<select required class="form-control form-control-sm" id="recording_active_status_VRS_server" name="vrs" value="{{ scctvdd.recording_active_status_vrs_server }}">
-									  <option value="{{ scctvdd.recording_active_status_vrs_server }}"  selected="selected">Prev Value:{{ scctvdd.recording_active_status_vrs_server }}</option>
+									  <option value="{{ scctvdd.recording_active_status_vrs_server }}" selected="selected">Prev Value:{{ scctvdd.recording_active_status_vrs_server }}</option>
 									  <option value="EQUALS TO TOTAL CAMERA">EQUALS TO TOTAL CAMERA</option>
 									  <option value="None">NONE</option>
 								</select>
@@ -101,7 +101,7 @@
 							    <label for="recording_active_status_RRS_server" class="col-sm-6 col-form-label">Check Recording status of cameras in RRS Server</label>
 							    <div>
 							    	<select required class="form-control form-control-sm" id="recording_active_status_RRS_server" name="rrs" value="{{ scctvdd.recording_active_status_rrs_server  }}">
-							    	  <option value="{{ scctvdd.recording_active_status_rrs_server  }}"  selected="selected">Prev Value:{{ scctvdd.recording_active_status_rrs_server  }}</option>
+							    	  <option value="{{ scctvdd.recording_active_status_rrs_server  }}" selected="selected">Prev Value:{{ scctvdd.recording_active_status_rrs_server  }}</option>
 									  <option value="ON">ON</option>
 									  <option value="PAUSE">PAUSE</option>
 									  <option value="OFF">OFF</option>
@@ -113,8 +113,8 @@
 							<div class="form-group row has-warning">
 							  <label for="database_status_VMS" class="col-sm-6 col-form-label">Check the Database status in VMS server</label>
 							  <div>
-							     <select  required class="form-control form-control-sm" id="database_status_VMS" name="vms" value="{{ scctvd.database_status_vms }}">
-							     	  <option value="{{ scctvdd.database_status_vms }}"  selected="selected">Prev Value:{{ scctvdd.database_status_vms }}</option>
+							     <select  required class="form-control form-control-sm" id="database_status_VMS" name="vms" value="{{ scctvdd.database_status_vms }}">
+							     	  <option value="{{ scctvdd.database_status_vms }}" selected="selected">Prev Value:{{ scctvdd.database_status_vms }}</option>
 									  <option value="OK">OK</option>
 									  <option value="NOT OK">NOT OK</option>
 								</select>
@@ -125,7 +125,7 @@
 							<div class="form-group row has-warning">
 							  <label for="cameras_IVMS" class="col-sm-6 col-form-label">Check all camera are working in client ivms software</label>
 							  <div>
-							     <select  required class="form-control form-control-sm" id="cameras_IVMS" name="ivms" value="{{ scctvd.cameras_ivms  }}">
+							     <select  required class="form-control form-control-sm" id="cameras_IVMS" name="ivms" value="{{ scctvdd.cameras_ivms  }}">
 							     	  <option value="{{ scctvdd.cameras_ivms  }}"  selected="selected">Prev Value: {{ scctvdd.cameras_ivms  }}</option>
 									  <option value="OK">OK</option>
 									  <option value="NOT OK">NOT OK</option>
@@ -137,8 +137,8 @@
 							<div class="form-group row has-warning">
 							  <label for="eqpt_cleaning" class="col-sm-6 col-form-label">Cleaning of Equipments</label>
 							  <div>
-							     <select  required class="form-control form-control-sm" id="eqpt_cleaning" name="equip" value="{{ scctvd.eqpt_cleaning }}">
-							     	  <option value="{{ scctvdd.eqpt_cleaning }}"  selected="selected">Prev Value: {{ scctvdd.eqpt_cleaning }}</option>
+							     <select  required class="form-control form-control-sm" id="eqpt_cleaning" name="equip" value="{{ scctvdd.eqpt_cleaning }}">
+							     	  <option value="{{ scctvdd.eqpt_cleaning }}" selected="selected">Prev Value: {{ scctvdd.eqpt_cleaning }}</option>
 									  <option value="CARRIED OUT">CARRIED OUT</option>
 									  <option value="NOT CARRIED OUT">NOT CARRIED OUT</option>
 								</select>
@@ -147,7 +147,7 @@
 
 							<hr>
 							<button class="btn submitbut">SUBMIT</button>
-								{%endfor%}
+								{% endfor %}
 				      		</div>
 				    	</div>
 				  	</form>

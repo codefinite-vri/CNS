@@ -32,7 +32,7 @@ def scctvw(request, id) :
     scctvwlogs = models.Scctvwlogs.objects.all()
     scctvwlogs = scctvwlogs.filter(date=date.today()).order_by('-log_id')    
     if scctv_w :
-       return render(request,'engineer/scctv/scctvweeklyrep.html',{'scctvwlogs':scctvwlogs,'supdetails':supdetails,'scctv_w':scctv_w,'id':id,'scctvw':scctvw[0]}) 
+       return render(request,'engineer/scctv/scctvweeklyrep.html',{'scctvwlogs':scctvwlogs,'supdetails':supdetails,'scctv_w':scctvw,'id':id,'scctvw':scctv_w[0]}) 
     else :
        return routebackscctvd(request, id)
    else : 
@@ -54,9 +54,9 @@ def homew(request, id, p_id) :
         f = 1
 
     supdetails = models.Supervisor.objects.all().values('name','contact','email').filter(dept='S')
-    scctvwlogs = models.Scctvwlogs.objects.all().filter(p_id=p_id).order_by('-log_id') 
+    scctvwlogs = models.Scctvwlogs.objects.all().filter(date=date.today()).order_by('-log_id') 
     if scctv_w :
-       return render(request,'engineer/scctv/scctvweeklyrep.html',{'scctvwlogs':scctvwlogs,'supdetails':supdetails,'scctv_w':scctv_w,'id':id,'scctvw':scctvw[0],'f':f}) 
+       return render(request,'engineer/scctv/scctvweeklyrep.html',{'scctvwlogs':scctvwlogs,'supdetails':supdetails,'scctv_w':scctvw,'id':id,'scctvw':scctv_w[0],'f':f}) 
     else :
        return routebackscctvd(request, id)
    else : 
@@ -222,7 +222,7 @@ def scctvwrepsubw(request, id) :
     scctvwlogs = models.Scctvwlogs.objects.all()
     scctvwlogs = scctvwlogs.filter(date=date.today()).order_by('-log_id')    
     
-    return render(request,'engineer/scctv/scctvweeklyrep.html',{'scctvwlogs':scctvwlogs,'scctv_w':scctv_w,'id':id,'scctvw':scctvw[0],'supdetails':supdetails})      
+    return render(request,'engineer/scctv/scctvweeklyrep.html',{'scctvwlogs':scctvwlogs,'scctv_w':scctvw,'id':id,'scctvw':scctv_w[0],'supdetails':supdetails})      
  else : 
     return render(request,'login/login.html')
  
@@ -379,7 +379,7 @@ def upscctvweekly(request, id) :
     scctvwlogs = models.Scctvwlogs.objects.all()
     scctvwlogs = scctvwlogs.filter(date=date.today()).order_by('-log_id')    
     
-    return render(request,'engineer/scctv/scctvweeklyrep.html',{'scctvwlogs':scctvwlogs,'scctv_w':scctv_w,'id':emp_id,'scctvw':scctvw[0],'supdetails':supdetails})      
+    return render(request,'engineer/scctv/scctvweeklyrep.html',{'scctvwlogs':scctvwlogs,'scctv_w':scctvw,'id':emp_id,'scctvw':scctv_w[0],'supdetails':supdetails})      
 
 
 def repsubwerrors(request,p_id,id):
@@ -425,7 +425,7 @@ def finalwrepsub(request,p_id,id):
         scctvwlogs = models.Scctvwlogs.objects.all()
         scctvwlogs = scctvwlogs.filter(date=date.today()).order_by('-log_id')    
     
-        return render(request,'engineer/scctv/scctvweeklyrep.html',{'scctvwlogs':scctvwlogs,'scctv_w':scctv_w,'id':id,'f':f,'scctvw':scctvw[0],'supdetails':supdetails})      
+        return render(request,'engineer/scctv/scctvweeklyrep.html',{'scctvwlogs':scctvwlogs,'scctv_w':scctvw,'id':id,'f':f,'scctvw':scctv_w[0],'supdetails':supdetails})      
     else : 
         return render(request,'login/login.html')
 

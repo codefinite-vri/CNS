@@ -20,28 +20,27 @@ def scctvmonthlyrec(request, id):
    return render(request,'login/login.html')
 
 def scctvm(request, id) :
-  if request.session.has_key('uid'):
-     currtime = datetime.now().strftime("%H:%M:%S")
-     currdate = date.today()
-     scctv_m = models.Scctvmonthly.objects.all()
-    #  scctv_m = scctv_m.values('p_id','date','emp_id','time','status','cleaning_scctv_associated_eqpt','battery_backup_time_of_ups1nups2','ups_battery_voltage_on_load','antenna_n_cable_check','earth_resistance','eorn_voltage','eqpt_status_after_check')
-     scctv_m = scctv_m.filter(emp_id=id)
-     scctvm = scctv_m.order_by('-p_id')   
-     scctv_m = scctv_m.filter(date=currdate)     
-     scctvmlogs = models.Scctvmlogs.objects.all()
-     scctvmlogs = scctvmlogs.filter(date=date.today()).order_by('-log_id')    
-     supdetails = models.Supervisor.objects.all()
-     supdetails = supdetails.values('name','contact','email').filter(dept='S')
-     uia = models.Scctvmonthly.objects.all()
-     uia = uia.values('unit_incharge_approval').order_by('-date').filter(emp_id=id)[0]['unit_incharge_approval'] 
-     if uia == "NO" :
-       f=0
-     elif uia == None :
-       f=1 
-     print(f)    
-     return render(request,'engineer/scctv/scctvmonthlyrep.html',{'scctv_m':scctv_m,'id':id,'f':f,'scctvm':scctvm[0],'supdetails':supdetails,'scctvmlogs':scctvmlogs}) 
+ if request.session.has_key('uid'):
+  uid=request.session['uid'] 
+  if int(uid) == int(id):
+      scctv_m = models.Scctvmonthly.objects.all()
+      # scctv_m = scctv_m.values('p_id','date','time','status','serveraorb','ups_ip','ups_op','dust_free','lan_status','remarks')
+      scctv_m = scctv_m.filter(emp_id=id)
+      scctvm = scctv_m.order_by('-p_id')
+      scctv_m = scctv_m.filter(date=date.today())
+      supdetails = models.Supervisor.objects.all()
+      supdetails = supdetails.values('name','contact','email').filter(dept='S')
+      scctvmlogs = models.Scctvmlogs.objects.all()
+      scctvmlogs = scctvmlogs.filter(date=date.today()).order_by('-log_id')    
+      if scctv_m :
+         return render(request,'engineer/scctv/scctvmonthlyrep.html',{'scctvmlogs':scctvmlogs,'supdetails':supdetails,'scctv_m':scctvm,'id':id,'scctvm':scctv_m[0]}) 
+      else :
+         return routebackscctvd(request, id)
   else : 
-     return render(request,'login/login.html')
+     return routebackscctvd(request, uid)
+   
+ else : 
+    return render(request,'login/login.html')
 
 def scctvmrep(request, id) :
  cursor = connection.cursor() 
@@ -232,7 +231,7 @@ def scctvmrepsub(request, id):
    supdetails = models.Supervisor.objects.all()
    supdetails = supdetails.values('name','contact','email').filter(dept='S')
 
-   return render(request,'engineer/scctv/scctvmonthlyrep.html',{'scctv_m':scctv_m,'id':id,'supdetails':supdetails,'scctvmlogs':scctvmlogs,'scctvm':scctvm[0]}) 
+   return render(request,'engineer/scctv/scctvmonthlyrep.html',{'scctv_m':scctvm,'id':id,'supdetails':supdetails,'scctvmlogs':scctvmlogs,'scctvm':scctv_m[0]}) 
        
 def editscctvmonthly(request,p_id):
   if request.session.has_key('uid'):
@@ -438,7 +437,7 @@ def upscctvmonthly(request, id):
    supdetails = models.Supervisor.objects.all()
    supdetails = supdetails.values('name','contact','email').filter(dept='S')
 
-   return render(request,'engineer/scctv/scctvmonthlyrep.html',{'scctv_m':scctv_m,'id':id,'supdetails':supdetails,'scctvmlogs':scctvmlogs,'scctvm':scctvm[0]}) 
+   return render(request,'engineer/scctv/scctvmonthlyrep.html',{'scctv_m':scctvm,'id':id,'supdetails':supdetails,'scctvmlogs':scctvmlogs,'scctvm':scctv_m[0]}) 
 
 
 def repsuberrors(request,p_id, id):
@@ -451,7 +450,7 @@ def repsuberrors(request,p_id, id):
     # scctvd = scctvd.values('p_id','emp_id','date','time','room_temp','status','status_of_ac','status_of_ups','status_of_servera','status_of_serverb','remarks')
     scctvd = scctvd.filter(p_id=p_id)
     print(scctvd)
-    return render(request,'engineer/scctv/scctvmfinalrep.html',{'scctvd':scctvd[0],'p_id':p_id,'id':id}) 
+    return render(request,'engineer/scctv/scctvmfinalrep.html',{'scctvm':scctvd[0],'p_id':p_id,'id':id}) 
    else :
     return routebackscctvd(request, uid)  
  else : 
@@ -483,7 +482,7 @@ def finalmrepsub(request,p_id,id) :
         scctvmlogs = scctvmlogs.filter(date=date.today()).order_by('-log_id')    
         supdetails = models.Supervisor.objects.all()
         supdetails = supdetails.values('name','contact','email').filter(dept='S')
-        return render(request,'engineer/scctv/scctvmonthlyrep.html',{'supdetails':supdetails,'scctv_m':scctv_m,'id':id,'f':f,'scctvm':scctvm[0],'scctvmlogs':scctvmlogs}) 
+        return render(request,'engineer/scctv/scctvmonthlyrep.html',{'supdetails':supdetails,'scctv_m':scctvm,'id':id,'f':f,'scctvm':scctv_m[0],'scctvmlogs':scctvmlogs}) 
     else : 
         return render(request,'login/login.html')
 
@@ -504,7 +503,7 @@ def homem(request, id, p_id) :
         scctvmlogs = models.Scctvmlogs.objects.all().filter(p_id=p_id).order_by('-log_id')
         supdetails = models.Supervisor.objects.all()
         supdetails = supdetails.values('name','contact','email').filter(dept='S')
-        return render(request,'engineer/scctv/scctvmonthlyrep.html',{'supdetails':supdetails,'scctv_m':scctv_m,'id':id,'scctvm':scctvm[0],'scctvmlogs':scctvmlogs,'f':f}) 
+        return render(request,'engineer/scctv/scctvmonthlyrep.html',{'supdetails':supdetails,'scctv_m':scctvm,'id':id,'scctvm':scctv_m[0],'scctvmlogs':scctvmlogs,'f':f}) 
      else :
         messages.add_message(request,30, 'You cannot make changes to pending report!')
         return routebackscctv(request, id)

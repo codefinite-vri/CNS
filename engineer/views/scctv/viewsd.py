@@ -148,7 +148,10 @@ def routebackscctvd(request, id) :
                 dwr=0
    
    
-        
+    p_id = models.Scctvmonthly.objects.all()
+    p_id = p_id.values('p_id')
+    p_id = p_id.order_by('-p_id')
+    p_id = p_id.values('p_id').filter(a_id=1)[0]['p_id']
    
     wdatem = models.Scctvmonthly.objects.all()
     wdatem = wdatem.values('date')
@@ -213,6 +216,9 @@ def routebackscctvd(request, id) :
         
     print(wdatem)
     
+    
+    
+    
     Scctvdaily=[entry for entry in models.Scctvdaily.objects.filter(emp_id=id).values().order_by('-date')]
     for item in Scctvdaily:
         item.update( {"type":"scctvdaily"})
@@ -254,7 +260,7 @@ def scctvd(request, id) :
         scctvdlogs = scctvdlogs.filter(date=date.today()).order_by('-log_id')
         supdetails = models.Supervisor.objects.all()
         supdetails = supdetails.values('name','contact','email').filter(dept='S')
-        return render(request,'engineer/scctv/scctvdailyrep.html',{'supdetails':supdetails,'scctv_d':scctv_d,'id':id,'scctvd':scctvd,'scctvdlogs':scctvdlogs}) 
+        return render(request,'engineer/scctv/scctvdailyrep.html',{'supdetails':supdetails,'scctv_d':scctvd,'id':id,'scctvd':scctvd[0],'scctvdlogs':scctvdlogs}) 
      else :
         messages.add_message(request,30, 'You cannot make changes to pending report!')
         return routebackscctvd(request, id)
@@ -278,11 +284,11 @@ def homed(request, id, p_id) :
      if status == "COMPLETED WITH ERRORS" or status == "PENDING" :
          f = 1 
      if scctv_d :
-        scctvdlogs = models.Scctvdlogs.objects.all().filter(p_id=p_id).order_by('-log_id')
+        scctvdlogs = models.Scctvdlogs.objects.all().filter(date=date.today()).order_by('-log_id')
         supdetails = models.Supervisor.objects.all()
         supdetails = supdetails.values('name','contact','email').filter(dept='S')
 
-        return render(request,'engineer/scctv/scctvdailyrep.html',{'f':f,'supdetails':supdetails,'scctv_d':scctv_d,'id':id,'scctvd':scctvd,'scctvdlogs':scctvdlogs,'f':f}) 
+        return render(request,'engineer/scctv/scctvdailyrep.html',{'f':f,'supdetails':supdetails,'scctv_d':scctvd,'id':id,'scctvd':scctv_d[0],'scctvdlogs':scctvdlogs,'f':f}) 
      else :
         messages.add_message(request,30, 'You cannot make changes to pending report!')
         return routebackscctvd(request, id)
@@ -342,6 +348,7 @@ def editscctvdaily(request, p_id) :
      scctvdlogs = scctvdlogs.filter(date=date.today()).order_by('-log_id')    
      supdetails = models.Supervisor.objects.all()
      supdetails = supdetails.values('name','contact','email').filter(dept='S')
+
      return render(request,'engineer/scctv/editscctvrepsub.html',{'supdetails':supdetails,'scctvd':scctvd,'id':scctv_id,'scctv_d':scctv_d,'scctvdlogs':scctvdlogs}) 
    else :
      return routebackscctvd(request, uid)  
@@ -484,7 +491,7 @@ def upscctvdaily(request, id) :
     supdetails = supdetails.values('name','contact','email').filter(dept='S')
      
      #'datetime_of_servers_wrt_gps_clk','status_of_disk_array','vhftx_atis_status','vhfrx_atis_status','scctv_update','audio_quality','remarks','unit_incharge_approval')
-    return render(request,'engineer/scctv/scctvdailyrep.html',{'supdetails':supdetails,'scctv_d':scctv_d,'id':id,'scctvd':scctvd,'scctvdlogs':scctvdlogs})
+    return render(request,'engineer/scctv/scctvdailyrep.html',{'supdetails':supdetails,'scctv_d':scctvd,'id':emp_id,'scctvd':scctv_d[0],'scctvdlogs':scctvdlogs})
  else : 
      return render(request,'login/login.html')
     
@@ -710,7 +717,7 @@ def scctvdrepsubm(request, id) :
     supdetails = supdetails.values('name','contact','email').filter(dept='S')
      
      #'datetime_of_servers_wrt_gps_clk','status_of_disk_array','vhftx_atis_status','vhfrx_atis_status','scctv_update','audio_quality','remarks','unit_incharge_approval')
-    return render(request,'engineer/scctv/scctvdailyrep.html',{'supdetails':supdetails,'scctv_d':scctv_d,'id':id,'scctvd':scctvd,'scctvdlogs':scctvdlogs})
+    return render(request,'engineer/scctv/scctvdailyrep.html',{'supdetails':supdetails,'scctv_d':scctvd,'id':id,'scctvd':scctv_d[0],'scctvdlogs':scctvdlogs})
  else : 
      return render(request,'login/login.html')
  
@@ -727,8 +734,8 @@ def repsuberrors(request,p_id, id):
     return render(request,'engineer/scctv/scctvfinalrep.html',{'scctvd':scctvd[0],'p_id':p_id,'id':id}) 
    else :
     return routebackscctvd(request, uid)  
- else : 
-    return render(request,'login/login.html')
+#  else : 
+#     return render(request,'login/login.html')
  
 def finalrepsub(request,p_id, id): 
     f=1
@@ -755,6 +762,6 @@ def finalrepsub(request,p_id, id):
         scctvdlogs = scctvdlogs.filter(date=date.today()).order_by('-log_id')    
         supdetails = models.Supervisor.objects.all()
         supdetails = supdetails.values('name','contact','email').filter(dept='S')
-        return render(request,'engineer/scctv/scctvdailyrep.html',{'supdetails':supdetails,'scctv_d':scctv_d,'id':id,'f':f,'scctvd':scctvd,'scctvdlogs':scctvdlogs}) 
+        return render(request,'engineer/scctv/scctvdailyrep.html',{'supdetails':supdetails,'scctv_d':scctvd,'id':id,'f':f,'scctvd':scctv_d[0],'scctvdlogs':scctvdlogs}) 
     else : 
         return render(request,'login/login.html')

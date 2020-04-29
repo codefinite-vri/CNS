@@ -110,7 +110,7 @@
         <div class="form-group row has-warning">
             <label for="nas_free_capacity" class="col-sm-6 col-form-label">Check NAS free capacity</label>
             <div>
-               <input type=number name="free" id="nas_free_capacity" class="form-control form-control-sm" required value="{{ scctvm.nas_free_capacity }}"></input>
+               <input type=float name="free" id="nas_free_capacity" class="form-control form-control-sm" required value="{{ scctvm.nas_free_capacity }}"></input>
             </div>
         </div>
 
@@ -305,12 +305,11 @@
                     <th>OFC Link in all L2 and L3 Switches</th>
                     <th>Cleaning of Cameras and Equipment</th>
                     <th>Check the rights of all users</th>
-                    <th>Remarks</th>
                     <th>Test</th>
                 </tr>
             </thead>
             <tbody>
-                 {% for scctvm in scctv_w %}  <!--check-->
+                 {% for scctvm in scctv_m %}  <!--check-->
                 <tr>
                  <td>{{ scctvm.date }}</td>
                   <td>{{ scctvm.time }}</td>
@@ -325,8 +324,7 @@
                   <td>{{ scctvm.ofclinkto_l2l3_switches }}</td>
                   <td>{{ scctvm.cleaning_camera_eqpt }}</td>
                   <td>{{ scctvm.user_rights_check }}</td>
-                  <td> {{ scctvm.remarks }}</td>
-                    {% if scctvm.ups_ip_voltage <= 235 and  scctvm.ups_ip_voltage >= 225 and scctvm.ups_op_voltage <= 230 and scctvm.ups_op_voltage >= 220 and scctvm.ups_battery_op_voltage_acpwron <= 213 and scctvm.ups_battery_op_voltage_acpwron >= 203 and ups_battery_op_voltage_acpwroff <= 191 and ups_battery_op_voltage_acpwroff >= 181 and scctvm.ups_battery_op_voltage_after15min_acpwroff <= 181 and scctvm.ups_battery_op_voltage_after15min_acpwroff >= 171 and scctvm.server_status == "ON" and scctvm.cameras_in_vrs_server == "OK" and scctvm.nas_free_capacity != 0 and scctvm.ofclinkto_l2l3_switches == "BLINKING GREEN" and scctvm.cleaning_camera_eqpt == "CARRIED OUT" and scctvm.user_rights_check == "OK" %}
+                    {% if scctvm.ups_ip_voltage <= 235 and  scctvm.ups_ip_voltage >= 225 and scctvm.ups_op_voltage <= 230 and scctvm.ups_op_voltage >= 220 and scctvm.ups_battery_op_voltage_acpwron <= 213 and scctvm.ups_battery_op_voltage_acpwron >= 203 and scctvm.ups_battery_op_voltage_acpwroff <= 191 and scctvm.ups_battery_op_voltage_acpwroff >= 181 and scctvm.ups_battery_op_voltage_after15min_acpwroff <= 181 and scctvm.ups_battery_op_voltage_after15min_acpwroff >= 171 and scctvm.server_status == "ON" and scctvm.cameras_in_vrs_server == "OK" and scctvm.nas_free_capacity != 0 and scctvm.ofclinkto_l2l3_switches == "BLINKING GREEN" and scctvm.cleaning_camera_eqpt == "CARRIED OUT" and scctvm.user_rights_check == "OK" %}
              <td>Pass</td>
                  {% else %}
                   <td>Fail</td>

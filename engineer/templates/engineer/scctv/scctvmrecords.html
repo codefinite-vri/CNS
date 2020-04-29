@@ -34,12 +34,12 @@
                   <th style="width: 150px;">Status</th>
                   <th>UPS Input Voltage</th>
                   <th>UPS Output Voltage</th>
-                  <th>UPS Battery output voltage during AC power ON (on both battery banks)</th>
-                  <th>UPS Battery output voltage during AC power OFF (on both battery banks)</th>
-                  <th>UPS Battery output voltage after 15 min of AC main OFF (on both battery banks)</th>
-                  <th>Check all the Server Status</th>
-                  <th>Check all the Camera / NAS Status in VRS Servers</th>
-                  <th>Check NAS free Capacity</th>
+                  <th>UPS Battery O/P V - AC power ON</th>
+                  <th>UPS Battery O/P V - AC power OFF</th>
+                  <th>UPS Battery O/P V - after 15 min AC main OFF</th>
+                  <th>Server Status</th>
+                  <th>Camera / NAS Status in VRS Servers</th>
+                  <th> NAS free Capacity</th>
                   <th>OFC Link in all L2 and L3 Switches</th>
                   <th>Cleaning of Cameras and Equipment</th>
                   <th>Check the rights of all users</th>
@@ -47,16 +47,6 @@
                   <th>Approval Status</th>
                   <th>Approval Date</th>
                   <th>Approval time</th>
-                  
-             
-              <!--   <th>datetime_of_servers_wrt_GPS_CLK</th>
-                  <th>status_of_Disk_array</th>
-                  <th>VHFTX_ATIS_status</th>
-                 <th>VHFRX_ATIS_status</th>
-                  <th>scctv_update</th>
-                  <th>Audio_quality</th>
-                  <th>REMARKS</th>
-                  <th>Unit_incharge_approval</th>-->
                 </tr>
               </thead>
               <tbody>
@@ -75,8 +65,8 @@
                   <td>{{ scctvw.ofclinkto_l2l3_switches }}</td>
                   <td>{{ scctvw.cleaning_camera_eqpt }}</td>
                   <td>{{ scctvw.user_rights_check }}</td>
-                   {% if scctvw.ups_ip_voltage <= 235 and  scctvw.ups_ip_voltage >= 225 and scctvw.ups_op_voltage <= 230 and scctvw.ups_op_voltage >= 220 and scctvw.ups_battery_op_voltage_acpwron <= 213 and scctvw.ups_battery_op_voltage_acpwron >= 203 and ups_battery_op_voltage_acpwroff <= 191 and ups_battery_op_voltage_acpwroff >= 181 and scctvw.ups_battery_op_voltage_after15min_acpwroff <= 181 and scctvw.ups_battery_op_voltage_after15min_acpwroff >= 171 and scctvw.server_status == "ON" and scctvw.cameras_in_vrs_server == "OK" and scctvw.nas_free_capacity != 0 and scctvw.ofclinkto_l2l3_switches == "BLINKING GREEN" and scctvw.cleaning_camera_eqpt == "CARRIED OUT" and scctvw.user_rights_check == "OK" %}
-                   <td>Pass</td>
+                   {% if scctvw.ups_ip_voltage <= 235 and  scctvw.ups_ip_voltage >= 225 and scctvw.ups_op_voltage <= 230 and scctvw.ups_op_voltage >= 220 and scctvw.ups_battery_op_voltage_acpwron <= 213 and scctvw.ups_battery_op_voltage_acpwron >= 203 and scctvw.ups_battery_op_voltage_acpwroff <= 191 and scctvw.ups_battery_op_voltage_acpwroff >= 181 and scctvw.ups_battery_op_voltage_after15min_acpwroff <= 181 and scctvw.ups_battery_op_voltage_after15min_acpwroff >= 171 and scctvw.server_status == "ON" and scctvw.cameras_in_vrs_server == "OK" and scctvw.nas_free_capacity != 0 and scctvw.ofclinkto_l2l3_switches == "BLINKING GREEN" and scctvw.cleaning_camera_eqpt == "CARRIED OUT" and scctvw.user_rights_check == "OK" %}
+             <td>Pass</td>
                  {% else %}
                   <td>Fail</td>
                {% endif %}

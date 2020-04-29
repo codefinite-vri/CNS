@@ -39,7 +39,7 @@
         <div class="form-group row has-warning">
             <label for="ups_ip_voltage" class="col-sm-6 col-form-label">UPS Input Voltage</label>
             <div>
-       			<input type=number  id="ups_ip_voltage" name="upsip" class="form-control form-control-sm" required></input>
+       			<input type=number id="ups_ip_voltage" name="upsip" class="form-control form-control-sm" required></input>
        		</div>
        	</div>
 
@@ -71,7 +71,7 @@
          <div class="form-group row has-warning">
             <label for="ups_battery_op_voltage_after15min_acpwroff" class="col-sm-6 col-form-label">UPS Battery output voltage after 15 min of AC main OFF (on both battery banks)</label>
             <div>
-        		<input type=number name="ups15" id="ups_battery_op_voltage_after15min_acpwroff	" class="form-control form-control-sm" required></input>
+        		<input type=number name="ups15" id="ups_battery_op_voltage_after15min_acpwroff" class="form-control form-control-sm" required></input>
     		</div>
     	</div>
 
@@ -103,7 +103,7 @@
         <div class="form-group row has-warning">
             <label for="nas_free_capacity" class="col-sm-6 col-form-label">Check NAS free capacity</label>
             <div>
-	             <input type=number name="free" id="nas_free_capacity" class="form-control form-control-sm" required></input>
+	             <input type=float name="free" id="nas_free_capacity" class="form-control form-control-sm" required></input>
             </div>
         </div>
 
@@ -133,7 +133,7 @@
 
         <hr>
         <div class="form-group row has-warning">
-            <label for="user_rights_check" class="col-sm-6 col-form-label">Check username and passwords of all users</label>
+            <label for="user_rights_check" class="col-sm-6 col-form-label">Check rights of all Users</label>
             <div>
                 <select  required class="form-control form-control-sm" id="user_rights_check" name="user">
 	                <option value="" disabled="disabled" selected="selected">Please select an option</option>
@@ -257,41 +257,37 @@
                           <table class="table table-bordered table-condensed table-striped table-hover todaytasks mantab">
             <thead>
                 <tr>  
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>UPS Input Voltage</th>
-                    <th>UPS Output Voltage</th>
-                    <th>UPS Battery output voltage during AC power ON (on both battery banks)</th>
-                    <th>UPS Battery output voltage during AC power OFF (on both battery banks)</th>
-                    <th>UPS Battery output voltage after 15 min of AC main OFF (on both battery banks)</th>
-                    <th>Check all the Server Status</th>
-                    <th>Check all the Camera / NAS Status in VRS Servers</th>
+                    <th>Date-Time</th>
+                    <th>UPS I/P Voltage</th>
+                    <th>UPS O/P Voltage</th>
+                    <th>UPS Battery O/P V - AC power ON</th>
+                    <th>UPS Battery O/P V - AC power OFF</th>
+                    <th>UPS Battery O/P V - 15 min of AC main OFF</th>
+                    <th>Server Status</th>
+                    <th>Camera / NAS Status in VRS Servers</th>
                     <th>Check NAS free Capacity</th>
                     <th>OFC Link in all L2 and L3 Switches</th>
                     <th>Cleaning of Cameras and Equipment</th>
                     <th>Check the rights of all users</th>
-                    <th>Remarks</th>
                     <th>Test</th>
                 </tr>
             </thead>
             <tbody>
-                {% for scctvw in scctv_w %}  <!--check-->
+                {% for scctvm in scctv_m %}  <!--check-->
                 <tr>
-                 <td>{{ scctvw.date }}</td>
-                  <td>{{ scctvw.time }}</td>
-                  <td>{{ scctvw.ups_ip_voltage }}</td>
-                  <td>{{ scctvw.ups_op_voltage }}</td>
-                  <td>{{ scctvw.ups_battery_op_voltage_acpwron }}</td>
-                  <td>{{ scctvw.ups_battery_op_voltage_acpwroff }}</td>
-                  <td>{{ scctvw.ups_battery_op_voltage_after15min_acpwroff }}</td>
-                  <td>{{ scctvw.server_status }}</td>
-                  <td>{{ scctvw.cameras_in_vrs_server }}</td>
-                  <td>{{ scctvw.nas_free_capacity }}</td>
-                  <td>{{ scctvw.ofclinkto_l2l3_switches }}</td>
-                  <td>{{ scctvw.cleaning_camera_eqpt }}</td>
-                  <td>{{ scctvw.user_rights_check }}</td>
-                  <td> {{ scctvw.remarks }}</td>
-                  	{% if scctvw.ups_ip_voltage <= 235 and  scctvw.ups_ip_voltage >= 225 and scctvw.ups_op_voltage <= 230 and scctvw.ups_op_voltage >= 220 and scctvw.ups_battery_op_voltage_acpwron <= 213 and scctvw.ups_battery_op_voltage_acpwron >= 203 and ups_battery_op_voltage_acpwroff <= 191 and ups_battery_op_voltage_acpwroff >= 181 and scctvw.ups_battery_op_voltage_after15min_acpwroff <= 181 and scctvw.ups_battery_op_voltage_after15min_acpwroff >= 171 and scctvw.server_status == "ON" and scctvw.cameras_in_vrs_server == "OK" and scctvw.nas_free_capacity != 0 and scctvw.ofclinkto_l2l3_switches == "BLINKING GREEN" and scctvw.cleaning_camera_eqpt == "CARRIED OUT" and scctvw.user_rights_check == "OK" %}
+                 <td>{{ scctvm.date }}<br>{{ scctvm.time }}</td>
+                  <td>{{ scctvm.ups_ip_voltage }}</td>
+                  <td>{{ scctvm.ups_op_voltage }}</td>
+                  <td>{{ scctvm.ups_battery_op_voltage_acpwron }}</td>
+                  <td>{{ scctvm.ups_battery_op_voltage_acpwroff }}</td>
+                  <td>{{ scctvm.ups_battery_op_voltage_after15min_acpwroff }}</td>
+                  <td>{{ scctvm.server_status }}</td>
+                  <td>{{ scctvm.cameras_in_vrs_server }}</td>
+                  <td>{{ scctvm.nas_free_capacity }}</td>
+                  <td>{{ scctvm.ofclinkto_l2l3_switches }}</td>
+                  <td>{{ scctvm.cleaning_camera_eqpt }}</td>
+                  <td>{{ scctvm.user_rights_check }}</td>
+                  	{% if scctvm.ups_ip_voltage <= 235 and  scctvm.ups_ip_voltage >= 225 and scctvm.ups_op_voltage <= 230 and scctvm.ups_op_voltage >= 220 and scctvm.ups_battery_op_voltage_acpwron <= 213 and scctvm.ups_battery_op_voltage_acpwron >= 203 and scctvm.ups_battery_op_voltage_acpwroff <= 191 and scctvm.ups_battery_op_voltage_acpwroff >= 181 and scctvm.ups_battery_op_voltage_after15min_acpwroff <= 181 and scctvm.ups_battery_op_voltage_after15min_acpwroff >= 171 and scctvm.server_status == "ON" and scctvm.cameras_in_vrs_server == "OK" and scctvm.nas_free_capacity != 0.0 and scctvm.ofclinkto_l2l3_switches == "BLINKING GREEN" and scctvm.cleaning_camera_eqpt == "CARRIED OUT" and scctvm.user_rights_check == "OK" %}
              <td>Pass</td>
                  {% else %}
                   <td>Fail</td>
@@ -341,11 +337,11 @@
 <script>
 
 $("#ups_ip_voltage").on("keyup",function(){
-    if($("#UPS_ip_voltage").val()==""){
-        $('#UPS_ip_voltage').css('border-color', 'red');
+    if($("#ups_ip_voltage").val()==""){
+        $('#ups_ip_voltage').css('border-color', 'red');
             return false;
     }else{
-        $('#UPS_ip_voltage').css('border-color', '#ced4da');
+        $('#ups_ip_voltage').css('border-color', '#ced4da');
     }
 });
 $("#ups_op_voltage").on("keyup",function(){

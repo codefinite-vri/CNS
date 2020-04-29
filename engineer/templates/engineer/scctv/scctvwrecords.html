@@ -5,7 +5,7 @@
   <title>Weekly SCCTV Maintenance Report</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="{% static 'engineer/scctvstyle.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'engineer/datisstyle.css' %}">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -25,11 +25,6 @@
     <br>        
         <table class="table table-bordered table-condensed table-striped table-hover todaytasks mantab">
             <thead>
-                <tr>  
-
-<!--<button onclick="window.location.href='/logout/{{ id }}'"> Logout</button></td>  -->  
-  
-                    
                   <th>Date-Time</th>
                   <th style="width: 150px;">Status</th>
                   <th>UPS Input Voltage</th>
@@ -59,17 +54,17 @@
               <tbody>
                     {% for scctvw in scctv_w %}  <!--check-->
                 <tr>
-                  <td>{{ scctvw.time }}</td><br>
-                  <td>{{ scctvw.time }}</td>
+                  <td>{{ scctvw.date }}<br>{{ scctvw.time }}</td>
+                  <td>{{ scctvw.status }}
                  <td>{{ scctvw.ups_ip_voltage }}</td>
                   <td>{{ scctvw.ups_op_voltage }}</td>
                   <td>{{ scctvw.ups_battery_status }}</td>
                   <td>{{ scctvw.server_status }}</td>
-                  <td>{{ scctvw.camera_NAS_status_in_VRS }}</td>
+                  <td>{{ scctvw.camera_nas_status_in_vrs }}</td>
                   <td>{{ scctvw.workstns_n_client_softw_check }}</td>
-                  <td>{{ scctvw.cameras_client_IVMS_softw }}</td>
-                  <td>{{ scctvw.NAS_free_capacity }}</td>
-                   {% if scctvw.ups_ip_voltage <= 235 and  scctvw.ups_ip_voltage >= 225 and scctvw.ups_op_voltage <= 230 and scctvw.ups_op_voltage >= 220 and scctvw.ups_battery_status == "FULL" and scctvw.server_status == "ON" and scctvw.camera_NAS_status_in_VRS == "OK" and scctvw.workstns_n_client_softw_check == "OK" and scctvw.cameras_client_IVMS_softw == "OK" and scctvw.NAS_free_capacity != 0 %}
+                  <td>{{ scctvw.cameras_client_ivms_softw }}</td>
+                  <td>{{ scctvw.nas_free_capacity }}</td>
+                   {% if scctvw.ups_ip_voltage <= 235 and  scctvw.ups_ip_voltage >= 225 and scctvw.ups_op_voltage <= 230 and scctvw.ups_op_voltage >= 220 and scctvw.ups_battery_status == "FULL" and scctvw.server_status == "ON" and scctvw.camera_nas_status_in_vrs == "OK" and scctvw.workstns_n_client_softw_check == "OK" and scctvw.cameras_client_ivms_softw == "OK" and scctvw.nas_free_capacity != 0 %}
                    <td>Pass</td>
                  {% else %}
                   <td>Fail</td>
