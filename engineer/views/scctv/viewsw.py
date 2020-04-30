@@ -288,9 +288,9 @@ def upscctvweekly(request, id) :
 
     else :
         status = "PENDING"
-         val = (emp_id,p_id,"Procedure Followed",remarks,currdate,currtime)
-         sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
-         cursor.execute(sql,val)  
+        val = (emp_id,p_id,"Procedure Followed",remarks,currdate,currtime)
+        sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
+        cursor.execute(sql,val)  
          
     cursor.execute("update scctvweekly set status = %s where p_id = %s",[status,p_id])
     f=0

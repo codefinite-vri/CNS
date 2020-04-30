@@ -375,6 +375,16 @@ class DjangoSession(models.Model):
         managed = False
         db_table = 'django_session'
 
+class DgmReports(models.Model):
+    r_id = models.IntegerField(primary_key=True)
+    r_type = models.CharField(max_length=30)
+    r_status = models.CharField(max_length=30)
+    r_count = models.PositiveIntegerField()
+    r_date = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'dgmreports'
 
 class Dmedaily(models.Model):
     date = models.DateTimeField()

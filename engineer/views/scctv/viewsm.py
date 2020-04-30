@@ -290,6 +290,7 @@ def upscctvmonthly(request, id):
    status=""
    eqpt=request.POST['eqpt']
    user=request.POST['user']
+   remarks=request.POST['remarks']
    temp=models.Scctvmonthly.objects.get(p_id=id)
    temp.ups_ip_voltage=upsip
    temp.ups_op_voltage=upsop
@@ -327,8 +328,12 @@ def upscctvmonthly(request, id):
  
 
    else :
-         
         status = "PENDING"
+        val = (emp_id,p_id,"Procedure Followed",remarks,currdate,currtime)
+        sql = "INSERT INTO scctvmlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
+        cursor.execute(sql,val) 
+         
+        
    cursor.execute("update scctvmonthly set status = %s where p_id = %s",[status,p_id])
    f=0
    if not(upsip <= 235 and upsip >= 225):  
@@ -440,7 +445,6 @@ def upscctvmonthly(request, id):
    supdetails = supdetails.values('name','contact','email').filter(dept='S')
 
    return render(request,'engineer/scctv/scctvmonthlyrep.html',{'scctv_m':scctv_m,'id':emp_id,'supdetails':supdetails,'scctvmlogs':scctvmlogs,'scctvm':scctvm}) 
-
 
 def repsuberrors(request,p_id, id):
  if request.session.has_key('uid'): 
