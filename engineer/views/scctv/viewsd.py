@@ -340,7 +340,6 @@ def editscctvdaily(request, p_id) :
      emp_id = models.Scctvdaily.objects.all()
      emp_id = emp_id.values('emp_id').filter(p_id=p_id)[0]['emp_id']
      scctvd = models.Scctvdaily.objects.all()
-    #  scctvd = scctvd.values('p_id','emp_id','date','time','status','room_temp','status_of_ac','status_of_ups','status_of_servera','status_of_serverb','remarks')
      scctv_d = scctvd.filter(emp_id=emp_id).order_by('-p_id')     
      scctvd = scctvd.filter(p_id=p_id)
      scctv_id = scctvd.values('p_id').filter(p_id=p_id)[0]['p_id']
@@ -348,7 +347,6 @@ def editscctvdaily(request, p_id) :
      scctvdlogs = scctvdlogs.filter(date=date.today()).order_by('-log_id')    
      supdetails = models.Supervisor.objects.all()
      supdetails = supdetails.values('name','contact','email').filter(dept='S')
-
      return render(request,'engineer/scctv/editscctvrepsub.html',{'supdetails':supdetails,'scctvd':scctvd,'id':scctv_id,'scctv_d':scctv_d,'scctvdlogs':scctvdlogs}) 
    else :
      return routebackscctvd(request, uid)  
@@ -357,7 +355,6 @@ def editscctvdaily(request, p_id) :
  
 def upscctvdaily(request, id) :
  if request.session.has_key('uid'):
- 
    uid=request.session['uid'] 
    emp_id = models.Scctvdaily.objects.all()
    emp_id = emp_id.values('emp_id').filter(p_id=id)[0]['emp_id']
@@ -378,7 +375,6 @@ def upscctvdaily(request, id) :
     ivms=request.POST['ivms']
     equip=request.POST['equip']
     remarks=request.POST['remarks']
-    # rint = int(roomtemp)
     
     temp=models.Scctvdaily.objects.get(p_id=id)
     temp.ups_battery_indication=ups
@@ -389,14 +385,8 @@ def upscctvdaily(request, id) :
     temp.database_status_vms=vms
     temp.cameras_ivms=ivms
     temp.eqpt_cleaning=equip
-    
     temp.date=date.today()
     temp.time=datetime.now().strftime("%H:%M:%S")
-            
-            
-         
-    # val = (date.today(),datetime.now().strftime("%H:%M:%S"),a_id,id,'2',ups,ser,vrm,vrs,rrs,vms,ivms,equip,status)
-    # cursor.execute(sql, val)
     temp.save()
     p_id = models.Scctvdaily.objects.all()
     p_id = p_id.values('p_id')
@@ -406,82 +396,74 @@ def upscctvdaily(request, id) :
     if ups == "FULL" and ser == "OK" and vrm == 'OK' and vrs == 'EQUALS TO TOTAL CAMERA' and ivms == 'OK' and vms == "OK" and equip == 'CARRIED OUT' and rrs == "PAUSE" :
           f=1
           status = "COMPLETED"
-          remarks = "Parameters normal at the first submit!"
           value = "All parameters NORMAL"
           val = (emp_id,id,remarks,value,currdate,currtime)
           sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s ,%s,%s, %s)"
           cursor.execute(sql,val)
           cursor.execute("update scctvdaily set unit_incharge_approval = %s where p_id = %s",[None,p_id])
-   
-    # elif rint <= 24 and statusofac == 'SVCBL' and statusofups == 'NORMAL' and statusofservera == 'STANDBY' and statusofserverb == 'MAINS' :
-    #       f=1
-    #       status = "COMPLETED"
-    #       remarks = "Parameters normal at the first submit!"
-    #       value = "All parameters NORMAL"
-    #       val = (id,p_id,remarks,value,currdate,currtime)
-    #       sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
-    #       cursor.execute(sql,val)
-    #       cursor.execute("update scctvdaily set unit_incharge_approval = %s where p_id = %s",[None,p_id])
-   
     else :
           f=2   
           status = "PENDING"
+          # added new lines and new variable remarks1
+          val = (emp_id,p_id,"Procedure Followed",remarks,currdate,currtime)
+          sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
+          cursor.execute(sql,val)  
+         
     cursor.execute("update scctvdaily set status = %s where p_id = %s",[status,p_id])
     
     if ups == 'DISCHARGED' :
          f=0
-         remarks = "UPS Battery Indication is 'DISCHARGED' "
-         val = (emp_id,id,remarks,ups,currdate,currtime)
+         remarks1 = "UPS Battery Indication is 'DISCHARGED' "
+         val = (emp_id,id,remarks1,ups,currdate,currtime)
          sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
          cursor.execute(sql,val)
 
         
     if ser == 'NOT OK' :
          f=0
-         remarks = "ALL SERVERS NOT IN ON STATE"
-         val = (emp_id,id,remarks,ser,currdate,currtime)
+         remarks1 = "ALL SERVERS NOT IN ON STATE"
+         val = (emp_id,id,remarks1,ser,currdate,currtime)
          sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
          cursor.execute(sql,val)
         #  print(statusofac)
     if vrm == 'NOT OK' :
          f=0
-         remarks = "NAS status in VMS/VRM is NOT OK "
-         val = (emp_id,id,remarks,vrm,currdate,currtime)
+         remarks1 = "NAS status in VMS/VRM is NOT OK "
+         val = (emp_id,id,remarks1,vrm,currdate,currtime)
          sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
          cursor.execute(sql,val)
     if vrs == 'NONE' :
          f=0
-         remarks = "status of all VRS servers is NONE"
-         val = (emp_id,id,remarks,vrs,currdate,currtime)
+         remarks1 = "status of all VRS servers is NONE"
+         val = (emp_id,id,remarks1,vrs,currdate,currtime)
          sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
          cursor.execute(sql,val)
     if rrs!= 'PAUSE':
          f=0
-         remarks = "Status of RRS camera is "+rrs
-         val = (emp_id,id,remarks,rrs,currdate,currtime)
+         remarks1 = "Status of RRS camera is "+rrs
+         val = (emp_id,id,remarks1,rrs,currdate,currtime)
          sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
          cursor.execute(sql,val)
     if vms == "NOT OK"  :
          f=0
-         remarks = "Status of vms server is NOT OK"
-         val = (emp_id,id,remarks,vms,currdate,currtime)
+         remarks1 = "Status of vms server is NOT OK"
+         val = (emp_id,id,remarks1,vms,currdate,currtime)
          sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
          cursor.execute(sql,val)
 
     if ivms == "NOT OK"  :
-         remarks = "Status of ivms server is NOT OK"
-         val = (emp_id,id,remarks,ivms,currdate,currtime)
+         remarks1 = "Status of ivms server is NOT OK"
+         val = (emp_id,id,remarks1,ivms,currdate,currtime)
          sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
          cursor.execute(sql,val)
     
     if equip=="NOT CARRIED OUT" :
-         remarks = "Cleaning of equipments not carried out"
-         val = (emp_id,id,remarks,equip,currdate,currtime)
+         remarks1 = "Cleaning of equipments not carried out"
+         val = (emp_id,id,remarks1,equip,currdate,currtime)
          sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
          cursor.execute(sql,val)
     
     scctv_d = models.Scctvdaily.objects.all()
-    # scctv_d = scctv_d.values('p_id','date','time','status','room_temp','status_of_ac','status_of_ups','status_of_servera','status_of_serverb','remarks')
     scctv_d = scctv_d.filter(emp_id=emp_id)  
     scctvd = scctv_d.order_by('-p_id')   
     scctv_d = scctv_d.filter(date=currdate)     
@@ -490,106 +472,10 @@ def upscctvdaily(request, id) :
     supdetails = models.Supervisor.objects.all()
     supdetails = supdetails.values('name','contact','email').filter(dept='S')
      
-     #'datetime_of_servers_wrt_gps_clk','status_of_disk_array','vhftx_atis_status','vhfrx_atis_status','scctv_update','audio_quality','remarks','unit_incharge_approval')
     return render(request,'engineer/scctv/scctvdailyrep.html',{'supdetails':supdetails,'scctv_d':scctvd,'id':emp_id,'scctvd':scctv_d[0],'scctvdlogs':scctvdlogs})
  else : 
      return render(request,'login/login.html')
     
-#     if('roomtemp') and (rint > 24) :
-#          cursor.execute("update scctvdaily set room_temp = %s where p_id = %s",[roomtemp,id])
-#          remarks1 = "Temperature not normal(update)"
-#          val = (emp_id,p_id,remarks1,roomtemp,currdate,currtime)
-#          sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
-#          cursor.execute(sql,val)  
-#     else :
-#          cursor.execute("update scctvdaily set room_temp = %s where p_id = %s",[roomtemp,id])
-                
-#     statusofac=request.POST['Status of AC']
-#     if statusofac != 'SVCBL' :
-#          cursor.execute("update scctvdaily set status_of_AC = %s where p_id = %s",[statusofac,id])
-#          remarks1 = "Status of ac not correct(update)"
-#          val = (emp_id,p_id,remarks1,statusofac,currdate,currtime)
-#          sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
-#          cursor.execute(sql,val)
-#     else :
-#          cursor.execute("update scctvdaily set status_of_AC = %s where p_id = %s",[statusofac,id])
-         
-#     statusofups=request.POST['Status of UPS']
-#     if statusofups != 'NORMAL' :
-#          cursor.execute("update scctvdaily set status_of_UPS = %s where p_id = %s",[statusofups,id])
-#          remarks1 = "Status of ups not NORMAL(update)"
-#          val = (emp_id,p_id,remarks1,statusofups,currdate,currtime)
-#          sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
-#          cursor.execute(sql,val)
-#     else :
-#          cursor.execute("update scctvdaily set status_of_UPS = %s where p_id = %s",[statusofups,id])
-       
-#     statusofservera=request.POST['Status of Server A']
-#     if statusofservera != 'MAINS' and statusofservera != 'STANDBY' :
-#          cursor.execute("update scctvdaily set status_of_serverA = %s where p_id = %s",[statusofservera,id])
-#          remarks1 = "Status of ServerA is not MAINS/STANDBY(update)"
-#          val = (emp_id,p_id,remarks1,statusofservera,currdate,currtime)
-#          sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
-#          cursor.execute(sql,val)
-#     else :
-#          cursor.execute("update scctvdaily set status_of_serverA = %s where p_id = %s",[statusofservera,id])
-         
-#     statusofserverb=request.POST['Status of Server B']
-#     if statusofserverb != 'MAINS' and statusofserverb != 'STANDBY' :
-#          cursor.execute("update scctvdaily set status_of_serverB = %s where p_id = %s",[statusofserverb,id])
-#          remarks1 = "Status of ServerB is not MAINS/STANDBY(update)"
-#          val = (emp_id,p_id,remarks1,statusofserverb,currdate,currtime)
-#          sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
-#          cursor.execute(sql,val) 
-#     else :
-#          cursor.execute("update scctvdaily set status_of_serverB = %s where p_id = %s",[statusofserverb,id])
-    
-#     if statusofservera == "MAINS" and statusofserverb == "MAINS" :
-#          remarks1 = "Status of ServerA and serverB is on MAINS(update)"
-#          val = (emp_id,p_id,remarks1,statusofserverb,currdate,currtime)
-#          sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
-#          cursor.execute(sql,val)
-    
-#     if statusofservera == "STANDBY" and statusofserverb == "STANDBY" :
-#          remarks1 = "Status of ServerA and ServerB is on STANDBY(update)"
-#          val = (emp_id,p_id,remarks1,statusofserverb,currdate,currtime)
-#          sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s,%s,%s,%s,%s)"
-#          cursor.execute(sql,val)
-        
-#     if (rint <= 24 and statusofservera == 'STANDBY' and statusofserverb == 'MAINS' and statusofups == 'NORMAL' and statusofac == 'SVCBL')  or (rint <= 24 and statusofservera == 'MAINS' and statusofserverb == 'STANDBY' and statusofups == 'NORMAL' and statusofac == 'SVCBL'):
-#           value = "All parameters NORMAL"
-#           val = (emp_id,p_id,value,remarks,currdate,currtime)
-#           sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
-#           cursor.execute(sql,val)
-#           cursor.execute("update scctvdaily set status_of_serverB = %s where p_id = %s",[statusofserverb,id])
-#           cursor.execute("update scctvdaily set status_of_serverA = %s where p_id = %s",[statusofservera,id])
-#           cursor.execute("update scctvdaily set status_of_UPS = %s where p_id = %s",[statusofups,id])
-#           cursor.execute("update scctvdaily set status_of_AC = %s where p_id = %s",[statusofac,id])
-#           cursor.execute("update scctvdaily set room_temp = %s where p_id = %s",[roomtemp,id])
-#           cursor.execute("update scctvdaily set status = %s where p_id = %s",["COMPLETED",id])
-#           cursor.execute("update scctvdaily set unit_incharge_approval = %s where p_id = %s",[None,id])
-   
-#     else :
-#           val = (emp_id,p_id,"Procedure Followed",remarks,currdate,currtime)
-#           sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
-#           cursor.execute(sql,val)  
-          
-#     #cursor.execute("update scctvdaily set remarks = %s where p_id = %s",[remarks1,id])
-#     scctv_d = models.Scctvdaily.objects.all()    
-#     # scctv_d = scctv_d.values('p_id','date','status','time','room_temp','status_of_ac','status_of_ups','status_of_servera','status_of_serverb','remarks')
-#     scctvd = scctv_d
-#     scctvd = scctvd.filter(emp_id=emp_id).order_by('-p_id')
-#     scctv_d = scctv_d.filter(date=currdate)
-#     scctvdlogs = models.Scctvdlogs.objects.all()
-#     scctvdlogs = scctvdlogs.filter(date=date.today()).order_by('-log_id')    
-#     supdetails = models.Supervisor.objects.all()
-#     supdetails = supdetails.values('name','contact','email').filter(dept='S')
-#     return render(request,'engineer/scctv/scctvdailyrep.html',{'f':f,'scctvdlogs':scctvdlogs,'supdetails':supdetails,'scctv_d':scctv_d,'id':emp_id,'scctvd':scctvd}) 
-#    else :
-#      return routebackscctvd(request, uid)  
-#  else : 
-#      return render(request,'login/login.html')
-       
 def scctvdrepsubm(request, id) :
  if request.session.has_key('uid'):  
     cursor = connection.cursor()
@@ -599,14 +485,6 @@ def scctvdrepsubm(request, id) :
     a_id = a_id.values('a_id').filter(emp_id=id)[0]['a_id']
     a_id=str(a_id)
     id=str(id)
-    # ups=''
-    # ser=''
-    # vrm=''
-    # vrs=''
-    # rrs=''
-    # vms=''
-    # ivms=''
-    # equip=''
     ups=request.POST['ups']
     ser = request.POST['ser']
     vrm = request.POST['vrm']
@@ -615,10 +493,8 @@ def scctvdrepsubm(request, id) :
     vms=request.POST['vms']
     ivms=request.POST['ivms']
     equip=request.POST['equip']
-    # print(type(ups))
     status=""
     
-    # sql = "INSERT INTO scctvdaily (date,time,a_id,emp_id,f_id,up_battery_indication,Servers_ON_condition,NAS_status_in_VMSorVRM,recording_active_status_VRS_server,recording_active_status_RRS_server,database_status_VMS,cameras_IVMS,eqpt_cleaning,status) VALUES (%s, %s,%s,%s,%s,%s,%s, %s,%s,%s,%s,%s)"
     temp=models.Scctvdaily(ups_battery_indication=ups,
             servers_on_condition=ser,
             nas_status_in_vmsorvrm=vrm,
@@ -634,8 +510,6 @@ def scctvdrepsubm(request, id) :
             emp_id=id,
             f_id=2
          )
-    # val = (date.today(),datetime.now().strftime("%H:%M:%S"),a_id,id,'2',ups,ser,vrm,vrs,rrs,vms,ivms,equip,status)
-    # cursor.execute(sql, val)
     temp.save()
     p_id = models.Scctvdaily.objects.all()
     p_id = p_id.values('p_id')
@@ -651,16 +525,6 @@ def scctvdrepsubm(request, id) :
           sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
           cursor.execute(sql,val)
           cursor.execute("update scctvdaily set unit_incharge_approval = %s where p_id = %s",[None,p_id])
-   
-    # elif rint <= 24 and statusofac == 'SVCBL' and statusofups == 'NORMAL' and statusofservera == 'STANDBY' and statusofserverb == 'MAINS' :
-    #       f=1
-    #       status = "COMPLETED"
-    #       remarks = "Parameters normal at the first submit!"
-    #       value = "All parameters NORMAL"
-    #       val = (id,p_id,remarks,value,currdate,currtime)
-    #       sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
-    #       cursor.execute(sql,val)
-    #       cursor.execute("update scctvdaily set unit_incharge_approval = %s where p_id = %s",[None,p_id])
    
     else :
           f=2   

@@ -268,7 +268,7 @@
 					<td>{{ datisd.cameras_ivms }}</td>
 					<td>{{ datisd.eqpt_cleaning }}</td>
 					<td>{{ datisd.remarks }}</td>
-			  {% if datisd.UPS_battery_indication == "FULL" and datisd.SERVERS_ON_condition == "OK" and datisd.NAS_status_in_VMSorVRM == "OK" and datisd.recording_active_status_VRS_server == "EQUALS TO TOTAL CAMERA" and datisd.recording_active_status_RRS_server == "PAUSE" and datisd.database_status_VMS == "OK" and cameras_IVMS == "OK" and datisd.eqpt_cleaning == "CARRIED OUT" %}
+			  {% if datisd.ups_battery_indication == "FULL" and datisd.servers_on_condition == "OK" and datisd.nas_status_in_vmsorvrm == "OK" and datisd.recording_active_status_vrs_server == "EQUALS TO TOTAL CAMERA" and datisd.recording_active_status_rrs_server == "PAUSE" and datisd.database_status_vms == "OK" and datisd.cameras_ivms == "OK" and datisd.eqpt_cleaning == "CARRIED OUT" %}
 					<td>Pass</td>
 			  {% else %}
 					 <td>Fail</td>

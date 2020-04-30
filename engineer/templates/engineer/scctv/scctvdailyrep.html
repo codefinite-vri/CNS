@@ -306,7 +306,7 @@
 												<td>{{ scctvd.cameras_ivms }}</td>
 												<td>{{ scctvd.eqpt_cleaning }}</td>
 												<td>{{ scctvd.remarks }}</td>
-										  {% if scctvd.ups_battery_indication == "FULL" and scctvd.servers_on_condition == "OK" and scctvd.nas_status_in_vmsorvrm == "OK" and scctvd.recording_active_status_vrs_server == "EQUALS TO TOTAL CAMERA" and scctvd.recording_active_status_rrs_server == "PAUSE" and scctvd.database_status_vms == "OK" and cameras_ == "OK" and scctvd.eqpt_cleaning == "CARRIED OUT" %}
+										  {% if scctvd.ups_battery_indication == "FULL" and scctvd.servers_on_condition == "OK" and scctvd.nas_status_in_vmsorvrm == "OK" and scctvd.recording_active_status_vrs_server == "EQUALS TO TOTAL CAMERA" and scctvd.recording_active_status_rrs_server == "PAUSE" and scctvd.database_status_vms == "OK" and scctvd.cameras_ivms == "OK" and scctvd.eqpt_cleaning == "CARRIED OUT" %}
 												<td>Pass</td>
 										  {% else %}
 												 <td>Fail</td>

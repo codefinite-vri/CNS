@@ -200,14 +200,6 @@ def scctvwrepsubw(request, id) :
         sql = "INSERT INTO scctvwlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
         cursor.execute(sql,val)
     
-    if f == 2:
-        status = "COMPLETED"
-        remarks = "Parameters normal at the first submit!"
-        value = "All parameters NORMAL"
-        val = (id,p_id,remarks,value,currdate,currtime)
-        sql = "INSERT INTO scctvwlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
-        cursor.execute(sql,val)
-        cursor.execute("update scctvweekly set unit_incharge_approval = %s where p_id = %s",[None,p_id])
     
     
    
@@ -268,7 +260,7 @@ def upscctvweekly(request, id) :
     sw=request.POST['sw']
     ivms=request.POST['ivms']
     free=float(request.POST['free'])
-
+    remarks = request.POST['remarks']
     temp=models.Scctvweekly.objects.get(p_id=id)
     temp.ups_ip_voltage=upsip
     temp.ups_op_voltage=upsop
@@ -284,14 +276,10 @@ def upscctvweekly(request, id) :
             
             
          
-    # val = (date.today(),datetime.now().strftime("%H:%M:%S"),a_id,id,'2',ups,ser,vrm,vrs,rrs,vms,ivms,equip,status)
-    # cursor.execute(sql, val)
     temp.save()
     
     if (upsip <= 235 and  upsip >= 225 and upsop <= 230 and upsop >= 220 and upsbat == "FULL" and ser == "ON" and nas == "OK" and sw == "OK" and ivms == "OK" and free != 0 ):
-       
         status = "COMPLETED"
-        remarks = "Parameters normal at the first submit!"
         value = "All parameters NORMAL"
         val = (emp_id,id,remarks,value,currdate,currtime)
         sql = "INSERT INTO scctvwlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
@@ -299,75 +287,66 @@ def upscctvweekly(request, id) :
         cursor.execute("update scctvweekly set unit_incharge_approval = %s where p_id = %s",[None,p_id])
 
     else :
-         
         status = "PENDING"
+         val = (emp_id,p_id,"Procedure Followed",remarks,currdate,currtime)
+         sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
+         cursor.execute(sql,val)  
+         
     cursor.execute("update scctvweekly set status = %s where p_id = %s",[status,p_id])
     f=0
+    
     if not(upsip <= 235 and upsip >= 225):  
-        
-            f=3
-            remarks = "UPS ip not in range"
-            val = (emp_id,id,remarks,upsip,currdate,currtime)
-            sql = "INSERT INTO scctvwlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
-            cursor.execute(sql,val)
+        f=3
+        remarks1 = "UPS ip not in range"
+        val = (emp_id,id,remarks1,upsip,currdate,currtime)
+        sql = "INSERT INTO scctvwlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
+        cursor.execute(sql,val)
     
     
     if not(upsop <= 230 and upsop >= 220):
         f=3
-        remarks = "UPS_op not in corrent range"
-        val = (emp_id,id,remarks,upsop,currdate,currtime)
+        remarks1 = "UPS_op not in corrent range"
+        val = (emp_id,id,remarks1,upsop,currdate,currtime)
         sql = "INSERT INTO scctvwlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
         cursor.execute(sql,val)
         
     if not(ser == "ON") :
         f=3
-        remarks = "Server value not normal"
-        val = (emp_id,id,remarks,ser,currdate,currtime)
+        remarks1 = "Server value not normal"
+        val = (emp_id,id,remarks1,ser,currdate,currtime)
         sql = "INSERT INTO scctvwlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
         cursor.execute(sql,val)
     if not(upsbat == "FULL"):
         f=3
-        remarks = "UPS battery not full"
-        val = (emp_id,id,remarks,upsbat,currdate,currtime)
+        remarks1 = "UPS battery not full"
+        val = (emp_id,id,remarks1,upsbat,currdate,currtime)
         sql = "INSERT INTO scctvwlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
         cursor.execute(sql,val) 
     if not(nas == "OK") :
         f=3
-        remarks = "camera_NAS_status_in_VRS not OK"
-        val = (emp_id,id,remarks,nas,currdate,currtime)
+        remarks1 = "camera_NAS_status_in_VRS not OK"
+        val = (emp_id,id,remarks1,nas,currdate,currtime)
         sql = "INSERT INTO scctvwlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
         cursor.execute(sql,val)
     
     if not(sw == "OK") :
         f=3
-        remarks = "workstns_n_client_softw_check not OK"
-        val = (emp_id,id,remarks,sw,currdate,currtime)
+        remarks1 = "workstns_n_client_softw_check not OK"
+        val = (emp_id,id,remarks1,sw,currdate,currtime)
         sql = "INSERT INTO scctvwlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
         cursor.execute(sql,val)
     if not(ivms == "OK") :
         f=3
-        remarks = "ivms not OK"
-        val = (emp_id,idremarks,ivms,currdate,currtime)
+        remarks1 = "ivms not OK"
+        val = (emp_id,id,remarks1,ivms,currdate,currtime)
         sql = "INSERT INTO scctvwlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
         cursor.execute(sql,val)
     if not(free != 0) :
         f=3
-        remarks = "NAS_free_capacity not OK"
-        val = (emp_id,id,remarks,free,currdate,currtime)
+        remarks1 = "NAS_free_capacity not OK"
+        val = (emp_id,id,remarks1,free,currdate,currtime)
         sql = "INSERT INTO scctvwlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
         cursor.execute(sql,val)
-    
-    if f == 2:
-        status = "COMPLETED"
-        remarks = "Parameters normal at the first submit!"
-        value = "All parameters NORMAL"
-        val = (emp_id,id,remarks,value,currdate,currtime)
-        sql = "INSERT INTO scctvwlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
-        cursor.execute(sql,val)
-        cursor.execute("update scctvweekly set unit_incharge_approval = %s where p_id = %s",[None,p_id])
-    
-    
-   
     print(status)    
     cursor.execute("update scctvweekly set status = %s where p_id = %s",[status,p_id])
     scctv_w = models.Scctvweekly.objects.all()

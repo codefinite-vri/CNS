@@ -108,7 +108,7 @@
                   <div class="form-group row has-warning">
                     <label for="NAS_free_capacity" class="col-sm-6 col-form-label">Check NAS free capacity</label>
                     <div>
-                      <input type="text" class="form-control form-control-sm" id="NAS_free_capacity" name="free" readonly="true" value="{{ scctvw.nas_free_capacity }}">
+                      <input type=float class="form-control form-control-sm" id="NAS_free_capacity" name="free" readonly="true" value="{{ scctvw.nas_free_capacity }}">
                     </div>
                   </div>
 
@@ -374,7 +374,7 @@ $(function(){
         $('#cameras_client_IVMS_softw').css('border-color', 'pale-green');
     }
 
-     if($("#NAS_free_capacity").val()=="0"){
+     if($("#NAS_free_capacity").val()=="0.0"){
         $('#NAS_free_capacity').css('border-color', 'red');
     }else{
         $('#NAS_free_capacity').css('border-color', 'pale-green');
