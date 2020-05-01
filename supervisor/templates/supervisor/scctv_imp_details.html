@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Daily DATIS Maintenance Report</title>
+    <title>Daily SCCTV Maintenance Report</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'supervisor/datisstyle.css' %}">
@@ -30,13 +30,13 @@
         <div class="row">
             <div class="col-sm-7">
 
-              {% if temp.unit_incharge_approval == NONE %}
+             {% if temp.unit_incharge_approval == NONE %}
 
-                  {% if temp.room_temp == None %}             
+                  {% if temp.ups_battery_indication == None %}             
                         <div class="alert alert-danger">
                           <strong>Report Not Submitted</strong>
 
-                      {% elif temp.room_temp < 25 and temp.status_of_servera == "MAINS" and temp.status_of_serverb == "STANDBY" and temp.status_of_ups == "NORMAL" and temp.status_of_ac == "SVCBL" or temp.room_temp < 25 and temp.status_of_servera == "STANDBY" and temp.status_of_serverb == "MAINS" and temp.status_of_ups == "NORMAL" and temp.status_of_ac == "SVCBL" %}
+                     {% elif temp.ups_battery_indication == "FULL" and temp.servers_on_condition == "OK" and temp.nas_status_in_vmsorvrm == "OK" and temp.recording_active_status_vrs_server == "EQUALS TO TOTAL CAMERA" and temp.recording_active_status_rrs_server == "PAUSE" and temp.database_status_vms == "OK" and temp.cameras_ivms == "OK" and temp.eqpt_cleaning == "CARRIED OUT" %}
                         <div class="alert alert-success">
                           <strong> All maintenance entries matched with standard values.</strong>                   
 
@@ -67,7 +67,7 @@
                   
                   <form id="form-v">                    
                         <div class="card-body">
-                            <h2 class="card-title">DATIS-TERMA DAILY MAINTENANCE Report</h2>
+                            <h2 class="card-title">SCCTV DAILY MAINTENANCE Report</h2>
                           
                             {% for log in logs|slice:":1" %}
                             <div class="alert alert-light" style="height: 40px; padding-top: 0px">
@@ -78,46 +78,68 @@
                             {% endfor %}
                              <hr>
                             <div class="form-group row has-warning">
-                              <label for="room_temp" class="col-sm-6 col-form-label">Room Temperature*</label>
-                              <div>
-                                <input type="text" class="form-control form-control-sm" id="room_temp" name="Room Temperature" readonly="true" value="{{ temp.room_temp }}">
-                              </div>
-                            </div>
+							  <label for="UPS_battery_indication" class="col-sm-6 col-form-label">UPS Battery Indication</label>
+							  <div>
+							   	<input type="text" class="form-control form-control-sm" id="UPS_battery_indication" name="ups" readonly="true" value="{{ temp.ups_battery_indication }}">
+							  </div>
+							</div>
 
 
-                              <hr>
-                            <div class="form-group row has-warning">
-                              <label for="status_of_AC" class="col-sm-6 col-form-label">Status of AC*</label>
-                              <div>
-                                 <input type="text" class="form-control form-control-sm" id="status_of_AC" name="Room Temperature" readonly="true" value="{{ temp.status_of_ac }}">
-                              </div>
-                            </div>
-                            
-                              <hr>  
-                            <div class="form-group row has-warning">
-                              <label for="status_of_UPS" class="col-sm-6 col-form-label">Status of UPS*</label>
-                              <div>
-                                <input type="text" class="form-control form-control-sm" id="status_of_UPS" name="Status of UPS" readonly="true" value="{{ temp.status_of_ups }}"/><br>
-                              </div>
-                            </div>
+							  <hr>
+							  <div class="form-group row has-warning">
+							  <label for="Servers_ON_condition" class="col-sm-6 col-form-label">Check all the servers are in ON condition</label>
+							  <div>
+							     <input type="text" class="form-control form-control-sm"id="Servers_ON_condition" name="ser" readonly="true" value="{{ temp.servers_on_condition }}">
+							  </div>
+							</div>
+							
+							<hr>
+							 <div class="form-group row has-warning">
+							  <label for="NAS_status_in_VMSorVRM" class="col-sm-6 col-form-label">Check the NAS status in VMS/VRM</label>
+							  <div>
+							    	<input type="text" class="form-control form-control-sm" id="NAS_status_in_VMSorVRM" name="vrm" readonly="true" value="{{ temp.nas_status_in_vmsorvrm }}"/><br>
+							    </div>
+							  </div>
 
+							  <hr>  
+							<div class="form-group row has-warning">
+							    <label for="recording_active_status_VRS_server" class="col-sm-6 col-form-label">Check Recording Active status of all VRS servers</label>
+							    <div>
+							   		<input type="text" class="form-control form-control-sm" id="recording_active_status_VRS_server" name="vrs"readonly="true" value="{{ temp.recording_active_status_vrs_server }}"/><br>
+							  	</div>
+							</div>
 
-                              <hr>
-                              <div class="form-group row has-warning">
-                                <label for="status_of_server A" class="col-sm-6 col-form-label">Status of Server A*</label>
-                                <div>
-                                    <input type="text" class="form-control form-control-sm" id="status_of_serverA" name="Status of Server A" readonly="true" value="{{ temp.status_of_servera }}"/><br>
-                                </div>
-                              </div>
+							  	<hr>  
+							 <div class="form-group row has-warning">
+							    <label for="recording_active_status_RRS_server" class="col-sm-6 col-form-label">Check Recording status of cameras in RRS Server</label>
+							    <div>
+							    	<input type="text" class="form-control form-control-sm"  id="recording_active_status_RRS_server" name="rrs" readonly="true" value="{{ temp.recording_active_status_rrs_server  }}">
+							    </div>
+							  </div>
 
-                              
-                                <hr>  
-                              <div class="form-group row has-warning">
-                                <label for="status_of_serverB" class="col-sm-6 col-form-label">Status of Server B*</label>
-                                <div>
-                                    <input type="text" class="form-control form-control-sm" id="status_of_serverB" name="Status of Server B" readonly="true" value="{{ temp.status_of_serverb }}">
-                                </div>
-                              </div>
+							<hr>  
+							<div class="form-group row has-warning">
+							  <label for="database_status_VMS" class="col-sm-6 col-form-label">Check the Database status in VMS server</label>
+							  <div>
+							    	<input type="text" class="form-control form-control-sm" id="database_status_VMS" name="vms" readonly="true" value="{{ temp.database_status_vms }}">
+							    </div>
+							</div>
+							
+							<hr>  
+							 <div class="form-group row has-warning">
+							  <label for="cameras_IVMS" class="col-sm-6 col-form-label">Check all camera are working in client IVMS software</label>
+							  <div>
+							    	<input type="text" class="form-control form-control-sm" id="cameras_IVMS" name="ivms" readonly="true" value="{{ temp.cameras_ivms  }}">
+							    </div>
+							  </div>
+
+							  <hr>  
+							 <div class="form-group row has-warning">
+							  <label for="eqpt_cleaning" class="col-sm-6 col-form-label">Cleaning of Equipments</label>
+							  <div>
+							    	<input type="text" class="form-control form-control-sm"  id="eqpt_cleaning" name="equip" readonly="true" value="{{ temp.eqpt_cleaning }}">
+							    </div>
+							  </div>
 
                                 
                                 <hr>
@@ -215,7 +237,7 @@
                         </div>
                     </div>    
                 </div>
-                {% if temp.room_temp != None %}
+                {% if temp.ups_battery_indication != None %}
                 <div> 
                     <div class="logr">                       
                         <div class="card sidecard logrtitle"> REPORT LOG </div>
@@ -254,54 +276,42 @@
                             <div class="modal-body">
                                 <table class="table table-bordered table-condensed table-striped table-hover todaytasks">
                                     <tr>
-                                        <th>VALUE LABEL</th>
-                                        <th>NORMAL VALUE</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Room Temperature</td>
-                                        <td>24 C</td>
-                                    </tr>
-                                    
-                                            <tr>
-                                        <td>Status of AC</td>
-                                        <td>Svcbl</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Status OF UPS</td>
-                                        <td>Normal</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Status of Server A</td>
-                                        <td>Main/Standby</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Status of Server B</td>
-                                        <td>Main/Standby</td>
-                                    </tr>
-                                    <!--    <tr>
-                                        <td>Date and time of servers wrt GPS CLK</td>
-                                        <td>Correct</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Status of Disk Array</td>
-                                        <td>OK</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Status of VHF TX used for ATIS</td>
-                                        <td>On-Line</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Status of VHF RX used for ATIS</td>
-                                        <td>On-Line</td>
-                                    </tr>
-                                        <tr>
-                                        <td>DATIS update</td>
-                                        <td>OK</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Audio Quality of Datis Announcement</td>
-                                        <td>Good</td>
-                                    </tr>-->
+							          		<th>VALUE LABEL</th>
+							          		<th>NORMAL VALUE</th>
+							          	</tr>
+							          	<tr>
+							          		<td>UPS Battery Indication</td>
+							          		<td>Full</td>
+							          	</tr>
+							          	
+											<tr>
+							          		<td>Check all the servers are in ON Condition</td>
+							          		<td>OK</td>
+							          	</tr>
+							          		<tr>
+							          		<td>Check the NAS status in VMS/VRM</td>
+							          		<td>OK</td>
+							          	</tr>
+							          		<tr>
+							          		<td>Check Recording Active status of all VRS servers</td>
+							          		<td>EQUALS TO TOTAL CAMERA</td>
+							          	</tr>
+							          		<tr>
+							          		<td>Check Recording status of cameras in RRS Server</td>
+							          		<td>PAUSE</td>
+							          	</tr>
+							          <tr>
+							          		<td>Check the Database status in VMS server</td>
+							          		<td>OK</td>
+							          	</tr>
+							          		<tr>
+							          		<td>Check all camera are working in client IVMS software</td>
+							          		<td>OK</td>
+							          	</tr>
+							          		<tr>
+							          		<td>Cleaning of Equipments</td>
+							          		<td>CARRIED OUT</td>
+							          	</tr>
                               </table>
                             </div>
                             <div class="modal-footer">
@@ -321,38 +331,44 @@
                             <div class="modal-body">
                                 <table class="table table-bordered table-condensed table-striped table-hover todaytasks mantab">
                                     <thead>
-                                        <tr>  
-                                          <th>Date</th>
-                                            <th>Time</th>
-                                            <th>Room Temp</th>
-                                            <th>Status of AC</th>
-                                          <th>Status of UPS</th>
-                                            <th>Status of server A</th>
-                                            <th>Status of server B</th>
-                                            <th>Remarks</th>
-                                            <th>Test</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody><!-- Need to change variables -->
-                                        {% for datisdd in mrec %}
-                                        <tr>
-                                         
-                                          <td>{{ datisdd.date }}</td>
-                                            <td>{{ datisdd.time }}</td>
-                                            <td>{{ datisdd.room_temp }}</td>
-                                            <td>{{ datisdd.status_of_ac }}</td>
-                                            <td>{{ datisdd.status_of_ups }}</td>
-                                            <td>{{ datisdd.status_of_servera }}</td>
-                                            <td>{{ datisdd.status_of_serverb }}</td>
-                                            <td>{{ datisdd.remarks }}</td>
-                                        {% if datisd.room_temp < 25 and datisd.status_of_servera == "MAINS" and datisd.status_of_serverb == "STANDBY" and datisd.status_of_ups == "NORMAL" and datisd.status_of_ac == "SVCBL" or datisd.room_temp < 25 and datisd.status_of_servera == "STANDBY" and datisd.status_of_serverb == "MAINS" and datisd.status_of_ups == "NORMAL" and datisd.status_of_ac == "SVCBL" %}
-                                            <td>Pass</td>
-                                        {% else %}
-                                            <td>Fail</td>
-                                        {% endif %}  
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
+				                           <tr>  
+												<th>Date</th>
+												<th>Time</th>
+												<th>UPS Battery Indication</th>
+												<th>Status of Servers</th>
+												<th>NAS Status in VMS/VRM</th>
+											  	<th>Recording Active Status of all VRS Servers</th>
+												<th>Recording Status of cameras in RRS Server</th>
+												<th>Database Status in VMS Server</th>
+												<th>Status of Camera in Client IVMS Sofware</th>
+												<th>Cleaning of Equipments</th>
+												<th>Remarks</th>
+												<th>Test</th>
+										  </tr>
+									  </thead>
+									  <tbody>
+										  {% for scctvd in mrec %}      <!--check-->
+										  <tr>
+										   
+											  <td>{{ scctvd.date }}</td>
+												<td>{{ scctvd.time }}</td>
+												<td>{{ scctvd.ups_battery_indication }}</td>
+												<td>{{ scctvd.servers_on_condition }}</td>
+												<td>{{ scctvd.nas_status_in_vmsorvrm }}</td>
+												<td>{{ scctvd.recording_active_status_vrs_server }}</td>
+												<td>{{ scctvd.recording_active_status_rrs_server }}</td>
+												<td>{{ scctvd.database_status_vms }}</td>
+												<td>{{ scctvd.cameras_ivms }}</td>
+												<td>{{ scctvd.eqpt_cleaning }}</td>
+												<td>{{ scctvd.remarks }}</td>
+										  {% if scctvd.ups_battery_indication == "FULL" and scctvd.servers_on_condition == "OK" and scctvd.nas_status_in_vmsorvrm == "OK" and scctvd.recording_active_status_vrs_server == "EQUALS TO TOTAL CAMERA" and scctvd.recording_active_status_rrs_server == "PAUSE" and scctvd.database_status_vms == "OK" and scctvd.cameras_ivms == "OK" and scctvd.eqpt_cleaning == "CARRIED OUT" %}
+												<td>Pass</td>
+										  {% else %}
+												 <td>Fail</td>
+										  {% endif %}  
+										  </tr>
+				                          {% endfor %}
+				                         </tbody>
                                 </table>
                             </div>
                             <div class="modal-footer">
@@ -386,36 +402,54 @@
     <script>
 
         $(function(){
-                if($("#room_temp").val()<"25"){
-                     $('#room_temp').css('border-color', 'pale-green');
-                }else{
-                   $('#room_temp').css('border-color', 'red');
-                }
+            if($("#UPS_battery_indication").val()=="FULL"){
+            	 $('#UPS_battery_indication').css('border-color', 'pale-green');
+            }else{
+               $('#UPS_battery_indication').css('border-color', 'red');
+            }
 
-                if($("#status_of_AC").val()=="SVCBL"){
-                     $('#status_of_AC').css('border-color', 'pale-green');
-                }else{
-                   $('#status_of_AC').css('border-color', 'red');
-                }
+            if($("#Servers_ON_condition").val()=="OK"){
+            	 $('#Servers_ON_condition').css('border-color', 'pale-green');
+            }else{
+               $('#Servers_ON_condition').css('border-color', 'red');
+            }
 
-                if($("#status_of_UPS").val()=="NORMAL"){
-                     $('#status_of_UPS').css('border-color', 'pale-green');
-                }else{
-                   $('#status_of_UPS').css('border-color', 'red');
-                }
+            if($("#NAS_status_in_VMSorVRM").val()=="OK"){
+            	 $('#NAS_status_in_VMSorVRM').css('border-color', 'pale-green');
+            }else{
+               $('#NAS_status_in_VMSorVRM').css('border-color', 'red');
+            }
 
-                if($("#status_of_serverB").val()=="MAINS" && $("#status_of_serverA").val()=="STANDBY" ){
-                     $('#status_of_serverB').css('border-color', 'pale-green');
-                     $('#status_of_serverA').css('border-color', 'pale-green');
-                }
-                else if($("#status_of_serverA").val()=="MAINS" && $("#status_of_serverB").val()=="STANDBY" ){
-                     $('#status_of_serverA').css('border-color', 'pale-green');
-                     $('#status_of_serverB').css('border-color', 'pale-green');
-                }else{
-                   $('#status_of_serverA').css('border-color', 'red');
-                   $('#status_of_serverB').css('border-color', 'red');
-                } 
-            });
+            if($("#recording_active_status_VRS_server").val()=="EQUALS TO TOTAL CAMERA"){
+            	 $('#recording_active_status_VRS_server').css('border-color', 'pale-green');
+            }else{
+            	 $('#recording_active_status_VRS_server').css('border-color', 'red');
+            }
+            if($("#recording_active_status_RRS_server").val()=="PAUSE") {
+               $('#recording_active_status_RRS_server').css('border-color', 'pale-green');
+              }else{
+               $('#recording_active_status_RRS_server').css('border-color', 'red');
+            }
+
+            if($("#database_status_VMS").val()=="OK"){
+            	 $('#database_status_VMS').css('border-color', 'pale-green');
+            }else{
+               $('#database_status_VMS').css('border-color', 'red');
+            }
+
+            if($("#cameras_IVMS").val()=="OK"){
+            	 $('#cameras_IVMS').css('border-color', 'pale-green');
+            }else{
+               $('#cameras_IVMS').css('border-color', 'red');
+            }
+
+            if($("#eqpt_cleaning").val()=="CARRIED OUT"){
+            	 $('#eqpt_cleaning').css('border-color', 'pale-green');
+            }else{
+               $('#eqpt_cleaning').css('border-color', 'red');
+            }
+           
+        });
     </script>
 </body>
 

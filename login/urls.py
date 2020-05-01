@@ -19,7 +19,7 @@ from engineer.views.cdvor import viewsm as cdvorviewsm
 from engineer.views.scctv import viewsd as scctvviewsd
 from engineer.views.scctv import viewsw as scctvviewsw
 from engineer.views.scctv import viewsm as scctvviewsm
-
+from supervisor.views.main import verify as verify
 urlpatterns = [
     path('',views.login),
     path('validate/',views.validate),
@@ -185,8 +185,8 @@ urlpatterns = [
     path('repscctvmsuberrors/<int:p_id>/<int:id>',scctvviewsm.repsuberrors),
     path('editscctvm/<int:p_id>',scctvviewsm.editscctvmonthly),
     path('upscctvmrepsub/<int:id>',scctvviewsm.upscctvmonthly),
-    path('scctvhomem/<int:id>/<int:p_id>',scctvviewsm.homem)
-    
+    path('scctvhomem/<int:id>/<int:p_id>',scctvviewsm.homem),
+    path('verify/<str:names>/<str:id>/',verify,name='verify'),
 
 
     

@@ -187,7 +187,7 @@ def dhomeview(request,id) :   #communication dept
    
     #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!dscn monthly!!!!!!!!!!!!!!!!!!!!!!!!!!
     
-    p_id = models.Datisweekly.objects.all()
+    p_id = models.Dscnmonthly.objects.all()
     p_id = p_id.values('p_id')
     p_id = p_id.order_by('-p_id')
     p_id = p_id.values('p_id').filter(a_id=1)[0]['p_id']
@@ -467,14 +467,15 @@ def dhomeviewn(request,id) :
             elif statusm == "PENDING" :
                 cmr=0
             
-        elif temp1 < wdate and temp1 > temp : #report submitted before the deadline 
+        elif temp1 < wdatem and temp1 > temp : #report submitted before the deadline 
             cdvormsub_deadline = temp1   
             if statusm == "COMPLETED" or statusm == "COMPLETED WITH ERRORS" :
                 cmr=1  
             elif statusm == "PENDING" :
                 cmr=0
     
-
+    print(cmr)
+    print(statusm)
     cdvordaily=[entry for entry in models.Cdvordaily.objects.filter(emp_id=id).values().order_by('-date')]
     for item in cdvordaily:
         item.update( {"type":"Cdvordaily"})

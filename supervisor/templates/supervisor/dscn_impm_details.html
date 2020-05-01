@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Daily DATIS Maintenance Report</title>
+    <title>Monthly DSCN Maintenance Report</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'supervisor/datisstyle.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Gotu&family=Righteous&display=swap" rel="stylesheet">
@@ -30,44 +30,36 @@
         <div class="row">
             <div class="col-sm-7">
 
-              {% if temp.unit_incharge_approval == NONE %}
-
-                  {% if temp.room_temp == None %}             
-                        <div class="alert alert-danger">
-                          <strong>Report Not Submitted</strong>
-
-                      {% elif temp.room_temp < 25 and temp.status_of_servera == "MAINS" and temp.status_of_serverb == "STANDBY" and temp.status_of_ups == "NORMAL" and temp.status_of_ac == "SVCBL" or temp.room_temp < 25 and temp.status_of_servera == "STANDBY" and temp.status_of_serverb == "MAINS" and temp.status_of_ups == "NORMAL" and temp.status_of_ac == "SVCBL" %}
-                        <div class="alert alert-success">
-                          <strong> All maintenance entries matched with standard values.</strong>                   
-
+                    {% if temp.unit_incharge_approval == NONE %}
+                      {% if temp.dscnm.cleaning_dscn_associated_eqpt == None %}             
+                          <div class="alert alert-danger">
+                            <strong>Report Not Submitted</strong>
+                                  
                       {% else %}             
+                      <div class="alert alert-primary">
+                          <strong>Maintenance Report.</strong>  
+                         
+                      {% endif %}
+                    {% else %}
+                      {% if temp.unit_incharge_approval == "NO" %}
                         <div class="alert alert-danger">
-                            <strong>Maintenance values do not match standards.</strong>  
+                          <strong>Report Declined; Waiting for update.</strong>
+                   
+                      {% endif %}
+                      {% if temp.unit_incharge_approval == "YES" %}
+                        <div class="alert alert-success">
+                          <strong>Report Approved.</strong> 
                       
+                      {% endif %}
 
-                  {% endif %}
-
-              {% else %}
-
-                  {% if temp.unit_incharge_approval == "NO" %}
-                    <div class="alert alert-danger">
-                      <strong>Report Declined; Waiting for update.</strong>
-                 
-                  {% endif %}
-
-                  {% if temp.unit_incharge_approval == "YES" %}
-                    <div class="alert alert-success">
-                      <strong>Report Approved.</strong> 
-
-                  {% endif %}
-
-              {% endif %}
-
-                <div class="card" style="text-align: center;">            
+                    {% endif %}
+                <div class="card" style="text-align: center;">                  
+                   
+                  
                   
                   <form id="form-v">                    
                         <div class="card-body">
-                            <h2 class="card-title">DATIS-TERMA DAILY MAINTENANCE Report</h2>
+                            <h2 class="card-title">DSCN-TERMA MONTHLY MAINTENANCE Report</h2>
                           
                             {% for log in logs|slice:":1" %}
                             <div class="alert alert-light" style="height: 40px; padding-top: 0px">
@@ -77,61 +69,68 @@
                             </div>
                             {% endfor %}
                              <hr>
-                            <div class="form-group row has-warning">
-                              <label for="room_temp" class="col-sm-6 col-form-label">Room Temperature*</label>
-                              <div>
-                                <input type="text" class="form-control form-control-sm" id="room_temp" name="Room Temperature" readonly="true" value="{{ temp.room_temp }}">
-                              </div>
-                            </div>
-
-
-                              <hr>
-                            <div class="form-group row has-warning">
-                              <label for="status_of_AC" class="col-sm-6 col-form-label">Status of AC*</label>
-                              <div>
-                                 <input type="text" class="form-control form-control-sm" id="status_of_AC" name="Room Temperature" readonly="true" value="{{ temp.status_of_ac }}">
-                              </div>
-                            </div>
-                            
-                              <hr>  
-                            <div class="form-group row has-warning">
-                              <label for="status_of_UPS" class="col-sm-6 col-form-label">Status of UPS*</label>
-                              <div>
-                                <input type="text" class="form-control form-control-sm" id="status_of_UPS" name="Status of UPS" readonly="true" value="{{ temp.status_of_ups }}"/><br>
-                              </div>
-                            </div>
-
-
-                              <hr>
-                              <div class="form-group row has-warning">
-                                <label for="status_of_server A" class="col-sm-6 col-form-label">Status of Server A*</label>
-                                <div>
-                                    <input type="text" class="form-control form-control-sm" id="status_of_serverA" name="Status of Server A" readonly="true" value="{{ temp.status_of_servera }}"/><br>
-                                </div>
-                              </div>
-
+                             <div class="form-group row has-warning">
+                  <label for="Cleaning_DSCN_associated_eqpt" class="col-sm-6 col-form-label">Cleaning DSCN associated eqpt</label>
+                  <div>
+                     <input type="text" class="form-control form-control-sm" id="Cleaning_DSCN_associated_eqpt" name="cdae" readonly="true" value="{{ dscnmm.cleaning_dscn_associated_eqpt }}" required>
+                  </div>
+               </div>
                               
-                                <hr>  
-                              <div class="form-group row has-warning">
-                                <label for="status_of_serverB" class="col-sm-6 col-form-label">Status of Server B*</label>
-                                <div>
-                                    <input type="text" class="form-control form-control-sm" id="status_of_serverB" name="Status of Server B" readonly="true" value="{{ temp.status_of_serverb }}">
-                                </div>
+              <hr>
+                <div class="form-group row has-warning">
+                  <label for="Battery_backup_time_of_UPS1nUPS2" class="col-sm-6 col-form-label">Battery backup time of UPS1nUPS2</label>
+                  <div>
+                     <input type="text" class="form-control form-control-sm" id="Battery_backup_time_of_UPS1nUPS2" name="bbt" readonly="true" value="{{ dscnmm.battery_backup_time_of_ups1nups2 }}" required>
+                  </div>
+                </div>
+   
+                              <hr>
+                <div class="form-group row has-warning">
+                  <label for="UPS_battery_voltage_on_load" class="col-sm-6 col-form-label">UPS battery voltage on load</label>
+                  <div>
+                     <input type="text" class="form-control form-control-sm" id="UPS_battery_voltage_on_load" name="ubvl"  readonly="true" value="{{ dscnmm.ups_battery_voltage_on_load }}" required>
+                  </div>
                               </div>
-
-                                
-                                <hr>
-                                {% if temp.status != "PENDING" and temp.unit_incharge_approval == NONE %}
-                                  {% if temp.status == "COMPLETED WITH ERRORS" %}                      
-                                      <button type="button" data-toggle="modal" data-target="#recheck" style="width: 100px; margin-right: 10%;"class="btn submitbut">DECLINE</button>
+                              <hr>
+                <div class="form-group row has-warning">
+                  <label for="Antenna_n_Cable_check" class="col-sm-6 col-form-label">Antenna and Cable check</label>
+                  <div>
+                     <input type="text" class="form-control form-control-sm" id="Antenna_n_Cable_check" name="ancc" readonly="true" value="{{ dscnmm.antenna_n_cable_check }}"  required>
+                  </div>
+                </div>
+                              <hr>
+                <div class="form-group row has-warning">
+                  <label for="Earth_resistance" class="col-sm-6 col-form-label">Earth resistance</label>
+                  <div>
+                     <input type="text" class="form-control form-control-sm" id="Earth_resistance" name="er" readonly="true" value="{{ dscnmm.earth_resistance }}" required>
+                  </div>
+                </div>
+                              <hr>
+                <div class="form-group row has-warning">
+                  <label for="EorN_voltage" class="col-sm-6 col-form-label">EorN voltage</label>
+                  <div>
+                     <input type="number" class="form-control form-control-sm" id="EorN_voltage" name="ev" readonly="true" value="{{ dscnmm.eorn_voltage }}" required>
+                  </div>
+                </div>
+                              <hr>
+                <div class="form-group row has-warning">
+                  <label for="Eqpt_status_after_check" class="col-sm-6 col-form-label">Eqpt status after check</label>
+                  <div>
+                     <input type="text" class="form-control form-control-sm" id="Eqpt_status_after_check" name="esac"  readonly="true" value="{{ dscnmm.eqpt_status_after_check }}"  required>
+                  </div>
+                  <hr>
+                </div>
+                                        
+                              
+                                {% if temp.status != "PENDING" and temp.unit_incharge_approval == NONE %}                 
+                                      <button type="button" data-toggle="modal" data-target="#report" style="width: 100px; margin-right: 10%;"class="btn submitbut">DECLINE</button>
                                       
-                                  {% endif %}
-                                  {% if temp.unit_incharge_approval != "YES" %}
-                                  <a href='/verify/{{names}}/{{temp.p_token}}' class="btn submitbut" >APPROVE</a>      
+                                  
+                                      <a href='/verify/{{names}}/{{temp.p_token}}' class="btn submitbut" >APPROVE</a>      
                                 {% endif %}
-                                {% endif %}
-</form></div>
-                                <div class="modal fade" id="recheck">
+                            </form>
+                        </div>
+                                <div class="modal fade" id="report">
                                       <div class="modal-dialog">
                                         <div class="modal-content">
                                           <div class="modal-header">
@@ -171,11 +170,10 @@
                                                       </div>
                                                   </div>
                                                   <hr>                                                  
-                                                  <button type="submit" class="btn btn-primary" value="SEND">Submit</button>
+                                                  <button type="submit" class="btn btn-primary" value="SEND">Submit</button>  
                                               </form>
                                             </div>
                                           </div>
-                                          
                                         </div>
                                       </div>
                                     </div>    
@@ -184,10 +182,7 @@
                                                           
                 </div>                      
             </div>
-<!--if statement
-            <div class="alert alert-success">
-                    <strong>Report sent</strong> 
-                </div>  -->               
+               
 
             <div class="col-sm-5" >
                 <div class="sidebar s" >
@@ -215,7 +210,7 @@
                         </div>
                     </div>    
                 </div>
-                {% if temp.room_temp != None %}
+
                 <div> 
                     <div class="logr">                       
                         <div class="card sidecard logrtitle"> REPORT LOG </div>
@@ -243,7 +238,7 @@
                         </div>
                     </div>
                 </div>   
-              {% endif %}
+              
                 <div class="modal fade" id="standardcheck">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -253,56 +248,17 @@
                             </div>
                             <div class="modal-body">
                                 <table class="table table-bordered table-condensed table-striped table-hover todaytasks">
-                                    <tr>
-                                        <th>VALUE LABEL</th>
-                                        <th>NORMAL VALUE</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Room Temperature</td>
-                                        <td>24 C</td>
-                                    </tr>
-                                    
-                                            <tr>
-                                        <td>Status of AC</td>
-                                        <td>Svcbl</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Status OF UPS</td>
-                                        <td>Normal</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Status of Server A</td>
-                                        <td>Main/Standby</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Status of Server B</td>
-                                        <td>Main/Standby</td>
-                                    </tr>
-                                    <!--    <tr>
-                                        <td>Date and time of servers wrt GPS CLK</td>
-                                        <td>Correct</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Status of Disk Array</td>
-                                        <td>OK</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Status of VHF TX used for ATIS</td>
-                                        <td>On-Line</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Status of VHF RX used for ATIS</td>
-                                        <td>On-Line</td>
-                                    </tr>
-                                        <tr>
-                                        <td>DATIS update</td>
-                                        <td>OK</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Audio Quality of Datis Announcement</td>
-                                        <td>Good</td>
-                                    </tr>-->
-                              </table>
+                              <tr>
+                                <th>VALUE LABEL</th>
+                                <th>NORMAL VALUE</th>
+                              </tr>
+                              <tr>
+                                  <td>Placeholder</td>
+                                  <td>Placeholder</td>
+                              </tr>
+                            
+                                
+                          </table>
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -321,38 +277,37 @@
                             <div class="modal-body">
                                 <table class="table table-bordered table-condensed table-striped table-hover todaytasks mantab">
                                     <thead>
-                                        <tr>  
-                                          <th>Date</th>
-                                            <th>Time</th>
-                                            <th>Room Temp</th>
-                                            <th>Status of AC</th>
-                                          <th>Status of UPS</th>
-                                            <th>Status of server A</th>
-                                            <th>Status of server B</th>
-                                            <th>Remarks</th>
-                                            <th>Test</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody><!-- Need to change variables -->
-                                        {% for datisdd in mrec %}
-                                        <tr>
-                                         
-                                          <td>{{ datisdd.date }}</td>
-                                            <td>{{ datisdd.time }}</td>
-                                            <td>{{ datisdd.room_temp }}</td>
-                                            <td>{{ datisdd.status_of_ac }}</td>
-                                            <td>{{ datisdd.status_of_ups }}</td>
-                                            <td>{{ datisdd.status_of_servera }}</td>
-                                            <td>{{ datisdd.status_of_serverb }}</td>
-                                            <td>{{ datisdd.remarks }}</td>
-                                        {% if datisd.room_temp < 25 and datisd.status_of_servera == "MAINS" and datisd.status_of_serverb == "STANDBY" and datisd.status_of_ups == "NORMAL" and datisd.status_of_ac == "SVCBL" or datisd.room_temp < 25 and datisd.status_of_servera == "STANDBY" and datisd.status_of_serverb == "MAINS" and datisd.status_of_ups == "NORMAL" and datisd.status_of_ac == "SVCBL" %}
-                                            <td>Pass</td>
-                                        {% else %}
-                                            <td>Fail</td>
-                                        {% endif %}  
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
+                <tr>  
+                    <th>Date</th>
+                    <th>Time</th>
+                   <th>Cleaning_DSCN_associated_eqpt</th>
+                 <th>Battery_backup_time_of_UPS1nUPS2</th>
+                       <th>UPS_battery_voltage_on_load</th>
+                    <th>Antenna_n_cable_check</th>
+                    <th>Earth_resistance</th>
+                    <th>EorN_voltage</th>
+                    <th>Eqpt_status_after_check</th>
+                    <th>Remarks</th>
+                    <th>Test</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dscnm in mrec %}
+                <tr>
+                 <td>{{ dscnm.date }}</td>
+                  <td>{{ dscnm.time }}</td>
+                  <td>{{ dscnm.cleaning_dscn_associated_eqpt }}</td>
+                  <td>{{ dscnm.battery_backup_time_of_ups1nups2  }}</td>
+                  <td>{{ dscnm.ups_battery_voltage_on_load }}</td>
+                  <td>{{ dscnm.antenna_n_cable_check }}</td>
+                  <td>{{ dscnm.earth_resistance }}</td>
+                  <td>{{ dscnm.eorn_voltage }}</td>
+                  <td>{{ dscnm.eqpt_status_after_check }}</td>
+                  <td>{{ dscnm.remarks }}</td>
+                   <td>Pass</td>
+                </tr>
+               {% endfor %}
+             </tbody>
                                 </table>
                             </div>
                             <div class="modal-footer">
@@ -371,7 +326,7 @@
                             </div>
                             <div class="modal-body">
                               <h5>{{eng.name}}</h5>
-                              <h6>Email: <a href="{{ eng.email }}">{{eng.email}}</a></h6>
+                              <h6>Email: <a href="mailto:surajshah@aai.com">{{eng.email}}</a></h6>
                               <h6>Phone: {{eng.contact}}</h6>
                             </div>
                             <div class="modal-footer">
@@ -384,38 +339,13 @@
         </div>
     </div>   
     <script>
-
-        $(function(){
-                if($("#room_temp").val()<"25"){
-                     $('#room_temp').css('border-color', 'pale-green');
-                }else{
-                   $('#room_temp').css('border-color', 'red');
-                }
-
-                if($("#status_of_AC").val()=="SVCBL"){
-                     $('#status_of_AC').css('border-color', 'pale-green');
-                }else{
-                   $('#status_of_AC').css('border-color', 'red');
-                }
-
-                if($("#status_of_UPS").val()=="NORMAL"){
-                     $('#status_of_UPS').css('border-color', 'pale-green');
-                }else{
-                   $('#status_of_UPS').css('border-color', 'red');
-                }
-
-                if($("#status_of_serverB").val()=="MAINS" && $("#status_of_serverA").val()=="STANDBY" ){
-                     $('#status_of_serverB').css('border-color', 'pale-green');
-                     $('#status_of_serverA').css('border-color', 'pale-green');
-                }
-                else if($("#status_of_serverA").val()=="MAINS" && $("#status_of_serverB").val()=="STANDBY" ){
-                     $('#status_of_serverA').css('border-color', 'pale-green');
-                     $('#status_of_serverB').css('border-color', 'pale-green');
-                }else{
-                   $('#status_of_serverA').css('border-color', 'red');
-                   $('#status_of_serverB').css('border-color', 'red');
-                } 
-            });
+      $('#Cleaning_DSCN_associated_eqpt').css('border-color', '#CED4DA');
+      $('#Battery_backup_time_of_UPS1nUPS2').css('border-color', '#CED4DA');
+      $('#UPS_battery_voltage_on_load').css('border-color', '#CED4DA');
+      $('#Antenna_n_Cable_check').css('border-color', '#CED4DA');
+      $('#Earth_resistance').css('border-color', '#CED4DA');
+      $('#EorN_voltage').css('border-color', '#CED4DA');
+      $('#Eqpt_status_after_check').css('border-color', '#CED4DA');
     </script>
 </body>
 

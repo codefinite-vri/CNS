@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Daily DATIS Maintenance Report</title>
+    <title>Monthly SCCTV Maintenance Report</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'supervisor/datisstyle.css' %}">
@@ -32,11 +32,11 @@
 
               {% if temp.unit_incharge_approval == NONE %}
 
-                  {% if temp.room_temp == None %}             
+                  {% if temp.ups_ip_voltage == None %}             
                         <div class="alert alert-danger">
                           <strong>Report Not Submitted</strong>
 
-                      {% elif temp.room_temp < 25 and temp.status_of_servera == "MAINS" and temp.status_of_serverb == "STANDBY" and temp.status_of_ups == "NORMAL" and temp.status_of_ac == "SVCBL" or temp.room_temp < 25 and temp.status_of_servera == "STANDBY" and temp.status_of_serverb == "MAINS" and temp.status_of_ups == "NORMAL" and temp.status_of_ac == "SVCBL" %}
+                      {% elif temp.ups_ip_voltage <= 235 and  temp.ups_ip_voltage >= 225 and temp.ups_op_voltage <= 230 and temp.ups_op_voltage >= 220 and temp.ups_battery_op_voltage_acpwron <= 213 and temp.ups_battery_op_voltage_acpwron >= 203 and temp.ups_battery_op_voltage_acpwroff <= 191 and temp.ups_battery_op_voltage_acpwroff >= 181 and temp.ups_battery_op_voltage_after15min_acpwroff <= 181 and temp.ups_battery_op_voltage_after15min_acpwroff >= 171 and temp.server_status == "ON" and temp.cameras_in_vrs_server == "OK" and temp.nas_free_capacity != 0 and temp.ofclinkto_l2l3_switches == "BLINKING GREEN" and temp.cleaning_camera_eqpt == "CARRIED OUT" and temp.user_rights_check == "OK" %}
                         <div class="alert alert-success">
                           <strong> All maintenance entries matched with standard values.</strong>                   
 
@@ -67,7 +67,7 @@
                   
                   <form id="form-v">                    
                         <div class="card-body">
-                            <h2 class="card-title">DATIS-TERMA DAILY MAINTENANCE Report</h2>
+                            <h2 class="card-title">SCCTV MONTHLY MAINTENANCE Report</h2>
                           
                             {% for log in logs|slice:":1" %}
                             <div class="alert alert-light" style="height: 40px; padding-top: 0px">
@@ -77,47 +77,91 @@
                             </div>
                             {% endfor %}
                              <hr>
+                           <div class="form-group row has-warning">
+                             <label for="ups_ip_voltage" class="col-sm-6 col-form-label">UPS Input Voltage</label>
+                            <div>
+                                <input type="text" class="form-control form-control-sm" id="ups_ip_voltage" name="ups_ip_voltage" readonly="true" value="{{ temp.ups_ip_voltage }}">
+                              </div>
+                            </div>
+                            <hr>
                             <div class="form-group row has-warning">
-                              <label for="room_temp" class="col-sm-6 col-form-label">Room Temperature*</label>
+                              <label for="ups_op_voltage" class="col-sm-6 col-form-label">UPS Output Voltage</label>
                               <div>
-                                <input type="text" class="form-control form-control-sm" id="room_temp" name="Room Temperature" readonly="true" value="{{ temp.room_temp }}">
+                                <input type="text" class="form-control form-control-sm" id="ups_op_voltage" name="ups_op_voltage" readonly="true" value="{{ temp.ups_op_voltage }}">
+                              </div>
+                            </div>
+                            <hr>
+                            <div class="form-group row has-warning">
+                              <label for="ups_battery_op_voltage_acpwron" class="col-sm-6 col-form-label">UPS Battery output voltage during AC power ON (on both battery banks)</label>
+                              <div>
+                                <input type=number name="ups_battery_op_voltage_ACpwrON" id="ups_battery_op_voltage_acpwron" class="form-control form-control-sm" required readonly="true" value="{{ temp.ups_battery_op_voltage_acpwron }}"></input>
                               </div>
                             </div>
 
-
-                              <hr>
+                            <hr>
                             <div class="form-group row has-warning">
-                              <label for="status_of_AC" class="col-sm-6 col-form-label">Status of AC*</label>
+                              <label for="ups_battery_op_voltage_acpwroff" class="col-sm-6 col-form-label">UPS Battery output voltage during AC power OFF (on both battery banks)</label>
                               <div>
-                                 <input type="text" class="form-control form-control-sm" id="status_of_AC" name="Room Temperature" readonly="true" value="{{ temp.status_of_ac }}">
-                              </div>
-                            </div>
-                            
-                              <hr>  
-                            <div class="form-group row has-warning">
-                              <label for="status_of_UPS" class="col-sm-6 col-form-label">Status of UPS*</label>
-                              <div>
-                                <input type="text" class="form-control form-control-sm" id="status_of_UPS" name="Status of UPS" readonly="true" value="{{ temp.status_of_ups }}"/><br>
+                                <input type=number name="ups_battery_op_voltage_acpwroff" id="ups_battery_op_voltage_acpwroff" class="form-control form-control-sm" required readonly="true" value="{{ temp.ups_battery_op_voltage_acpwroff }}"></input>
                               </div>
                             </div>
 
-
-                              <hr>
-                              <div class="form-group row has-warning">
-                                <label for="status_of_server A" class="col-sm-6 col-form-label">Status of Server A*</label>
-                                <div>
-                                    <input type="text" class="form-control form-control-sm" id="status_of_serverA" name="Status of Server A" readonly="true" value="{{ temp.status_of_servera }}"/><br>
-                                </div>
+                            <hr>
+                            <div class="form-group row has-warning">
+                              <label for="ups_battery_op_voltage_after15min_acpwroff" class="col-sm-6 col-form-label">UPS Battery output voltage after 15 min of AC main OFF (on both battery banks)</label>
+                              <div>
+                                <input type=number name="ups_battery_op_voltage_after15min_acpwroff" id="ups_battery_op_voltage_after15min_acpwroff" class="form-control form-control-sm" required readonly="true" value="{{ temp.ups_battery_op_voltage_after15min_acpwroff }}"></input>
                               </div>
+                            </div>
 
-                              
-                                <hr>  
-                              <div class="form-group row has-warning">
-                                <label for="status_of_serverB" class="col-sm-6 col-form-label">Status of Server B*</label>
-                                <div>
-                                    <input type="text" class="form-control form-control-sm" id="status_of_serverB" name="Status of Server B" readonly="true" value="{{ temp.status_of_serverb }}">
-                                </div>
+                            <hr>  
+                             <div class="form-group row has-warning">
+                            <label for="server_status" class="col-sm-6 col-form-label">Check all the server status</label>
+                            <div>
+                                
+                                <input type="text" class="form-control form-control-sm" id="server_status" name="server_status" readonly="true" value="{{ temp.server_status }}">
                               </div>
+                            </div>
+
+                            <hr>  
+                            <div class="form-group row has-warning">
+                             <label for="cameras_in_vrs_server" class="col-sm-6 col-form-label">Check Camera/NAS status in VRS servers</label>
+                            <div>
+                                <input type="text" class="form-control form-control-sm" id="cameras_in_vrs_server" name="cameras_in_vrs_server" readonly="true" value="{{ temp.cameras_in_vrs_server }}">
+                              </div>
+                            </div>
+
+                            <hr>  
+                            <div class="form-group row has-warning">
+                              <label for="nas_free_capacity" class="col-sm-6 col-form-label">Check NAS free capacity</label>
+                              <div>
+                                <input type=float class="form-control form-control-sm" id="nas_free_capacity" name="nas_free_capacity" readonly="true" value="{{ temp.nas_free_capacity }}">
+                              </div>
+                            </div>
+
+                            <hr>  
+                            <div class="form-group row has-warning">
+                              <label for="ofclinkto_l2l3_switches" class="col-sm-6 col-form-label">OFC Link in all L2 and L3 switches</label>
+                              <div>
+                                <input type="text" class="form-control form-control-sm" id="ofclinkto_l2l3_switches" name="ofclinkto_l2l3_switches" readonly="true" value="{{ temp.ofclinkto_l2l3_switches }}">
+                              </div>
+                            </div>
+
+                            <hr>  
+                            <div class="form-group row has-warning">
+                              <label for="cleaning_camera_eqpt" class="col-sm-6 col-form-label">Cleaning of Cameras and Equipment</label>
+                              <div>
+                                <input type="text" class="form-control form-control-sm" id="cleaning_camera_eqpt" name="cleaning_camera_eqpt" readonly="true" value="{{ temp.cleaning_camera_eqpt }}">
+                              </div>
+                            </div>
+
+                            <hr>  
+                            <div class="form-group row has-warning">
+                              <label for="user_rights_check" class="col-sm-6 col-form-label">Check username and passwords of all users</label>
+                              <div>
+                                <input type="text" class="form-control form-control-sm" id="user_rights_check" name="user_rights_check" readonly="true" value="{{ temp.user_rights_check }}">
+                              </div>
+                            </div>
 
                                 
                                 <hr>
@@ -215,7 +259,7 @@
                         </div>
                     </div>    
                 </div>
-                {% if temp.room_temp != None %}
+                {% if temp.ups_ip_voltage != None %}
                 <div> 
                     <div class="logr">                       
                         <div class="card sidecard logrtitle"> REPORT LOG </div>
@@ -254,54 +298,54 @@
                             <div class="modal-body">
                                 <table class="table table-bordered table-condensed table-striped table-hover todaytasks">
                                     <tr>
-                                        <th>VALUE LABEL</th>
-                                        <th>NORMAL VALUE</th>
+                                      <th>VALUE LABEL</th>
+                                      <th>NORMAL VALUE</th>
                                     </tr>
                                     <tr>
-                                        <td>Room Temperature</td>
-                                        <td>24 C</td>
+                                      <td>UPS Input Voltage</td>
+                                      <td>225-235V</td>
                                     </tr>
                                     
-                                            <tr>
-                                        <td>Status of AC</td>
-                                        <td>Svcbl</td>
+                                    <tr>
+                                      <td>UPS Output Voltage</td>
+                                      <td>220-230V</td>
                                     </tr>
                                     <tr>
-                                        <td>Status OF UPS</td>
-                                        <td>Normal</td>
+                                      <td>UPS Battery O/P V - AC power ON</td>
+                                      <td>203-213V</td>
+                                    </tr>
+                                      <tr>
+                                      <td>UPS Battery O/P V - AC power OFF</td>
+                                      <td>181-191V</td>
+                                    </tr>
+                                      <tr>
+                                      <td>UPS Battery O/P V - after 15m AC main OFF </td>
+                                      <td>171-181V</td>
+                                    </tr>
+                                      <tr>
+                                      <td>Server Status</td>
+                                      <td>ON</td>
+                                    </tr>
+                                      <tr>
+                                      <td>Camera / NAS Status in VRS Servers</td>
+                                      <td>OK/Accesible</td>
                                     </tr>
                                     <tr>
-                                        <td>Status of Server A</td>
-                                        <td>Main/Standby</td>
+                                      <td>NAS free Capacity</td>
+                                      <td>Not zero</td>
                                     </tr>
                                     <tr>
-                                        <td>Status of Server B</td>
-                                        <td>Main/Standby</td>
+                                      <td>OFC Link in all L2 and L3 Switches</td>
+                                      <td>Blinking Green</td>
                                     </tr>
-                                    <!--    <tr>
-                                        <td>Date and time of servers wrt GPS CLK</td>
-                                        <td>Correct</td>
+                                    <tr>
+                                      <td>Cleaning of Cameras and Equipment</td>
+                                      <td>Carried Out</td>
                                     </tr>
-                                        <tr>
-                                        <td>Status of Disk Array</td>
-                                        <td>OK</td>
+                                    <tr>
+                                      <td>Check the rights of all users</td>
+                                      <td>OK</td>
                                     </tr>
-                                        <tr>
-                                        <td>Status of VHF TX used for ATIS</td>
-                                        <td>On-Line</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Status of VHF RX used for ATIS</td>
-                                        <td>On-Line</td>
-                                    </tr>
-                                        <tr>
-                                        <td>DATIS update</td>
-                                        <td>OK</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Audio Quality of Datis Announcement</td>
-                                        <td>Good</td>
-                                    </tr>-->
                               </table>
                             </div>
                             <div class="modal-footer">
@@ -321,38 +365,49 @@
                             <div class="modal-body">
                                 <table class="table table-bordered table-condensed table-striped table-hover todaytasks mantab">
                                     <thead>
-                                        <tr>  
+                                      <tr>  
                                           <th>Date</th>
-                                            <th>Time</th>
-                                            <th>Room Temp</th>
-                                            <th>Status of AC</th>
-                                          <th>Status of UPS</th>
-                                            <th>Status of server A</th>
-                                            <th>Status of server B</th>
-                                            <th>Remarks</th>
-                                            <th>Test</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody><!-- Need to change variables -->
-                                        {% for datisdd in mrec %}
-                                        <tr>
-                                         
-                                          <td>{{ datisdd.date }}</td>
-                                            <td>{{ datisdd.time }}</td>
-                                            <td>{{ datisdd.room_temp }}</td>
-                                            <td>{{ datisdd.status_of_ac }}</td>
-                                            <td>{{ datisdd.status_of_ups }}</td>
-                                            <td>{{ datisdd.status_of_servera }}</td>
-                                            <td>{{ datisdd.status_of_serverb }}</td>
-                                            <td>{{ datisdd.remarks }}</td>
-                                        {% if datisd.room_temp < 25 and datisd.status_of_servera == "MAINS" and datisd.status_of_serverb == "STANDBY" and datisd.status_of_ups == "NORMAL" and datisd.status_of_ac == "SVCBL" or datisd.room_temp < 25 and datisd.status_of_servera == "STANDBY" and datisd.status_of_serverb == "MAINS" and datisd.status_of_ups == "NORMAL" and datisd.status_of_ac == "SVCBL" %}
-                                            <td>Pass</td>
-                                        {% else %}
-                                            <td>Fail</td>
-                                        {% endif %}  
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
+                                          <th>Time</th>
+                                          <th>UPS Input Voltage</th>
+                                          <th>UPS Output Voltage</th>
+                                          <th>UPS Battery O/P V - AC power ON</th>
+                                          <th>UPS Battery O/P V - AC power OFF</th>
+                                          <th>UPS Battery O/P V - after 15m AC main OFF</th>
+                                          <th>Server Status</th>
+                                          <th>Camera / NAS Status in VRS Servers</th>
+                                          <th>NAS free Capacity</th>
+                                          <th>OFC Link in all L2 and L3 Switches</th>
+                                          <th>Cleaning of Cameras and Equipment</th>
+                                          <th>Check the rights of all users</th>
+                                          <th>Test</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                       <!--check-->
+                                      <tr>
+                                       {% for scctvmm in mrec %}
+                                      <td>{{ scctvmm.date }}</td>
+                                        <td>{{ scctvmm.time }}</td>
+                                       <td>{{ scctvmm.ups_ip_voltage }}</td>
+                                        <td>{{ scctvmm.ups_op_voltage }}</td>
+                                        <td>{{ scctvmm.ups_battery_op_voltage_acpwron }}</td>
+                                        <td>{{ scctvmm.ups_battery_op_voltage_acpwroff }}</td>
+                                        <td>{{ scctvmm.ups_battery_op_voltage_after15min_acpwroff }}</td>
+                                        <td>{{ scctvmm.server_status }}</td>
+                                        <td>{{ scctvmm.cameras_in_vrs_server }}</td>
+                                        <td>{{ scctvmm.nas_free_capacity }}</td>
+                                        <td>{{ scctvmm.ofclinkto_l2l3_switches }}</td>
+                                        <td>{{ scctvmm.cleaning_camera_eqpt }}</td>
+                                        <td>{{ scctvmm.user_rights_check }}</td>
+                                          {% if scctvmm.ups_ip_voltage <= 235 and  scctvmm.ups_ip_voltage >= 225 and scctvmm.ups_op_voltage <= 230 and scctvmm.ups_op_voltage >= 220 and scctvmm.ups_battery_op_voltage_acpwron <= 213 and scctvmm.ups_battery_op_voltage_acpwron >= 203 and scctvmm.ups_battery_op_voltage_acpwroff <= 191 and scctvmm.ups_battery_op_voltage_acpwroff >= 181 and scctvmm.ups_battery_op_voltage_after15min_acpwroff <= 181 and scctvmm.ups_battery_op_voltage_after15min_acpwroff >= 171 and scctvmm.server_status == "ON" and scctvmm.cameras_in_vrs_server == "OK" and scctvmm.nas_free_capacity != 0 and scctvmm.ofclinkto_l2l3_switches == "BLINKING GREEN" and scctvmm.cleaning_camera_eqpt == "CARRIED OUT" and scctvmm.user_rights_check == "OK" %}
+                                   <td>Pass</td>
+                                       {% else %}
+                                        <td>Fail</td>
+                                     {% endif %}
+                                     
+                                   </tr>
+                                    {% endfor %}
+                                   </tbody>
                                 </table>
                             </div>
                             <div class="modal-footer">
@@ -384,38 +439,77 @@
         </div>
     </div>   
     <script>
+$(function(){
 
-        $(function(){
-                if($("#room_temp").val()<"25"){
-                     $('#room_temp').css('border-color', 'pale-green');
-                }else{
-                   $('#room_temp').css('border-color', 'red');
-                }
+    if($("#ups_ip_voltage").val()<"225" || $("#ups_ip_voltage").val()>"235"){
+        $('#ups_ip_voltage').css('border-color', 'red');
+    }else{
+        $('#ups_ip_voltage').css('border-color', 'pale-green');
+  }
 
-                if($("#status_of_AC").val()=="SVCBL"){
-                     $('#status_of_AC').css('border-color', 'pale-green');
-                }else{
-                   $('#status_of_AC').css('border-color', 'red');
-                }
+    if($("#ups_op_voltage").val()<"220" || $("#ups_op_voltage").val()>"230"){
+        $('#ups_op_voltage').css('border-color', 'red');
+    }else{
+        $('#ups_op_voltage').css('border-color', 'pale-green');
+    }
 
-                if($("#status_of_UPS").val()=="NORMAL"){
-                     $('#status_of_UPS').css('border-color', 'pale-green');
-                }else{
-                   $('#status_of_UPS').css('border-color', 'red');
-                }
+    if($("#ups_battery_op_voltage_acpwron").val()>"213" || $("#ups_battery_op_voltage_acpwron").val()<"203"){
+        $('#ups_battery_op_voltage_acpwron').css('border-color', 'red');
+    }else{
+        $('#ups_battery_op_voltage_acpwron').css('border-color', 'pale-green');
+    }
 
-                if($("#status_of_serverB").val()=="MAINS" && $("#status_of_serverA").val()=="STANDBY" ){
-                     $('#status_of_serverB').css('border-color', 'pale-green');
-                     $('#status_of_serverA').css('border-color', 'pale-green');
-                }
-                else if($("#status_of_serverA").val()=="MAINS" && $("#status_of_serverB").val()=="STANDBY" ){
-                     $('#status_of_serverA').css('border-color', 'pale-green');
-                     $('#status_of_serverB').css('border-color', 'pale-green');
-                }else{
-                   $('#status_of_serverA').css('border-color', 'red');
-                   $('#status_of_serverB').css('border-color', 'red');
-                } 
-            });
+    if($("#ups_battery_op_voltage_acpwroff").val()>"191" || $("#ups_battery_op_voltage_acpwroff").val()<"181"){
+        $('#ups_battery_op_voltage_acpwroff').css('border-color', 'red');
+    }else{
+        $('#ups_battery_op_voltage_acpwroff').css('border-color', 'pale-green');
+    }
+
+    if($("#ups_battery_op_voltage_after15min_acpwroff").val()>"181" || $("#ups_battery_op_voltage_after15min_acpwroff").val()<"171"){
+        $('#ups_battery_op_voltage_after15min_acpwroff').css('border-color', 'red');
+    }else{
+        $('#ups_battery_op_voltage_after15min_acpwroff').css('border-color', 'pale-green');
+    }
+
+    
+
+    if($("#server_status").val()!="ON"){
+        $('#server_status').css('border-color', 'red');
+    }else{
+        $('#server_status').css('border-color', 'pale-green');
+    }
+
+    if($("#cameras_in_vrs_server").val()!="OK"){
+        $('#cameras_in_vrs_server').css('border-color', 'red');
+    }else{
+        $('#cameras_in_vrs_server').css('border-color', 'pale-green');
+    }
+
+    if($("#user_rights_check").val()!="OK"){
+        $('#user_rights_check').css('border-color', 'red');
+    }else{
+        $('#user_rights_check').css('border-color', 'pale-green');
+    }
+
+    if($("#ofclinkto_l2l3_switches").val()!="BLINKING GREEN"){
+        $('#ofclinkto_l2l3_switches').css('border-color', 'red');
+    }else{
+        $('#ofclinkto_l2l3_switches').css('border-color', 'pale-green');
+    }
+
+     if($("#cleaning_camera_eqpt").val()!="CARRIED OUT"){
+        $('#cleaning_camera_eqpt').css('border-color', 'red');
+    }else{
+        $('#cleaning_camera_eqpt').css('border-color', 'pale-green');
+    }
+
+     if($("#nas_free_capacity").val()=="0.0"){
+        $('#nas_free_capacity').css('border-color', 'red');
+    }else{
+        $('#nas_free_capacity').css('border-color', 'pale-green');
+    }
+
+});
     </script>
 </body>
 

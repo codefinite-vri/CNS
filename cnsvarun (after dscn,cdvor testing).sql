@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 28, 2020 at 07:26 AM
+-- Generation Time: May 01, 2020 at 12:39 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS `auth_permission` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
   KEY `auth_permission_content_type_id_2f476e4b` (`content_type_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=233 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=249 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `auth_permission`
@@ -336,7 +336,23 @@ INSERT INTO `auth_permission` (`id`, `name`, `content_type_id`, `codename`) VALU
 (229, 'Can add cdvormlogs', 58, 'add_cdvormlogs'),
 (230, 'Can change cdvormlogs', 58, 'change_cdvormlogs'),
 (231, 'Can delete cdvormlogs', 58, 'delete_cdvormlogs'),
-(232, 'Can view cdvormlogs', 58, 'view_cdvormlogs');
+(232, 'Can view cdvormlogs', 58, 'view_cdvormlogs'),
+(233, 'Can add scctvdlogs', 59, 'add_scctvdlogs'),
+(234, 'Can change scctvdlogs', 59, 'change_scctvdlogs'),
+(235, 'Can delete scctvdlogs', 59, 'delete_scctvdlogs'),
+(236, 'Can view scctvdlogs', 59, 'view_scctvdlogs'),
+(237, 'Can add scctvmlogs', 60, 'add_scctvmlogs'),
+(238, 'Can change scctvmlogs', 60, 'change_scctvmlogs'),
+(239, 'Can delete scctvmlogs', 60, 'delete_scctvmlogs'),
+(240, 'Can view scctvmlogs', 60, 'view_scctvmlogs'),
+(241, 'Can add scctvwlogs', 61, 'add_scctvwlogs'),
+(242, 'Can change scctvwlogs', 61, 'change_scctvwlogs'),
+(243, 'Can delete scctvwlogs', 61, 'delete_scctvwlogs'),
+(244, 'Can view scctvwlogs', 61, 'view_scctvwlogs'),
+(245, 'Can add dgm reports', 62, 'add_dgmreports'),
+(246, 'Can change dgm reports', 62, 'change_dgmreports'),
+(247, 'Can delete dgm reports', 62, 'delete_dgmreports'),
+(248, 'Can view dgm reports', 62, 'view_dgmreports');
 
 -- --------------------------------------------------------
 
@@ -423,7 +439,7 @@ CREATE TABLE IF NOT EXISTS `cdvordaily` (
   KEY `emp_id` (`emp_id`),
   KEY `CDVORDaily_ibfk_1` (`a_id`),
   KEY `cdvordaily_ibfk_3` (`f_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `cdvordaily`
@@ -431,9 +447,13 @@ CREATE TABLE IF NOT EXISTS `cdvordaily` (
 
 INSERT INTO `cdvordaily` (`p_id`, `date`, `time`, `status`, `a_id`, `emp_id`, `f_id`, `Azimuth_angle`, `30Hz_modulation`, `9960Hz_modulation`, `9960Hz_deviation`, `field_intensity`, `ident_modulation`, `REMARKS`, `Unit_incharge_approval`, `approval_date`, `approval_time`) VALUES
 (1, '2020-04-18', '19:08:07', 'PENDING', 1, 4121, 1, 24, 30, 30, 16, 0, 10, NULL, NULL, NULL, NULL),
-(2, '2020-04-23', '17:11:00', 'COMPLETED', 1, 4123, 1, 23, 28, 32, 17, 1, 11, NULL, 'YES', '2020-04-23', '13:04:07'),
+(2, '2020-04-23', '17:11:00', 'COMPLETED', 1, 4129, 1, 23, 28, 32, 17, 1, 11, NULL, 'YES', '2020-04-23', '13:04:07'),
 (3, '2020-04-26', '13:12:36', 'COMPLETED', 1, 4123, 1, 24, 29, 30, 16, 1, NULL, NULL, 'YES', '2020-04-26', '09:05:00'),
-(4, '2020-04-27', '01:38:34', 'PENDING', 1, 4123, 1, 23, 28, 26, 16, 1, NULL, NULL, NULL, NULL, NULL);
+(4, '2020-04-27', '01:38:34', 'PENDING', 1, 4123, 1, 23, 28, 26, 16, 1, NULL, NULL, NULL, NULL, NULL),
+(5, '2020-04-28', '16:56:25', 'PENDING', 1, 4123, 2, NULL, NULL, NULL, NULL, NULL, NULL, '---Report not submitted---', NULL, NULL, NULL),
+(6, '2020-04-29', '17:26:41', 'PENDING', 1, 4123, 2, NULL, NULL, NULL, NULL, NULL, NULL, '---Report not submitted---', NULL, NULL, NULL),
+(7, '2020-04-30', '17:28:28', 'COMPLETED', 1, 4123, 1, 24, 28, 29, 16, 0, NULL, NULL, 'YES', '2020-04-30', '17:48:06'),
+(8, '2020-05-01', '13:49:35', 'COMPLETED WITH ERRORS', 1, 4121, 1, 24, 28, 28, 18, 1, NULL, NULL, 'YES', '2020-05-01', '14:31:32');
 
 -- --------------------------------------------------------
 
@@ -453,7 +473,7 @@ CREATE TABLE IF NOT EXISTS `cdvordlogs` (
   PRIMARY KEY (`log_id`),
   KEY `emp_id` (`emp_id`),
   KEY `p_id` (`p_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `cdvordlogs`
@@ -478,7 +498,22 @@ INSERT INTO `cdvordlogs` (`log_id`, `emp_id`, `p_id`, `value`, `remarks`, `date`
 (16, 4123, 4, 'bye', 'All parameters NORMAL', '2020-04-27', '01:48:33'),
 (17, 4123, 4, 'ok', 'All parameters NORMAL', '2020-04-27', '01:53:36'),
 (18, 4123, 4, '26', '9960Hz modulation not normal(update)', '2020-04-27', '02:09:22'),
-(19, 4123, 4, 'bye', 'Procedure Followed', '2020-04-27', '02:09:22');
+(19, 4123, 4, 'bye', 'Procedure Followed', '2020-04-27', '02:09:22'),
+(20, 4123, 7, '27', '9960Hz modulation not in specified range', '2020-04-30', '17:28:28'),
+(21, 4123, 7, 'hello', 'All parameters NORMAL', '2020-04-30', '17:28:47'),
+(22, 4123, 7, 'bye', 'All parameters NORMAL', '2020-04-30', '17:45:59'),
+(23, 4121, 8, '31', '30Hz modulation not in specified range', '2020-05-01', '13:49:35'),
+(24, 4121, 8, '26', '9960Hz modulation not in specified range', '2020-05-01', '13:49:35'),
+(25, 4121, 8, '18', '9960Hz modulation not in specified range', '2020-05-01', '13:49:35'),
+(26, 4121, 8, '3', 'Field intensity not in specified range', '2020-05-01', '13:49:35'),
+(27, 4121, 8, '26', '9960Hz modulation not normal(update)', '2020-05-01', '13:51:08'),
+(28, 4121, 8, '18', '9960Hz deviation not normal(update)', '2020-05-01', '13:51:08'),
+(29, 4121, 8, '3', 'field intensity not normal(update)', '2020-05-01', '13:51:08'),
+(30, 4121, 8, 'FIXED 30HZ', 'Procedure Followed', '2020-05-01', '13:51:08'),
+(31, 4121, 8, 'submit', 'Final submit with errors', '2020-05-01', '13:51:46'),
+(32, 4121, 8, '18', '9960Hz deviation not normal(update)', '2020-05-01', '14:30:21'),
+(33, 4121, 8, 'FOLLOWED', 'Procedure Followed', '2020-05-01', '14:30:21'),
+(34, 4121, 8, 'hello', 'Final submit with errors', '2020-05-01', '14:30:41');
 
 -- --------------------------------------------------------
 
@@ -498,7 +533,7 @@ CREATE TABLE IF NOT EXISTS `cdvormlogs` (
   PRIMARY KEY (`log_id`),
   KEY `emp_id` (`emp_id`),
   KEY `p_id` (`p_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `cdvormlogs`
@@ -508,7 +543,18 @@ INSERT INTO `cdvormlogs` (`log_id`, `emp_id`, `p_id`, `value`, `remarks`, `date`
 (3, 4123, 2, 'No Entry', 'Report not submitted', '2020-04-26', '12:51:16'),
 (4, 4123, 2, 'No Entry', 'Report not submitted', '2020-04-27', '12:51:16'),
 (5, 4123, 4, '31', 'Measured bearing 5 is deviating for more than 1', '2020-04-28', '12:52:39'),
-(6, 4123, 4, 'bye', 'All parameters NORMAL', '2020-04-28', '12:53:32');
+(6, 4123, 4, 'bye', 'All parameters NORMAL', '2020-04-28', '12:53:32'),
+(7, 4123, 5, '1', 'Measured bearing 1 is deviating for more than 1', '2020-05-01', '14:58:11'),
+(8, 4123, 5, '16', 'Measured bearing 3 is deviating for more than 1', '2020-05-01', '14:58:11'),
+(9, 4123, 5, '31', 'Measured bearing 5 is deviating for more than 1', '2020-05-01', '14:58:11'),
+(10, 4123, 5, '0.8', 'Error spread found is greator than 0.5', '2020-05-01', '14:58:11'),
+(11, 4123, 5, '1', 'Measured bearing 1 is deviating for more than 1(update)', '2020-05-01', '14:59:28'),
+(12, 4123, 5, '31', 'Measured bearing 5 is deviating for more than 1(update)', '2020-05-01', '14:59:28'),
+(13, 4123, 5, '0.6', 'Error spread found is >= 0.5(update)', '2020-05-01', '14:59:28'),
+(14, 4123, 5, 'bye', 'Procedure Followed', '2020-05-01', '14:59:28'),
+(15, 4123, 5, '31', 'Measured bearing 5 is deviating for more than 1(update)', '2020-05-01', '15:15:21'),
+(16, 4123, 5, 'bye', 'Procedure Followed', '2020-05-01', '15:15:21'),
+(17, 4123, 5, '5 normal', 'All parameters NORMAL', '2020-05-01', '15:25:43');
 
 -- --------------------------------------------------------
 
@@ -544,7 +590,7 @@ CREATE TABLE IF NOT EXISTS `cdvormonthly` (
   KEY `emp_id` (`emp_id`),
   KEY `VHFMaily_ibfk_1` (`a_id`),
   KEY `cdvormonthly_ibfk_3` (`f_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `cdvormonthly`
@@ -553,7 +599,8 @@ CREATE TABLE IF NOT EXISTS `cdvormonthly` (
 INSERT INTO `cdvormonthly` (`date`, `time`, `a_id`, `emp_id`, `f_id`, `p_id`, `status`, `measured_bearing_1`, `bearing_deviation_1`, `measured_bearing_2`, `bearing_deviation_2`, `measured_bearing_3`, `bearing_deviation_3`, `measured_bearing_4`, `bearing_deviation_4`, `measured_bearing_5`, `bearing_deviation_5`, `error_spread`, `REMARKS`, `Unit_incharge_approval`, `approval_date`, `approval_time`) VALUES
 ('2020-02-27', '11:06:06', 1, 4123, 1, 1, 'COMPLETED', 0, 0, 7.5, 0, 15, 0, 22.5, 0, 37.5, 0, 0, NULL, 'YES', '2020-02-27', '15:03:00'),
 ('2020-03-27', '00:00:00', 1, 4123, 2, 2, 'COMPLETED', 0, 0, 8, 0.5, 16, 1, 22.5, 0, 37.8, 0.3, 1.8, 'Error spread found of 1.8, which is nominal.', 'YES', '2020-03-27', '16:04:05'),
-('2020-04-28', '12:52:39', 1, 4123, 1, 4, 'COMPLETED', 0, 0, 7.5, 0, 15, 0, 23, 0.5, 30, 0, 0.1, NULL, NULL, NULL, NULL);
+('2020-04-28', '12:52:39', 1, 4123, 1, 4, 'COMPLETED', 0, 0, 7.5, 0, 15, 0, 23, 0.5, 30, 0, 0.1, NULL, 'YES', '2020-05-01', '13:24:47'),
+('2020-05-01', '14:58:11', 1, 4123, 1, 5, 'COMPLETED', 0, 0, 8, 0.5, 15, 0, 23, 0.5, 30, 0, 0.2, NULL, 'YES', '2020-05-01', '16:07:19');
 
 -- --------------------------------------------------------
 
@@ -591,7 +638,7 @@ CREATE TABLE IF NOT EXISTS `cdvorweekly` (
   KEY `emp_id` (`emp_id`),
   KEY `date` (`date`,`a_id`) USING BTREE,
   KEY `cdvorweekly_ibfk_3` (`f_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `cdvorweekly`
@@ -600,7 +647,8 @@ CREATE TABLE IF NOT EXISTS `cdvorweekly` (
 INSERT INTO `cdvorweekly` (`p_id`, `date`, `time`, `a_id`, `emp_id`, `f_id`, `status`, `PS_5V`, `PS_12V`, `PS_negative_12V`, `PS_28V`, `PS_48V`, `outside_temp`, `TX1_temp`, `TX2_temp`, `Out_temp_enabled`, `AM`, `FM`, `sideband_frequency`, `REMARKS`, `Unit_incharge_approval`, `approval_date`, `approval_time`) VALUES
 (1, '2020-04-12', '05:07:10', 1, 4129, 1, 'PENDING', 3, 10, -13, 29, 41, 79, 44, 49, 'FALSE', 30, 30, 10001, 'PS 5V,PS 12V,PS -12V, reading deviating too much. Issue no 519', NULL, NULL, NULL),
 (2, '2020-04-21', '09:06:10', 1, 4123, 1, 'PENDING', 5, 5, 3, 56, 67, 45, 456, 67, '234', 546, 435, 345, 'xcg cgbxbvc', NULL, NULL, NULL),
-(4, '2020-04-28', '11:52:19', 1, 4123, 1, 'PENDING', 7, 11.9, NULL, 28, NULL, 27, NULL, NULL, NULL, NULL, NULL, 10001, NULL, NULL, NULL, NULL);
+(4, '2020-04-28', '11:52:19', 1, 4123, 1, 'COMPLETED', 7, 11.9, NULL, 28, NULL, 27, NULL, NULL, NULL, NULL, NULL, 10001, NULL, 'YES', '2020-04-28', '17:04:06'),
+(5, '2020-05-01', '14:38:47', 1, 4129, 1, 'COMPLETED', 5.1, 12.4, NULL, 29, NULL, 34, NULL, NULL, NULL, NULL, NULL, 10001, NULL, 'YES', '2020-05-01', '14:45:50');
 
 -- --------------------------------------------------------
 
@@ -620,7 +668,7 @@ CREATE TABLE IF NOT EXISTS `cdvorwlogs` (
   PRIMARY KEY (`log_id`),
   KEY `emp_id` (`emp_id`),
   KEY `p_id` (`p_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `cdvorwlogs`
@@ -628,7 +676,20 @@ CREATE TABLE IF NOT EXISTS `cdvorwlogs` (
 
 INSERT INTO `cdvorwlogs` (`log_id`, `emp_id`, `p_id`, `value`, `remarks`, `date`, `time`) VALUES
 (3, 4123, 2, 'No Entry', 'Report not submitted', '2020-04-27', '11:33:59'),
-(4, 4123, 4, '7', 'PS 5V not in range', '2020-04-28', '11:52:19');
+(4, 4123, 4, '7', 'PS 5V not in range', '2020-04-28', '11:52:19'),
+(5, 4129, 5, '2', 'PS 5V not in range', '2020-05-01', '14:38:47'),
+(6, 4129, 5, '7', 'PS 12V not in range', '2020-05-01', '14:38:47'),
+(7, 4129, 5, '31', 'PS 28V not in range', '2020-05-01', '14:38:47'),
+(8, 4129, 5, '72', 'Outside temperature not in range', '2020-05-01', '14:38:47'),
+(9, 4129, 5, '12', 'sideband frequency not equal to 10001 Hz', '2020-05-01', '14:38:47'),
+(10, 4129, 5, '31', 'PS 28V value not in normal range(update)', '2020-05-01', '14:39:25'),
+(11, 4129, 5, '72', 'Temperature not in range -25 to 70(update)', '2020-05-01', '14:39:25'),
+(12, 4129, 5, '12', 'Sideband frequency not equal to 10001(update)', '2020-05-01', '14:39:25'),
+(13, 4129, 5, 'followed', 'Procedure Followed', '2020-05-01', '14:39:25'),
+(14, 4129, 5, '31', 'PS 28V value not in normal range(update)', '2020-05-01', '14:39:50'),
+(15, 4129, 5, '12', 'Sideband frequency not equal to 10001(update)', '2020-05-01', '14:39:50'),
+(16, 4129, 5, 'temp back to normal', 'Procedure Followed', '2020-05-01', '14:39:50'),
+(17, 4129, 5, 'freq normal', 'All parameters NORMAL', '2020-05-01', '14:40:15');
 
 -- --------------------------------------------------------
 
@@ -698,7 +759,7 @@ CREATE TABLE IF NOT EXISTS `datisdaily` (
   KEY `a_id` (`a_id`),
   KEY `emp_id` (`emp_id`),
   KEY `f_id` (`f_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `datisdaily`
@@ -719,7 +780,11 @@ INSERT INTO `datisdaily` (`p_id`, `date`, `time`, `a_id`, `emp_id`, `Status`, `f
 (67, '2020-04-23', '20:03:12', 1, 4156, 'PENDING', 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '---Report not submitted---', NULL, NULL, NULL),
 (68, '2020-04-24', '18:43:00', 1, 4156, 'PENDING', 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '---Report not submitted---', NULL, NULL, NULL),
 (69, '2020-04-25', '18:15:03', 1, 4156, 'PENDING', 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '---Report not submitted---', NULL, NULL, NULL),
-(70, '2020-04-26', '01:33:12', 1, 4156, 'PENDING', 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '---Report not submitted---', NULL, NULL, NULL);
+(70, '2020-04-26', '01:33:12', 1, 4156, 'PENDING', 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '---Report not submitted---', NULL, NULL, NULL),
+(71, '2020-04-27', '16:39:34', 1, 4156, 'PENDING', 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '---Report not submitted---', NULL, NULL, NULL),
+(72, '2020-04-28', '16:39:34', 1, 4156, 'PENDING', 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '---Report not submitted---', NULL, NULL, NULL),
+(73, '2020-04-29', '14:25:44', 1, 4156, 'PENDING', 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '---Report not submitted---', NULL, NULL, NULL),
+(74, '2020-04-30', '17:34:52', 1, 4156, 'PENDING', 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '---Report not submitted---', NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -815,7 +880,7 @@ INSERT INTO `datisweekly` (`p_id`, `date`, `time`, `a_id`, `f_id`, `emp_id`, `St
 (10, '2020-04-07', '22:43:40', 1, 2, 4156, 'COMPLETED', 'A', 220, 230, 'OK', 'OK', NULL, NULL, NULL, NULL, NULL, NULL, 'YES', NULL, NULL),
 (12, '2020-04-08', '17:16:01', 1, 2, 4156, 'PENDING', 'A', 224, 230, 'NOT OK', 'OK', NULL, NULL, NULL, NULL, NULL, NULL, 'NO', NULL, NULL),
 (20, '2020-04-14', '22:08:19', 1, 2, 4156, 'COMPLETED WITH ERRORS', 'A', 45, 234, 'OK', 'OK', NULL, NULL, NULL, NULL, NULL, NULL, 'YES', '2020-04-19', '22:17:54'),
-(33, '2020-04-22', '13:17:34', 1, 2, 4156, 'COMPLETED', 'A', 220, 230, 'OK', 'OK', NULL, NULL, NULL, NULL, NULL, NULL, 'YES', '2020-04-22', '00:08:53');
+(33, '2020-04-22', '13:17:34', 1, 2, 4156, 'COMPLETED', 'A', 220, 230, 'OK', 'OK', NULL, NULL, NULL, NULL, NULL, NULL, 'YES', '2020-04-22', '19:06:05');
 
 -- --------------------------------------------------------
 
@@ -835,7 +900,7 @@ CREATE TABLE IF NOT EXISTS `datiswlogs` (
   PRIMARY KEY (`log_id`),
   KEY `emp_id` (`emp_id`),
   KEY `p_id` (`p_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `datiswlogs`
@@ -856,7 +921,9 @@ INSERT INTO `datiswlogs` (`log_id`, `emp_id`, `p_id`, `Remarks`, `value`, `date`
 (123, 4156, 33, 'UPS_op value not normal', '229', '2020-04-21', '13:17:34'),
 (124, 4156, 33, 'Final submit with errors', 'okk\r\n', '2020-04-21', '13:17:49'),
 (125, 4156, 33, 'Final submit with errors', 'cool', '2020-04-22', '00:07:10'),
-(126, 4156, 33, 'All parameters NORMAL', 'ok', '2020-04-22', '00:08:28');
+(126, 4156, 33, 'All parameters NORMAL', 'ok', '2020-04-22', '00:08:28'),
+(127, 4156, 33, 'Report not submitted', 'No Entry', '2020-04-29', '14:25:44'),
+(128, 4156, 33, 'Report not submitted', 'No Entry', '2020-04-30', '17:34:52');
 
 -- --------------------------------------------------------
 
@@ -892,6 +959,31 @@ INSERT INTO `dgm` (`dgm_id`, `name`, `designation`, `a_id`, `contact`, `password
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `dgmreports`
+--
+
+DROP TABLE IF EXISTS `dgmreports`;
+CREATE TABLE IF NOT EXISTS `dgmreports` (
+  `r_id` int(11) NOT NULL AUTO_INCREMENT,
+  `r_type` varchar(30) NOT NULL,
+  `r_status` varchar(30) NOT NULL,
+  `r_count` int(11) NOT NULL,
+  `r_date` datetime NOT NULL,
+  PRIMARY KEY (`r_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `dgmreports`
+--
+
+INSERT INTO `dgmreports` (`r_id`, `r_type`, `r_status`, `r_count`, `r_date`) VALUES
+(1, 'DATIS-Daily', 'PENDING', 84, '2020-04-29 05:09:05'),
+(2, 'DATIS-Daily', 'COMPLETED', 17, '2020-04-29 09:06:00'),
+(3, 'DATIS-Daily', 'COMPLETED WITH ERRORS', 7, '2020-04-29 06:10:13');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `django_admin_log`
 --
 
@@ -923,7 +1015,7 @@ CREATE TABLE IF NOT EXISTS `django_content_type` (
   `model` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
-) ENGINE=MyISAM AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=63 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `django_content_type`
@@ -987,7 +1079,11 @@ INSERT INTO `django_content_type` (`id`, `app_label`, `model`) VALUES
 (55, 'login', 'cdvorwlogs'),
 (56, 'login', 'dscnwlogs'),
 (57, 'login', 'dscnmlogs'),
-(58, 'login', 'cdvormlogs');
+(58, 'login', 'cdvormlogs'),
+(59, 'login', 'scctvdlogs'),
+(60, 'login', 'scctvmlogs'),
+(61, 'login', 'scctvwlogs'),
+(62, 'login', 'dgmreports');
 
 -- --------------------------------------------------------
 
@@ -1002,7 +1098,7 @@ CREATE TABLE IF NOT EXISTS `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `django_migrations`
@@ -1033,7 +1129,9 @@ INSERT INTO `django_migrations` (`id`, `app`, `name`, `applied`) VALUES
 (22, 'login', '0005_cdvordlogs_cdvorwlogs', '2020-04-24 14:49:47.491848'),
 (23, 'login', '0006_dscnwlogs', '2020-04-25 13:28:33.188759'),
 (24, 'login', '0007_dscnmlogs', '2020-04-26 06:08:53.455973'),
-(25, 'login', '0008_cdvormlogs', '2020-04-26 20:56:17.506680');
+(25, 'login', '0008_cdvormlogs', '2020-04-26 20:56:17.506680'),
+(26, 'login', '0009_scctvdlogs_scctvmlogs_scctvwlogs', '2020-04-28 19:17:22.482070'),
+(27, 'login', '0010_dgmreports', '2020-04-30 09:15:37.882617');
 
 -- --------------------------------------------------------
 
@@ -1064,7 +1162,8 @@ INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALU
 ('281cx89vbwgb14ih73awp6844dv3wf5q', 'NmE1ZGM2NDBiNTc1MGEwNzJlZTA1MzMwNTU1MTdiMTU0ZTE5NmZjZTp7InR5cGUiOiJlIiwidWlkIjoiNDE1NiJ9', '2020-05-06 09:48:42.168428'),
 ('uu2npwzrenssytpylm4yfn3xu5166l50', 'Y2I3ZWY1ZWFhOGY5YmVjY2RjYTdkNzZkYmVlODNiMjkzMjBkNTg2Mjp7InR5cGUiOiJlIiwidWlkIjoiNDEyMyJ9', '2020-05-12 07:21:16.797122'),
 ('l45d0lz7gxnbhe4b47qi61wx81bjxlhb', 'Y2I3ZWY1ZWFhOGY5YmVjY2RjYTdkNzZkYmVlODNiMjkzMjBkNTg2Mjp7InR5cGUiOiJlIiwidWlkIjoiNDEyMyJ9', '2020-05-08 07:36:07.093745'),
-('hdzauvhjgq5w9dessfwg693hfw05n0eq', 'Y2I3ZWY1ZWFhOGY5YmVjY2RjYTdkNzZkYmVlODNiMjkzMjBkNTg2Mjp7InR5cGUiOiJlIiwidWlkIjoiNDEyMyJ9', '2020-05-10 20:59:18.092572');
+('hdzauvhjgq5w9dessfwg693hfw05n0eq', 'Y2I3ZWY1ZWFhOGY5YmVjY2RjYTdkNzZkYmVlODNiMjkzMjBkNTg2Mjp7InR5cGUiOiJlIiwidWlkIjoiNDEyMyJ9', '2020-05-10 20:59:18.092572'),
+('xaf0hf0nqpmlx0v2ry89cpv05f1gaez1', 'MWM1NjA3NWI2ZmM2ZWMzYzhmOGI0MDM1NTdjMGIzNzFhY2FiMDI2YTp7InR5cGUiOiJlIiwidWlkIjoiNDEzMSJ9', '2020-05-12 18:47:44.044217');
 
 -- --------------------------------------------------------
 
@@ -1201,16 +1300,16 @@ CREATE TABLE IF NOT EXISTS `dscndaily` (
   `a_id` int(11) NOT NULL,
   `f_id` int(11) NOT NULL DEFAULT '3',
   `emp_id` int(11) DEFAULT NULL,
-  `SAT_LED` varchar(10) DEFAULT NULL,
-  `ODU_LED` varchar(10) DEFAULT NULL,
-  `IO_LED` varchar(10) DEFAULT NULL,
-  `Alarm_LED` varchar(10) DEFAULT NULL,
-  `Power_LED` varchar(10) DEFAULT NULL,
-  `V35_LED` varchar(20) DEFAULT NULL,
+  `SAT_LED` varchar(30) DEFAULT NULL,
+  `ODU_LED` varchar(30) DEFAULT NULL,
+  `IO_LED` varchar(30) DEFAULT NULL,
+  `Alarm_LED` varchar(30) DEFAULT NULL,
+  `Power_LED` varchar(30) DEFAULT NULL,
+  `V35_LED` varchar(30) DEFAULT NULL,
   `IP_Voltage` int(11) DEFAULT NULL,
   `OP_voltage` int(11) DEFAULT NULL,
   `Battery_Voltage` int(11) DEFAULT NULL,
-  `CorO_function` varchar(5) DEFAULT NULL,
+  `CorO_function` varchar(20) DEFAULT NULL,
   `REMARKS` tinytext,
   `Unit_incharge_approval` varchar(3) DEFAULT NULL,
   `approval_date` date DEFAULT NULL,
@@ -1220,7 +1319,7 @@ CREATE TABLE IF NOT EXISTS `dscndaily` (
   KEY `a_id` (`a_id`),
   KEY `emp_id` (`emp_id`),
   KEY `dscndaily_ibfk_3` (`f_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `dscndaily`
@@ -1233,7 +1332,12 @@ INSERT INTO `dscndaily` (`p_id`, `status`, `date`, `time`, `a_id`, `f_id`, `emp_
 (4, '', '2020-04-02', '01:13:31', 1, 3, 4169, 'STEADY ON', 'STEADY ON', 'STEADY ON', 'OFF', 'STEADY ON', 'RX/TX BLINKING', 230, 230, 200, 'OK', 'Alarm LED is ON. it was tuned off successfully', 'YES', NULL, NULL),
 (5, 'COMPLETED', '2020-04-23', '17:29:54', 1, 3, 4156, 'STEADY ON', 'STEADY ON', 'STEADY ON', 'OFF', 'STEADY ON', 'RX/TX BLINKING', 230, 220, 210, 'OK', 'Every parameters are normal', 'YES', '2020-04-23', '16:07:10'),
 (8, 'COMPLETED WITH ERRORS', '2020-04-25', '22:18:56', 1, 3, 4156, 'STEADY ON', 'STEADY ON', 'STEADY ON', 'ON', 'STEADY ON', 'RX/TX BLINKING', 220, 220, 220, 'OK', NULL, NULL, NULL, NULL),
-(9, 'COMPLETED', '2020-04-26', '22:51:57', 1, 3, 4156, 'STEADY ON', 'STEADY ON', 'STEADY ON', 'OFF', 'STEADY ON', 'RX/TX BLINKING', 220, 220, 220, 'OK', NULL, NULL, NULL, NULL);
+(9, 'COMPLETED', '2020-04-26', '22:51:57', 1, 3, 4156, 'STEADY ON', 'STEADY ON', 'STEADY ON', 'OFF', 'STEADY ON', 'RX/TX BLINKING', 220, 220, 220, 'OK', NULL, NULL, NULL, NULL),
+(10, 'PENDING', '2020-04-27', '16:39:34', 1, 3, 4156, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '---Report not submitted---', NULL, NULL, NULL),
+(11, 'PENDING', '2020-04-28', '16:39:34', 1, 3, 4156, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '---Report not submitted---', NULL, NULL, NULL),
+(12, 'PENDING', '2020-04-29', '14:25:48', 1, 3, 4156, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '---Report not submitted---', NULL, NULL, NULL),
+(13, 'COMPLETED', '2020-04-30', '16:59:26', 1, 3, 4156, 'STEADY ON', 'STEADY ON', 'STEADY ON', 'OFF', 'STEADY ON', 'RX/TX BLINKING', 220, 220, 220, 'OK', NULL, 'YES', '2020-04-30', '17:25:48'),
+(16, 'COMPLETED', '2020-05-01', '17:59:29', 1, 3, 4156, 'STEADY ON', 'STEADY ON', 'STEADY ON', 'OFF', 'STEADY ON', 'RX/TX BLINKING', 230, 230, 230, 'OK', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1253,7 +1357,7 @@ CREATE TABLE IF NOT EXISTS `dscndlogs` (
   PRIMARY KEY (`log_id`),
   KEY `emp_id` (`emp_id`),
   KEY `dscndlogs_ibfk_2` (`p_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dscndlogs`
@@ -1276,13 +1380,33 @@ INSERT INTO `dscndlogs` (`log_id`, `emp_id`, `remarks`, `value`, `date`, `time`,
 (16, 4156, 'Alarm LED was turned ON(update)', 'ON', '2020-04-25', '00:50:00', 8),
 (17, 4156, 'Procedure Followed', 'okkk', '2020-04-25', '00:50:00', 8),
 (18, 4156, 'Alarm LED was turned ON(update)', 'ON', '2020-04-25', '00:51:14', 8),
-(19, 4156, 'Procedure Followed', 'ok', '2020-04-25', '00:51:14', 8),
-(20, 4156, 'Alarm LED was turned ON(update)', 'ON', '2020-04-25', '00:54:04', 8),
-(21, 4156, 'Procedure Followed', 'okkk', '2020-04-25', '00:54:04', 8),
-(22, 4156, 'All parameters NORMAL', 'bye', '2020-04-25', '00:54:26', 8),
-(23, 4156, 'Final submit with errors', 'ok', '2020-04-25', '19:09:28', 8),
-(24, 4156, 'Alarm LED was turned ON', 'STEADY ON', '2020-04-26', '22:51:57', 9),
-(25, 4156, 'All parameters NORMAL', 'ko', '2020-04-26', '23:03:38', 9);
+(40, 4156, 'SAT LED not steady on', 'NOT STEADY ON', '2020-05-01', '17:59:29', 16),
+(41, 4156, 'I/O LED not steady on', 'NOT STEADY ON', '2020-05-01', '17:59:29', 16),
+(42, 4156, 'ODU LED not steady on', 'NOT STEADY ON', '2020-05-01', '17:59:29', 16),
+(43, 4156, 'Power LED not steady on', 'NOT STEADY ON', '2020-05-01', '17:59:29', 16),
+(44, 4156, 'Rx/Tx -not Blinking', 'RX/TX NOT BLINKING', '2020-05-01', '17:59:29', 16),
+(45, 4156, 'Alarm LED was turned ON', 'ON', '2020-05-01', '17:59:29', 16),
+(46, 4156, 'UPS I/P Voltage exceeding normal voltage', '-1', '2020-05-01', '17:59:29', 16),
+(47, 4156, 'UPS O/P Voltage exceeding normal voltage', '-1', '2020-05-01', '17:59:29', 16),
+(48, 4156, 'UPS Battery Voltage exceeding normal voltage', '-1', '2020-05-01', '17:59:29', 16),
+(49, 4156, 'C/O Function not OK', 'NOT OK', '2020-05-01', '17:59:29', 16),
+(50, 4156, 'ODU LED not steady on(update)', 'NOT STEADY ON', '2020-05-01', '18:08:18', 16),
+(51, 4156, 'Power LED not steady on(update)', 'NOT STEADY ON', '2020-05-01', '18:08:18', 16),
+(52, 4156, 'Rx/Tx -not Blinking(update)', 'RX/TX NOT BLINKING', '2020-05-01', '18:08:18', 16),
+(53, 4156, 'Alarm LED was turned ON(update)', 'ON', '2020-05-01', '18:08:18', 16),
+(54, 4156, 'UPS I/P Voltage exceeding normal voltage(update)', '200', '2020-05-01', '18:08:18', 16),
+(55, 4156, 'UPS O/P Voltage exceeding normal voltage(update)', '200', '2020-05-01', '18:08:18', 16),
+(56, 4156, 'UPS Battery Voltage exceeding normal voltage(update)', '-1', '2020-05-01', '18:08:18', 16),
+(57, 4156, 'C/O Function not OK(update)', 'NOT OK', '2020-05-01', '18:08:18', 16),
+(58, 4156, 'Procedure Followed', 'bye', '2020-05-01', '18:08:18', 16),
+(59, 4156, 'ODU LED not steady on(update)', 'NOT STEADY ON', '2020-05-01', '18:08:44', 16),
+(60, 4156, 'Power LED not steady on(update)', 'NOT STEADY ON', '2020-05-01', '18:08:44', 16),
+(61, 4156, 'Rx/Tx -not Blinking(update)', 'RX/TX NOT BLINKING', '2020-05-01', '18:08:44', 16),
+(62, 4156, 'Alarm LED was turned ON(update)', 'ON', '2020-05-01', '18:08:44', 16),
+(63, 4156, 'UPS I/P Voltage exceeding normal voltage(update)', '210', '2020-05-01', '18:08:44', 16),
+(64, 4156, 'UPS O/P Voltage exceeding normal voltage(update)', '210', '2020-05-01', '18:08:44', 16),
+(65, 4156, 'Procedure Followed', 'hello', '2020-05-01', '18:08:44', 16),
+(66, 4156, 'All parameters NORMAL', 'goodye', '2020-05-01', '18:09:17', 16);
 
 -- --------------------------------------------------------
 
@@ -1302,7 +1426,7 @@ CREATE TABLE IF NOT EXISTS `dscnmlogs` (
   PRIMARY KEY (`log_id`),
   KEY `dscnmlogs_ibfk_1` (`emp_id`),
   KEY `p_id` (`p_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dscnmlogs`
@@ -1310,9 +1434,7 @@ CREATE TABLE IF NOT EXISTS `dscnmlogs` (
 
 INSERT INTO `dscnmlogs` (`log_id`, `emp_id`, `p_id`, `value`, `remarks`, `date`, `time`) VALUES
 (1, 4156, 5, 'Parameters as submitted in the report', 'Parameters submitted to the supervisor', '2020-04-27', '12:29:55'),
-(2, 4156, 5, 'ok', 'Parameters submitted to the supervisor after rectification', '2020-04-27', '18:51:43'),
-(3, 4156, 5, 'ok', 'Final submit with errors', '2020-04-27', '18:58:29'),
-(4, 4156, 5, 'bye', 'Parameters submitted to the supervisor after rectification', '2020-04-27', '00:54:58');
+(2, 4156, 5, 'ok', 'Parameters submitted to the supervisor after rectification', '2020-04-27', '18:51:43');
 
 -- --------------------------------------------------------
 
@@ -1354,7 +1476,7 @@ CREATE TABLE IF NOT EXISTS `dscnmonthly` (
 INSERT INTO `dscnmonthly` (`p_id`, `date`, `time`, `status`, `a_id`, `emp_id`, `f_id`, `Cleaning_DSCN_associated_eqpt`, `Battery_backup_time_of_UPS1nUPS2`, `UPS_battery_voltage_on_load`, `Antenna_n_cable_check`, `Earth_resistance`, `EorN_voltage`, `eqpt_status_after_check`, `REMARKS`, `Unit_incharge_approval`, `approval_date`, `approval_time`) VALUES
 (1, '2020-02-27', '10:05:06', 'COMPLETED', 1, 4156, 3, 'Cleaning performed.', '15hrs ', 'Can withstand load ', 'All antennas and cables properly connected.', 'All connections are maintained.', 25, 'GOOD', NULL, 'YES', '2020-02-27', '13:07:05'),
 (2, '2020-03-27', '11:06:04', 'COMPLETED', 1, 4156, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'YES', '2020-03-27', '14:11:06'),
-(5, '2020-04-27', '12:29:55', 'COMPLETED', 1, 4156, 3, 'cleaning performed ', '15 hrs', 'can withstamd', 'xs', 'ok', 25, 'ok', NULL, NULL, '2020-04-27', '00:02:00');
+(5, '2020-04-27', '12:29:55', 'COMPLETED WITH ERRORS', 1, 4156, 3, 'cleaning performed ', '15 hrs', 'can withstamd', 'xs', 'ok', 25, 'ok', NULL, NULL, '2020-04-27', '00:02:00');
 
 -- --------------------------------------------------------
 
@@ -1483,7 +1605,7 @@ INSERT INTO `engineer` (`emp_id`, `name`, `designation`, `a_id`, `dept`, `contac
 (4129, 'Ramesh Sharma', 'JET', 1, 'N', 32412, 'pbkdf2_sha256$180000$diZOk8Rzg1jx$hs/Io2JxPemTz/XiP1p/1ZNseMjMDi87l8hmWF/nmcI=', 3112, 'bro@gmail.com'),
 (4131, 'Chandresh Reddy', 'MGR SR', 1, 'S', 21315, 'pbkdf2_sha256$180000$KqlhlXzv8Mjd$Jz3b0MbUJiah//q+7bR17PzYMZarf0/bjtSY2m3Im5E=', 3181, 'bro@gmail.com'),
 (4132, 'Suresh Kelkar', 'AM', 1, 'S', 12312, 'pbkdf2_sha256$180000$TyI6a1BHImPz$T138jiTOLZO5K4cIoLP4HTS/Ips0oyFJX4XmF/rvp6Y=', 3181, 'bro@gmail.com'),
-(4133, 'bobby', 'JET', 1, 'N', 44499, 'pbkdf2_sha256$180000$3mDUpcCefGhT$ISSBIRA6W4A34bfUm/5Q36geKPDs5LhGl5decyPhLTA=', 3112, 'bro@gmail.com'),
+(4133, 'bobby', 'JET', 1, 'S', 44499, 'pbkdf2_sha256$180000$3mDUpcCefGhT$ISSBIRA6W4A34bfUm/5Q36geKPDs5LhGl5decyPhLTA=', 3181, 'bro@gmail.com'),
 (4144, 'Hudson Odoi', 'AM', 1, 'C', 23231, 'pbkdf2_sha256$180000$0gx6UouLSNhm$reJqcqeiPkGZncq2y/Xbw/BdkhnaQoA08Lo7AepAEJE=', 3193, 'bro@gmail.com'),
 (4156, 'Mason Mount', 'JET', 1, 'C', 231123, 'pbkdf2_sha256$180000$jSyJMRXoC0OR$WRh6O+2VZnlicZqvopk6Iz6NPzj1tcv+OrkGa71r/bA=', 3193, 'bro@gmail.com'),
 (4169, 'Varun Naik', 'MGR CE', 1, 'C', 866651, 'pbkdf2_sha256$180000$u14lkS5xAW9g$N4A5ZRz8byVghDGCYfIfZKi8mbd2+oS45clKoeOKHJQ=', 3193, 'bro123@gmail.com');
@@ -1740,14 +1862,17 @@ INSERT INTO `ndbweekly` (`date`, `a_id`, `emp_id`, `f_id`, `mains_pwr_supply_che
 
 DROP TABLE IF EXISTS `scctvdaily`;
 CREATE TABLE IF NOT EXISTS `scctvdaily` (
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `p_id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `status` varchar(30) NOT NULL,
   `a_id` int(11) NOT NULL,
   `emp_id` int(11) DEFAULT NULL,
-  `f_id` varchar(10) NOT NULL,
+  `f_id` int(11) NOT NULL,
   `UPS_battery_indication` varchar(20) DEFAULT NULL,
   `Servers_ON_condition` varchar(10) DEFAULT NULL,
   `NAS_status_in_VMSorVRM` varchar(10) DEFAULT NULL,
-  `recording_active_status_VRS_server` int(11) DEFAULT NULL,
+  `recording_active_status_VRS_server` varchar(30) DEFAULT NULL,
   `recording_active_status_RRS_server` varchar(20) DEFAULT NULL,
   `database_status_VMS` varchar(10) DEFAULT NULL,
   `cameras_IVMS` varchar(10) DEFAULT NULL,
@@ -1756,23 +1881,77 @@ CREATE TABLE IF NOT EXISTS `scctvdaily` (
   `Unit_incharge_approval` varchar(3) DEFAULT NULL,
   `approval_date` date DEFAULT NULL,
   `approval_time` time DEFAULT NULL,
-  `p_id` int(11) NOT NULL AUTO_INCREMENT,
-  `s_verify` int(11) DEFAULT NULL,
-  `status` varchar(30) NOT NULL,
   PRIMARY KEY (`p_id`),
   UNIQUE KEY `date` (`date`,`a_id`) USING BTREE,
   KEY `a_id` (`a_id`),
-  KEY `emp_id` (`emp_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+  KEY `emp_id` (`emp_id`),
+  KEY `scctvdaily_ibfk_3` (`f_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `scctvdaily`
 --
 
-INSERT INTO `scctvdaily` (`date`, `a_id`, `emp_id`, `f_id`, `UPS_battery_indication`, `Servers_ON_condition`, `NAS_status_in_VMSorVRM`, `recording_active_status_VRS_server`, `recording_active_status_RRS_server`, `database_status_VMS`, `cameras_IVMS`, `eqpt_cleaning`, `REMARKS`, `Unit_incharge_approval`, `approval_date`, `approval_time`, `p_id`, `s_verify`, `status`) VALUES
-('2020-03-24 10:41:57', 1, 4132, '3', 'FULL', 'OK', 'OK', 32, 'PAUSE', 'OK', 'OK', 'OK', NULL, 'YES', NULL, NULL, 1, NULL, ''),
-('2020-03-24 10:42:00', 1, 4133, '3', 'FULL', 'OK', 'OK', 32, 'PAUSE', 'OK', 'OK', 'CARRIED OUT', NULL, 'YES', NULL, NULL, 2, NULL, ''),
-('2020-03-24 10:42:03', 1, 4131, '3', 'FULL', 'OK', 'OK', 32, 'PAUSE', 'OK', 'OK', 'OK', NULL, 'YES', NULL, NULL, 3, NULL, '');
+INSERT INTO `scctvdaily` (`p_id`, `date`, `time`, `status`, `a_id`, `emp_id`, `f_id`, `UPS_battery_indication`, `Servers_ON_condition`, `NAS_status_in_VMSorVRM`, `recording_active_status_VRS_server`, `recording_active_status_RRS_server`, `database_status_VMS`, `cameras_IVMS`, `eqpt_cleaning`, `REMARKS`, `Unit_incharge_approval`, `approval_date`, `approval_time`) VALUES
+(1, '2020-04-25', '09:04:06', 'COMPLETED', 1, 4132, 3, 'FULL', 'OK', 'OK', '32', 'PAUSE', 'OK', 'OK', 'OK', NULL, 'YES', '2020-04-26', '13:07:06'),
+(2, '2020-04-27', '07:06:06', 'COMPLETED', 1, 4133, 3, 'FULL', 'OK', 'OK', '32', 'PAUSE', 'OK', 'OK', 'CARRIED OUT', NULL, 'YES', '2020-04-27', '10:07:00'),
+(3, '2020-04-28', '07:11:08', 'COMPLETED', 1, 4131, 3, 'FULL', 'OK', 'OK', '32', 'PAUSE', 'OK', 'OK', 'OK', NULL, 'YES', '2020-04-28', '19:10:05'),
+(35, '2020-04-29', '17:37:15', 'COMPLETED WITH ERRORS', 1, 4131, 2, 'FULL', 'OK', 'OK', 'EQUALS TO TOTAL CAMERA', 'ON', 'OK', 'OK', 'CARRIED OUT', NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `scctvdlogs`
+--
+
+DROP TABLE IF EXISTS `scctvdlogs`;
+CREATE TABLE IF NOT EXISTS `scctvdlogs` (
+  `log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_id` int(11) NOT NULL,
+  `p_id` int(11) NOT NULL,
+  `value` varchar(40) NOT NULL,
+  `remarks` varchar(100) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  PRIMARY KEY (`log_id`),
+  KEY `emp_id` (`emp_id`),
+  KEY `p_id` (`p_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `scctvdlogs`
+--
+
+INSERT INTO `scctvdlogs` (`log_id`, `emp_id`, `p_id`, `value`, `remarks`, `date`, `time`) VALUES
+(1, 4131, 35, 'NOT OK', 'NAS status in VMS/VRM is NOT OK ', '2020-04-29', '00:34:13'),
+(2, 4131, 35, 'ON', 'Status of RRS camera is ON', '2020-04-29', '00:34:13'),
+(3, 4131, 35, 'ON', 'Status of RRS camera is ON', '2020-04-29', '01:04:54'),
+(4, 4131, 35, 'ON', 'Status of RRS camera is ON', '2020-04-29', '01:08:07'),
+(5, 4131, 35, 'ON', 'Status of RRS camera is ON', '2020-04-29', '01:09:48'),
+(6, 4131, 35, 'ON', 'Status of RRS camera is ON', '2020-04-29', '17:33:53'),
+(7, 4131, 35, 'NOT OK', 'Status of ivms server is NOT OK', '2020-04-29', '17:33:53'),
+(8, 4131, 35, 'ON', 'Status of RRS camera is ON', '2020-04-29', '17:37:15'),
+(9, 4131, 35, 'bye', 'Final submit with errors', '2020-04-29', '17:38:29');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `scctvmlogs`
+--
+
+DROP TABLE IF EXISTS `scctvmlogs`;
+CREATE TABLE IF NOT EXISTS `scctvmlogs` (
+  `log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_id` int(11) NOT NULL,
+  `p_id` int(11) NOT NULL,
+  `value` varchar(40) NOT NULL,
+  `remarks` varchar(100) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  PRIMARY KEY (`log_id`),
+  KEY `scctvmlogs_ibfk_1` (`emp_id`),
+  KEY `p_id` (`p_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -1782,10 +1961,13 @@ INSERT INTO `scctvdaily` (`date`, `a_id`, `emp_id`, `f_id`, `UPS_battery_indicat
 
 DROP TABLE IF EXISTS `scctvmonthly`;
 CREATE TABLE IF NOT EXISTS `scctvmonthly` (
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `p_id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
   `a_id` int(11) NOT NULL,
   `emp_id` int(11) DEFAULT NULL,
-  `f_id` varchar(10) NOT NULL,
+  `f_id` int(11) NOT NULL,
+  `status` varchar(30) NOT NULL,
   `ups_ip_voltage` int(11) DEFAULT NULL,
   `ups_op_voltage` int(11) DEFAULT NULL,
   `ups_battery_op_voltage_ACpwrON` int(11) DEFAULT NULL,
@@ -1801,22 +1983,21 @@ CREATE TABLE IF NOT EXISTS `scctvmonthly` (
   `Unit_incharge_approval` varchar(3) DEFAULT NULL,
   `approval_date` date DEFAULT NULL,
   `approval_time` time DEFAULT NULL,
-  `p_id` int(11) NOT NULL AUTO_INCREMENT,
-  `s_verify` int(11) DEFAULT NULL,
-  `status` varchar(30) NOT NULL,
   PRIMARY KEY (`p_id`),
   UNIQUE KEY `date` (`date`,`a_id`) USING BTREE,
   KEY `a_id` (`a_id`),
-  KEY `emp_id` (`emp_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+  KEY `emp_id` (`emp_id`),
+  KEY `scctvmonthly_ibfk_3` (`f_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `scctvmonthly`
 --
 
-INSERT INTO `scctvmonthly` (`date`, `a_id`, `emp_id`, `f_id`, `ups_ip_voltage`, `ups_op_voltage`, `ups_battery_op_voltage_ACpwrON`, `ups_battery_op_voltage_ACpwrOFF`, `ups_battery_op_voltage_after15min_ACpwrOFF`, `server_status`, `cameras_in_VRS_server`, `NAS_free_capacity`, `OFClinkto_L2L3_switches`, `cleaning_camera_eqpt`, `user_rights_check`, `REMARKS`, `Unit_incharge_approval`, `approval_date`, `approval_time`, `p_id`, `s_verify`, `status`) VALUES
-('2020-03-24 10:42:17', 1, 4133, '3', 235, 225, 203, 191, 176, 'ON', 'ACCESSIBLE', 1.24, 'BLINKING GREEN', 'CARRIED OUT', 'OK', NULL, 'YES', NULL, NULL, 1, NULL, ''),
-('2020-03-24 10:42:19', 1, 4132, '3', 230, 225, 208, 186, 176, 'ON', 'OK', 9.2, 'BLINKING GREEN', 'CARRIED OUT', 'OK', NULL, 'YES', NULL, NULL, 2, NULL, '');
+INSERT INTO `scctvmonthly` (`p_id`, `date`, `time`, `a_id`, `emp_id`, `f_id`, `status`, `ups_ip_voltage`, `ups_op_voltage`, `ups_battery_op_voltage_ACpwrON`, `ups_battery_op_voltage_ACpwrOFF`, `ups_battery_op_voltage_after15min_ACpwrOFF`, `server_status`, `cameras_in_VRS_server`, `NAS_free_capacity`, `OFClinkto_L2L3_switches`, `cleaning_camera_eqpt`, `user_rights_check`, `REMARKS`, `Unit_incharge_approval`, `approval_date`, `approval_time`) VALUES
+(1, '2020-03-24', '09:04:02', 1, 4131, 3, 'COMPLETED', 235, 225, 203, 191, 176, 'ON', 'ACCESSIBLE', 1.24, 'BLINKING GREEN', 'CARRIED OUT', 'OK', NULL, 'YES', '2020-03-24', '14:04:11'),
+(2, '2020-04-24', '09:06:04', 1, 4131, 3, 'COMPLETED', 230, 225, 208, 186, 176, 'ON', 'OK', 9.2, 'BLINKING GREEN', 'CARRIED OUT', 'OK', NULL, 'YES', '2020-04-24', '17:12:04'),
+(6, '2020-04-29', '20:59:00', 1, 4131, 3, 'COMPLETED WITH ERRORS', 237, 230, 207, 185, 179, 'ON', 'OK', 1, 'BLINKING GREEN', 'CARRIED OUT', 'OK', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1826,10 +2007,13 @@ INSERT INTO `scctvmonthly` (`date`, `a_id`, `emp_id`, `f_id`, `ups_ip_voltage`, 
 
 DROP TABLE IF EXISTS `scctvweekly`;
 CREATE TABLE IF NOT EXISTS `scctvweekly` (
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `p_id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `status` varchar(30) NOT NULL,
   `a_id` int(11) NOT NULL,
   `emp_id` int(11) DEFAULT NULL,
-  `f_id` varchar(10) NOT NULL,
+  `f_id` int(11) NOT NULL,
   `ups_ip_voltage` int(11) DEFAULT NULL,
   `ups_op_voltage` int(11) DEFAULT NULL,
   `ups_battery_status` varchar(10) DEFAULT NULL,
@@ -1842,21 +2026,52 @@ CREATE TABLE IF NOT EXISTS `scctvweekly` (
   `Unit_incharge_approval` varchar(3) DEFAULT NULL,
   `approval_date` date DEFAULT NULL,
   `approval_time` time DEFAULT NULL,
-  `p_id` int(11) NOT NULL AUTO_INCREMENT,
-  `s_verify` int(11) DEFAULT NULL,
-  `status` varchar(30) NOT NULL,
   PRIMARY KEY (`p_id`),
   KEY `a_id` (`a_id`),
-  KEY `emp_id` (`emp_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+  KEY `emp_id` (`emp_id`),
+  KEY `SCCTVWeekly_ibfk_3` (`f_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `scctvweekly`
 --
 
-INSERT INTO `scctvweekly` (`date`, `a_id`, `emp_id`, `f_id`, `ups_ip_voltage`, `ups_op_voltage`, `ups_battery_status`, `server_status`, `camera_NAS_status_in_VRS`, `workstns_n_client_softw_check`, `cameras_client_IVMS_softw`, `NAS_free_capacity`, `REMARKS`, `Unit_incharge_approval`, `approval_date`, `approval_time`, `p_id`, `s_verify`, `status`) VALUES
-('2020-03-24 10:42:34', 1, 4131, '3', 230, 225, 'FULL', 'OK', 'OK', 'OK', 'OK', 1.23, 'NAS_free_capacity not to be equal to 0.', 'YES', NULL, NULL, 1, NULL, ''),
-('2020-03-24 10:42:37', 1, 4132, '3', 225, 220, 'FULL', 'OK', 'OK', 'OK', 'OK', 1.34, NULL, 'YES', NULL, NULL, 2, NULL, '');
+INSERT INTO `scctvweekly` (`p_id`, `date`, `time`, `status`, `a_id`, `emp_id`, `f_id`, `ups_ip_voltage`, `ups_op_voltage`, `ups_battery_status`, `server_status`, `camera_NAS_status_in_VRS`, `workstns_n_client_softw_check`, `cameras_client_IVMS_softw`, `NAS_free_capacity`, `REMARKS`, `Unit_incharge_approval`, `approval_date`, `approval_time`) VALUES
+(1, '2020-04-15', '09:05:04', 'COMPLETED', 1, 4131, 3, 230, 225, 'FULL', 'OK', 'OK', 'OK', 'OK', 1.23, 'NAS_free_capacity not to be equal to 0.', 'YES', '2020-04-15', '08:04:04'),
+(2, '2020-04-22', '09:05:05', 'COMPLETED', 1, 4132, 3, 225, 220, 'FULL', 'OK', 'OK', 'OK', 'OK', 1.34, NULL, 'YES', '2020-04-22', '16:05:04'),
+(3, '2020-04-29', '17:51:03', 'COMPLETED WITH ERRORS', 1, 4131, 3, 230, 231, 'FULL', 'ON', 'OK', 'OK', 'OK', 0, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `scctvwlogs`
+--
+
+DROP TABLE IF EXISTS `scctvwlogs`;
+CREATE TABLE IF NOT EXISTS `scctvwlogs` (
+  `log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `emp_id` int(11) NOT NULL,
+  `p_id` int(11) NOT NULL,
+  `value` varchar(40) NOT NULL,
+  `remarks` varchar(100) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  PRIMARY KEY (`log_id`),
+  KEY `emp_id` (`emp_id`),
+  KEY `p_id` (`p_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `scctvwlogs`
+--
+
+INSERT INTO `scctvwlogs` (`log_id`, `emp_id`, `p_id`, `value`, `remarks`, `date`, `time`) VALUES
+(1, 4131, 3, '231', 'UPS_op not in corrent range', '2020-04-29', '17:42:47'),
+(2, 4131, 3, 'DISCHARGED', 'UPS battery not full', '2020-04-29', '17:42:47'),
+(3, 4131, 3, '0', 'NAS_free_capacity not OK', '2020-04-29', '17:42:47'),
+(4, 4131, 3, '231', 'UPS_op not in corrent range', '2020-04-29', '17:51:03'),
+(5, 4131, 3, '0', 'NAS_free_capacity not OK', '2020-04-29', '17:51:03'),
+(6, 4131, 3, 'bye', 'Final submit with errors', '2020-04-29', '17:54:32');
 
 -- --------------------------------------------------------
 
@@ -2398,21 +2613,45 @@ ALTER TABLE `ndbweekly`
 --
 ALTER TABLE `scctvdaily`
   ADD CONSTRAINT `SCCTVDaily_ibfk_2` FOREIGN KEY (`emp_id`) REFERENCES `engineer` (`emp_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `scctvdaily_ibfk_1` FOREIGN KEY (`a_id`) REFERENCES `airport` (`a_id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `scctvdaily_ibfk_1` FOREIGN KEY (`a_id`) REFERENCES `airport` (`a_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `scctvdaily_ibfk_3` FOREIGN KEY (`f_id`) REFERENCES `surveillance` (`f_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `scctvdlogs`
+--
+ALTER TABLE `scctvdlogs`
+  ADD CONSTRAINT `scctvdlogs_ibfk_1` FOREIGN KEY (`emp_id`) REFERENCES `engineer` (`emp_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `scctvdlogs_ibfk_2` FOREIGN KEY (`p_id`) REFERENCES `scctvdaily` (`p_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `scctvmlogs`
+--
+ALTER TABLE `scctvmlogs`
+  ADD CONSTRAINT `scctvmlogs_ibfk_1` FOREIGN KEY (`emp_id`) REFERENCES `engineer` (`emp_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `scctvmlogs_ibfk_2` FOREIGN KEY (`p_id`) REFERENCES `scctvmonthly` (`p_id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `scctvmonthly`
 --
 ALTER TABLE `scctvmonthly`
   ADD CONSTRAINT `SCCTVMonthly_ibfk_2` FOREIGN KEY (`emp_id`) REFERENCES `engineer` (`emp_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `scctvmonthly_ibfk_1` FOREIGN KEY (`a_id`) REFERENCES `airport` (`a_id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `scctvmonthly_ibfk_1` FOREIGN KEY (`a_id`) REFERENCES `airport` (`a_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `scctvmonthly_ibfk_3` FOREIGN KEY (`f_id`) REFERENCES `surveillance` (`f_id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `scctvweekly`
 --
 ALTER TABLE `scctvweekly`
-  ADD CONSTRAINT `SCCTVWeekly_ibfk_2` FOREIGN KEY (`emp_id`) REFERENCES `engineer` (`emp_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `SCCTVWeekly_ibfk_2` FOREIGN KEY (`emp_id`) REFERENCES `engineer` (`emp_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `SCCTVWeekly_ibfk_3` FOREIGN KEY (`f_id`) REFERENCES `surveillance` (`f_id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `scctvweekly_ibfk_1` FOREIGN KEY (`a_id`) REFERENCES `airport` (`a_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `scctvwlogs`
+--
+ALTER TABLE `scctvwlogs`
+  ADD CONSTRAINT `scctvwlogs_ibfk_1` FOREIGN KEY (`emp_id`) REFERENCES `engineer` (`emp_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `scctvwlogs_ibfk_2` FOREIGN KEY (`p_id`) REFERENCES `scctvweekly` (`p_id`);
 
 --
 -- Constraints for table `supervisor`

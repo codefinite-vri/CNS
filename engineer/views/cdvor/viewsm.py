@@ -260,6 +260,7 @@ def cdvorm(request, id) :
             if cdvor_m :
                 return render(request,'engineer/cdvor/cdvormonthlyrep.html',{'cdvormlogs':cdvormlogs,'supdetails':supdetails,'cdvor_m':cdvor_m,'id':id,'cdvorm':cdvorm}) 
             else:
+                messages.add_message(request,30, 'You cannot make changes to pending report!')
                 return routebackcdvord(request, id)
         else: 
             return routebackcdvord(request, uid)
@@ -276,7 +277,7 @@ def cdvormonthlyrec(request, id):
             cdvor_m = cdvor_m.filter(emp_id=id).order_by('-p_id')
             return render(request,'engineer/cdvor/cdvormrecords.html',{'cdvor_m':cdvor_m,'id':id}) 
         else: 
-            return routebackcdvord(request, uid)
+            return routebackcdvord(request, id)
     else: 
         return render(request,'login/login.html')
 

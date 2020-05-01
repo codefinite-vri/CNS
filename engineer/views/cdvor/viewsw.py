@@ -148,6 +148,7 @@ def cdvorw(request, id) :
     if cdvor_w :
        return render(request,'engineer/cdvor/cdvorweeklyrep.html',{'cdvorwlogs':cdvorwlogs,'supdetails':supdetails,'cdvor_w':cdvor_w,'id':id,'cdvorw':cdvorw}) 
     else :
+       messages.add_message(request,30, 'You cannot make changes to pending report!')
        return routebackcdvord(request, id)
    else : 
      return routebackcdvord(request, uid)

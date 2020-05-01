@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Daily DATIS Maintenance Report</title>
+    <title>Daily DSCN Maintenance Report</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'supervisor/datisstyle.css' %}">
@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Gotu&family=Righteous&display=swap" rel="stylesheet">
        
 </head>
-<body onbeforeunload="return OnBeforeUnLoad ()"> 
+<body> 
     <div class="container">
         
         <nav class="navbar sticky-top">
@@ -32,11 +32,11 @@
 
               {% if temp.unit_incharge_approval == NONE %}
 
-                  {% if temp.room_temp == None %}             
+                  {% if temp.sat_led == None %}             
                         <div class="alert alert-danger">
                           <strong>Report Not Submitted</strong>
 
-                      {% elif temp.room_temp < 25 and temp.status_of_servera == "MAINS" and temp.status_of_serverb == "STANDBY" and temp.status_of_ups == "NORMAL" and temp.status_of_ac == "SVCBL" or temp.room_temp < 25 and temp.status_of_servera == "STANDBY" and temp.status_of_serverb == "MAINS" and temp.status_of_ups == "NORMAL" and temp.status_of_ac == "SVCBL" %}
+                      {% elif temp.coro_function == "OK" and temp.ip_voltage > 219 and temp.ip_voltage < 241 and temp.op_voltage > 219 and temp.op_voltage < 241 and temp.battery_voltage > 180 and temp.battery_voltage < 250 and temp.power_led == "STEADY ON" and temp.sat_led == "STEADY ON" and temp.odu_led == "STEADY ON" and temp.io_led == "STEADY ON" and temp.alarm_led == "OFF" and temp.v35_led == "RX/TX BLINKING" %}
                         <div class="alert alert-success">
                           <strong> All maintenance entries matched with standard values.</strong>                   
 
@@ -67,7 +67,7 @@
                   
                   <form id="form-v">                    
                         <div class="card-body">
-                            <h2 class="card-title">DATIS-TERMA DAILY MAINTENANCE Report</h2>
+                            <h2 class="card-title">DSCN-TERMA DAILY MAINTENANCE Report</h2>
                           
                             {% for log in logs|slice:":1" %}
                             <div class="alert alert-light" style="height: 40px; padding-top: 0px">
@@ -76,48 +76,84 @@
                                    
                             </div>
                             {% endfor %}
+                             
                              <hr>
-                            <div class="form-group row has-warning">
-                              <label for="room_temp" class="col-sm-6 col-form-label">Room Temperature*</label>
-                              <div>
-                                <input type="text" class="form-control form-control-sm" id="room_temp" name="Room Temperature" readonly="true" value="{{ temp.room_temp }}">
+                              <div class="form-group row has-warning">
+                                <label for="sat_led" class="col-sm-6 col-form-label">SAT LED*</label>
+                                <div>
+                                  <input type="text" class="form-control form-control-sm" id="sat_led" name="sled" readonly="true" value="{{ temp.sat_led }}">
+                                </div>
                               </div>
-                            </div>
+                            <hr>
+                              <div class="form-group row has-warning">
+                                <label for="odu_led" class="col-sm-6 col-form-label">ODU LED*</label>
+                                <div>
+                                   <input type="text" class="form-control form-control-sm" id="odu_led" name="ioled" readonly="true" value="{{ temp.io_led }}">
+                                </div>
+                              </div>
+                          
+                            <hr>  
+                              <div class="form-group row has-warning">
+                                <label for="alarm_led" class="col-sm-6 col-form-label">Alarm LED*</label>
+                                <div>
+                                  <input type="text" class="form-control form-control-sm" id="alarm_led" name="aled" readonly="true" value="{{ temp.alarm_led }}"/><br>
+                                </div>
+                              </div>
 
 
-                              <hr>
-                            <div class="form-group row has-warning">
-                              <label for="status_of_AC" class="col-sm-6 col-form-label">Status of AC*</label>
-                              <div>
-                                 <input type="text" class="form-control form-control-sm" id="status_of_AC" name="Room Temperature" readonly="true" value="{{ temp.status_of_ac }}">
+                            <hr>
+                              <div class="form-group row has-warning">
+                                <label for="power_led" class="col-sm-6 col-form-label">Power LED*</label>
+                                <div>
+                                  <input type="text" class="form-control form-control-sm" id="power_led" name="pwled" readonly="true" value="{{ temp.power_led }}"/><br>
+                                </div>
                               </div>
-                            </div>
+
                             
                               <hr>  
-                            <div class="form-group row has-warning">
-                              <label for="status_of_UPS" class="col-sm-6 col-form-label">Status of UPS*</label>
-                              <div>
-                                <input type="text" class="form-control form-control-sm" id="status_of_UPS" name="Status of UPS" readonly="true" value="{{ temp.status_of_ups }}"/><br>
-                              </div>
-                            </div>
-
-
-                              <hr>
                               <div class="form-group row has-warning">
-                                <label for="status_of_server A" class="col-sm-6 col-form-label">Status of Server A*</label>
+                                <label for="v35_led" class="col-sm-6 col-form-label">V35 LED*</label>
                                 <div>
-                                    <input type="text" class="form-control form-control-sm" id="status_of_serverA" name="Status of Server A" readonly="true" value="{{ temp.status_of_servera }}"/><br>
+                                  <input type="text" class="form-control form-control-sm" id="v35_led" name="v35led" readonly="true" value="{{ temp.v35_led }}">
                                 </div>
-                              </div>
-
+                              </div>                                
                               
-                                <hr>  
+                              <hr>  
                               <div class="form-group row has-warning">
-                                <label for="status_of_serverB" class="col-sm-6 col-form-label">Status of Server B*</label>
+                                <label for="ip_voltage" class="col-sm-6 col-form-label">I/P Voltage*</label>
                                 <div>
-                                    <input type="text" class="form-control form-control-sm" id="status_of_serverB" name="Status of Server B" readonly="true" value="{{ temp.status_of_serverb }}">
+                                  <input type="text" class="form-control form-control-sm" id="ip_voltage" name="ipv" readonly="true" value="{{ temp.ip_voltage }}">
                                 </div>
                               </div>
+                
+                                  
+                                  
+                                <hr>  
+                                <div class="form-group row has-warning">
+                                  <label for="op_voltage" class="col-sm-6 col-form-label">O/P Voltage*</label>
+                                  <div>
+                                    <input type="text" class="form-control form-control-sm" id="op_voltage" name="opv" readonly="true" value="{{ temp.op_voltage }}">
+                                  </div>
+                                </div>
+                  
+                                    
+                                  <hr>
+                                    <div class="form-group row has-warning">
+                                      <label for="battery_voltage" class="col-sm-6 col-form-label">Battery Voltage*</label>
+                                      <div>
+                                        <input type="text" class="form-control form-control-sm" id="battery_voltage" name="" readonly="true" value="{{ temp.battery_voltage }}">
+                                      </div>
+                                    </div>
+                      
+                                        
+                                    <hr>  
+                                    <div class="form-group row has-warning">
+                                      <label for="coro_function" class="col-sm-6 col-form-label">CorO Function*</label>
+                                      <div>
+                                        <input type="text" class="form-control form-control-sm" id="cof" name="cof" readonly="true" value="{{ temp.coro_function }}">
+                                      </div>
+                                                                  
+                                    </div>
 
                                 
                                 <hr>
@@ -128,6 +164,7 @@
                                   {% endif %}
                                   {% if temp.unit_incharge_approval != "YES" %}
                                   <a href='/verify/{{names}}/{{temp.p_token}}' class="btn submitbut" >APPROVE</a>      
+                                  <!-- <button class="btn submitbut" onclick="window.location.href='/verify/{{names}}/{{temp.p_token}}'" >APPROVE </button> -->
                                 {% endif %}
                                 {% endif %}
 </form></div>
@@ -215,7 +252,7 @@
                         </div>
                     </div>    
                 </div>
-                {% if temp.room_temp != None %}
+                {% if temp.sat_led != None %}
                 <div> 
                     <div class="logr">                       
                         <div class="card sidecard logrtitle"> REPORT LOG </div>
@@ -253,55 +290,52 @@
                             </div>
                             <div class="modal-body">
                                 <table class="table table-bordered table-condensed table-striped table-hover todaytasks">
-                                    <tr>
-                                        <th>VALUE LABEL</th>
-                                        <th>NORMAL VALUE</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Room Temperature</td>
-                                        <td>24 C</td>
-                                    </tr>
                                     
-                                            <tr>
-                                        <td>Status of AC</td>
-                                        <td>Svcbl</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Status OF UPS</td>
-                                        <td>Normal</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Status of Server A</td>
-                                        <td>Main/Standby</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Status of Server B</td>
-                                        <td>Main/Standby</td>
-                                    </tr>
-                                    <!--    <tr>
-                                        <td>Date and time of servers wrt GPS CLK</td>
-                                        <td>Correct</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Status of Disk Array</td>
-                                        <td>OK</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Status of VHF TX used for ATIS</td>
-                                        <td>On-Line</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Status of VHF RX used for ATIS</td>
-                                        <td>On-Line</td>
-                                    </tr>
-                                        <tr>
-                                        <td>DATIS update</td>
-                                        <td>OK</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Audio Quality of Datis Announcement</td>
-                                        <td>Good</td>
-                                    </tr>-->
+                            <tr>
+                              <th>VALUE LABEL</th>
+                              <th>NORMAL VALUE</th>
+                          </tr>
+                          <tr>
+                              <td>SAT LED</td>
+                              <td>Steady ON</td>
+                          </tr>
+                          
+                            <tr>
+                              <td>ODU LED</td>
+                              <td>Steady ON</td>
+                          </tr>
+                              <tr>
+                              <td>I/O LED</td>
+                              <td>Steady ON</td>
+                          </tr>
+                              <tr>
+                              <td>Alarm LED</td>
+                              <td>OFF</td>
+                          </tr>
+                              <tr>
+                              <td>Power LED</td>
+                              <td>Steady ON</td>
+                          </tr>
+                              <tr>
+                              <td>V.35 LED</td>
+                              <td>Rx/Tx- Blinking, When data is being Xmitted/R'cvd</td>
+                          </tr>
+                              <tr>
+                              <td>Input Voltage</td>
+                              <td>230-10%, 230+10%</td>
+                          </tr>
+                              <tr>
+                              <td>Output Voltage</td>
+                              <td>Refer Airtel/UPS service manual</td>
+                          </tr>
+                              <tr>
+                              <td>Battery Voltage</td>
+                              <td>Refer Airtel/UPS service manual</td>
+                        </tr>
+                              <tr>
+                              <td>C/O Function</td>
+                              <td>OK</td>
+                        </tr>
                               </table>
                             </div>
                             <div class="modal-footer">
@@ -323,35 +357,44 @@
                                     <thead>
                                         <tr>  
                                           <th>Date</th>
-                                            <th>Time</th>
-                                            <th>Room Temp</th>
-                                            <th>Status of AC</th>
-                                          <th>Status of UPS</th>
-                                            <th>Status of server A</th>
-                                            <th>Status of server B</th>
-                                            <th>Remarks</th>
-                                            <th>Test</th>
+                                      <th>Time</th>
+                                      <th>SAT LED</th>
+                                      <th>ODU LED</th>
+                                      <th>IO LED</th>
+                                      <th>Alarm LED</th>
+                                      <th>Power LED</th>
+                                      <th>V35 LED</th>
+                                      <th>IP Voltage</th>
+                                      <th>OP voltage</th>
+                                      <th>Battery Voltage</th>
+                                      <th>CorO function</th>
+                                      <th>Test</th>
                                         </tr>
                                     </thead>
                                     <tbody><!-- Need to change variables -->
-                                        {% for datisdd in mrec %}
+                                        {% for temp in mrec %}
                                         <tr>
                                          
-                                          <td>{{ datisdd.date }}</td>
-                                            <td>{{ datisdd.time }}</td>
-                                            <td>{{ datisdd.room_temp }}</td>
-                                            <td>{{ datisdd.status_of_ac }}</td>
-                                            <td>{{ datisdd.status_of_ups }}</td>
-                                            <td>{{ datisdd.status_of_servera }}</td>
-                                            <td>{{ datisdd.status_of_serverb }}</td>
-                                            <td>{{ datisdd.remarks }}</td>
-                                        {% if datisd.room_temp < 25 and datisd.status_of_servera == "MAINS" and datisd.status_of_serverb == "STANDBY" and datisd.status_of_ups == "NORMAL" and datisd.status_of_ac == "SVCBL" or datisd.room_temp < 25 and datisd.status_of_servera == "STANDBY" and datisd.status_of_serverb == "MAINS" and datisd.status_of_ups == "NORMAL" and datisd.status_of_ac == "SVCBL" %}
-                                            <td>Pass</td>
-                                        {% else %}
-                                            <td>Fail</td>
-                                        {% endif %}  
+                                          <td>{{ temp.date }}</td>
+                                          <td>{{ temp.time }}</td>
+                                          <td>{{ temp.sat_led }}</td>
+                                          <td>{{ temp.odu_led }}</td>
+                                          <td>{{ temp.io_led }}</td>
+                                          <td>{{ temp.alarm_led }}</td>
+                                          <td>{{ temp.power_led }}</td>
+                                          <td>{{ temp.v35_led }}</td>
+                                          <td>{{ temp.ip_voltage }}</td>
+                                          <td>{{ temp.op_voltage }}</td>
+                                          <td>{{ temp.battery_voltage }}</td>
+                                          <td>{{ temp.coro_function }}</td>
+                                          
+                                          {% if temp.coro_function == "OK" and temp.ip_voltage > 219 and temp.ip_voltage < 241 and temp.op_voltage > 219 and temp.op_voltage < 241 and temp.battery_voltage > 180 and temp.battery_voltage < 250 and temp.power_led == "STEADY ON" and temp.sat_led == "STEADY ON" and temp.odu_led == "STEADY ON" and temp.io_led == "STEADY ON" and temp.alarm_led == "OFF" and temp.v35_led == "RX/TX BLINKING" %}
+                                          <td>Pass</td>
+                                          {% else %}
+                                         <td>Fail</td>
+                                          {% endif %}
                                         </tr>
-                                        {% endfor %}
+                                              {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
@@ -386,36 +429,61 @@
     <script>
 
         $(function(){
-                if($("#room_temp").val()<"25"){
-                     $('#room_temp').css('border-color', 'pale-green');
-                }else{
-                   $('#room_temp').css('border-color', 'red');
-                }
+            if($("#sat_led").val()=="STEADY ON"){
+               $('#sat_led').css('border-color', 'pale-green');
+            }else{
+               $('#sat_led').css('border-color', 'red');
+            }
 
-                if($("#status_of_AC").val()=="SVCBL"){
-                     $('#status_of_AC').css('border-color', 'pale-green');
-                }else{
-                   $('#status_of_AC').css('border-color', 'red');
-                }
+            if($("#odu_led").val()=="STEADY ON"){
+               $('#odu_led').css('border-color', 'pale-green');
+            }else{
+               $('#odu_led').css('border-color', 'red');
+            }
 
-                if($("#status_of_UPS").val()=="NORMAL"){
-                     $('#status_of_UPS').css('border-color', 'pale-green');
-                }else{
-                   $('#status_of_UPS').css('border-color', 'red');
-                }
+            if($("#alarm_led").val()=="OFF"){
+               $('#alarm_led').css('border-color', 'pale-green');
+            }else{
+               $('#alarm_led').css('border-color', 'red');
+            }
 
-                if($("#status_of_serverB").val()=="MAINS" && $("#status_of_serverA").val()=="STANDBY" ){
-                     $('#status_of_serverB').css('border-color', 'pale-green');
-                     $('#status_of_serverA').css('border-color', 'pale-green');
-                }
-                else if($("#status_of_serverA").val()=="MAINS" && $("#status_of_serverB").val()=="STANDBY" ){
-                     $('#status_of_serverA').css('border-color', 'pale-green');
-                     $('#status_of_serverB').css('border-color', 'pale-green');
-                }else{
-                   $('#status_of_serverA').css('border-color', 'red');
-                   $('#status_of_serverB').css('border-color', 'red');
-                } 
-            });
+            if($("#power_led").val()=="STEADY ON"){
+               $('#power_led').css('border-color', 'pale-green');
+            }else{
+               $('#power_led').css('border-color', 'red');
+            }
+
+            if($("#v35_led").val()=="RX/TX BLINKING" ){
+               $('#v35_led').css('border-color', 'pale-green');
+            }else{
+               $('#v35_led').css('border-color', 'red');
+            }
+
+            if($("#ip_voltage").val()>"219"){
+               $('#ip_voltage').css('border-color', 'pale-green');
+            }else{
+               $('ip_voltage').css('border-color', 'red');
+            }
+
+            if($("#op_voltage").val()>"219" && $("#op_voltage").val()<"241"){
+               $('#op_voltage').css('border-color', 'pale-green');
+            }else{
+               $('op_voltage').css('border-color', 'red');
+            }
+
+            if($("#battery_voltage").val()>"180" && $("#battery_voltage").val()<"250"){
+               $('#battery_voltage').css('border-color', 'pale-green');
+            }else{
+               $('#battery_voltage').css('border-color', 'red');
+            }
+
+            if($("#cof").val()=="OK" ){
+               $('#cof').css('border-color', 'pale-green');
+            }else{
+               $('#cof').css('border-color', 'red');
+            }
+           
+        });
     </script>
 </body>
 

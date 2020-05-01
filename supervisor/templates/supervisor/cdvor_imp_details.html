@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Daily DATIS Maintenance Report</title>
+    <title>Daily CDVOR Maintenance Report</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'supervisor/datisstyle.css' %}">
@@ -32,12 +32,11 @@
 
               {% if temp.unit_incharge_approval == NONE %}
 
-                  {% if temp.room_temp == None %}             
+                  {% if temp.azimuth_angle == None %}             
                         <div class="alert alert-danger">
                           <strong>Report Not Submitted</strong>
 
-                      {% elif temp.room_temp < 25 and temp.status_of_servera == "MAINS" and temp.status_of_serverb == "STANDBY" and temp.status_of_ups == "NORMAL" and temp.status_of_ac == "SVCBL" or temp.room_temp < 25 and temp.status_of_servera == "STANDBY" and temp.status_of_serverb == "MAINS" and temp.status_of_ups == "NORMAL" and temp.status_of_ac == "SVCBL" %}
-                        <div class="alert alert-success">
+                      {% elif temp.azimuth_angle < 25 and temp.number_30hz_modulation >= 28 and temp.number_30hz_modulation < 31 and temp.number_9960hz_modulation >= 28 and temp.number_9960hz_modulation < 31 and temp.number_9960hz_deviation >= 15 and temp.number_9960hz_deviation < 18 and temp.field_intensity >= -1 and temp.field_intensity < 2 %}
                           <strong> All maintenance entries matched with standard values.</strong>                   
 
                       {% else %}             
@@ -67,7 +66,7 @@
                   
                   <form id="form-v">                    
                         <div class="card-body">
-                            <h2 class="card-title">DATIS-TERMA DAILY MAINTENANCE Report</h2>
+                            <h2 class="card-title">CDVOR DAILY MAINTENANCE Report</h2>
                           
                             {% for log in logs|slice:":1" %}
                             <div class="alert alert-light" style="height: 40px; padding-top: 0px">
@@ -78,44 +77,44 @@
                             {% endfor %}
                              <hr>
                             <div class="form-group row has-warning">
-                              <label for="room_temp" class="col-sm-6 col-form-label">Room Temperature*</label>
+                              <label for="azimuth_angle" class="col-sm-6 col-form-label">Azimuth angle*</label>
                               <div>
-                                <input type="text" class="form-control form-control-sm" id="room_temp" name="Room Temperature" readonly="true" value="{{ temp.room_temp }}">
+                                <input type="text" class="form-control form-control-sm" id="azimuth_angle" name="Azimuth angle" readonly="true" value="{{ temp.azimuth_angle }}">
                               </div>
                             </div>
 
 
                               <hr>
                             <div class="form-group row has-warning">
-                              <label for="status_of_AC" class="col-sm-6 col-form-label">Status of AC*</label>
+                              <label for="number_30hz_modulation" class="col-sm-6 col-form-label">30Hz modulation*</label>
                               <div>
-                                 <input type="text" class="form-control form-control-sm" id="status_of_AC" name="Room Temperature" readonly="true" value="{{ temp.status_of_ac }}">
+                                 <input type="text" class="form-control form-control-sm" id="number_30hz_modulation" name="30Hz modulation" readonly="true" value="{{ temp.number_30hz_modulation }}">
                               </div>
                             </div>
                             
                               <hr>  
                             <div class="form-group row has-warning">
-                              <label for="status_of_UPS" class="col-sm-6 col-form-label">Status of UPS*</label>
+                              <label for="number_9960hz_modulation" class="col-sm-6 col-form-label">9960Hz modulation*</label>
                               <div>
-                                <input type="text" class="form-control form-control-sm" id="status_of_UPS" name="Status of UPS" readonly="true" value="{{ temp.status_of_ups }}"/><br>
+                                <input type="text" class="form-control form-control-sm" id="number_9960hz_modulation" name="9960Hz modulation" readonly="true" value="{{ temp.number_9960hz_modulation }}"/><br>
                               </div>
                             </div>
 
 
                               <hr>
                               <div class="form-group row has-warning">
-                                <label for="status_of_server A" class="col-sm-6 col-form-label">Status of Server A*</label>
+                                <label for="number_9960hz_deviation" class="col-sm-6 col-form-label">9960Hz deviation*</label>
                                 <div>
-                                    <input type="text" class="form-control form-control-sm" id="status_of_serverA" name="Status of Server A" readonly="true" value="{{ temp.status_of_servera }}"/><br>
+                                  <input type="text" class="form-control form-control-sm" id="number_9960hz_deviation" name="9960Hz deviation" readonly="true" value="{{ temp.number_9960hz_deviation }}"/><br>
                                 </div>
                               </div>
 
                               
                                 <hr>  
                               <div class="form-group row has-warning">
-                                <label for="status_of_serverB" class="col-sm-6 col-form-label">Status of Server B*</label>
+                                <label for="field_intensity" class="col-sm-6 col-form-label">Field Intensity*</label>
                                 <div>
-                                    <input type="text" class="form-control form-control-sm" id="status_of_serverB" name="Status of Server B" readonly="true" value="{{ temp.status_of_serverb }}">
+                                  <input type="text" class="form-control form-control-sm" id="field_intensity" name="Field Intensity" readonly="true" value="{{ temp.field_intensity }}">
                                 </div>
                               </div>
 
@@ -215,7 +214,7 @@
                         </div>
                     </div>    
                 </div>
-                {% if temp.room_temp != None %}
+                {% if temp.azimuth_angle != None %}
                 <div> 
                     <div class="logr">                       
                         <div class="card sidecard logrtitle"> REPORT LOG </div>
@@ -254,54 +253,30 @@
                             <div class="modal-body">
                                 <table class="table table-bordered table-condensed table-striped table-hover todaytasks">
                                     <tr>
-                                        <th>VALUE LABEL</th>
-                                        <th>NORMAL VALUE</th>
+                                      <th>VALUE LABEL</th>
+                                      <th>NORMAL VALUE</th>
                                     </tr>
                                     <tr>
-                                        <td>Room Temperature</td>
-                                        <td>24 C</td>
+                                      <td>Azimuth Angle</td>
+                                      <td>less than 25</td>
                                     </tr>
                                     
-                                            <tr>
-                                        <td>Status of AC</td>
-                                        <td>Svcbl</td>
+                                    <tr>
+                                      <td>30Hz Modulation</td>
+                                      <td>28 - 30</td>
                                     </tr>
                                     <tr>
-                                        <td>Status OF UPS</td>
-                                        <td>Normal</td>
+                                      <td>9960Hz Modulation</td>
+                                      <td>28 - 30</td>
                                     </tr>
                                     <tr>
-                                        <td>Status of Server A</td>
-                                        <td>Main/Standby</td>
+                                      <td>9960Hz Deviation</td>
+                                      <td>15 - 17</td>
                                     </tr>
                                     <tr>
-                                        <td>Status of Server B</td>
-                                        <td>Main/Standby</td>
+                                      <td>Field Intensity</td>
+                                      <td>-1 - 1</td>
                                     </tr>
-                                    <!--    <tr>
-                                        <td>Date and time of servers wrt GPS CLK</td>
-                                        <td>Correct</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Status of Disk Array</td>
-                                        <td>OK</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Status of VHF TX used for ATIS</td>
-                                        <td>On-Line</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Status of VHF RX used for ATIS</td>
-                                        <td>On-Line</td>
-                                    </tr>
-                                        <tr>
-                                        <td>DATIS update</td>
-                                        <td>OK</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Audio Quality of Datis Announcement</td>
-                                        <td>Good</td>
-                                    </tr>-->
                               </table>
                             </div>
                             <div class="modal-footer">
@@ -321,38 +296,37 @@
                             <div class="modal-body">
                                 <table class="table table-bordered table-condensed table-striped table-hover todaytasks mantab">
                                     <thead>
-                                        <tr>  
-                                          <th>Date</th>
-                                            <th>Time</th>
-                                            <th>Room Temp</th>
-                                            <th>Status of AC</th>
-                                          <th>Status of UPS</th>
-                                            <th>Status of server A</th>
-                                            <th>Status of server B</th>
-                                            <th>Remarks</th>
-                                            <th>Test</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody><!-- Need to change variables -->
-                                        {% for datisdd in mrec %}
-                                        <tr>
-                                         
-                                          <td>{{ datisdd.date }}</td>
-                                            <td>{{ datisdd.time }}</td>
-                                            <td>{{ datisdd.room_temp }}</td>
-                                            <td>{{ datisdd.status_of_ac }}</td>
-                                            <td>{{ datisdd.status_of_ups }}</td>
-                                            <td>{{ datisdd.status_of_servera }}</td>
-                                            <td>{{ datisdd.status_of_serverb }}</td>
-                                            <td>{{ datisdd.remarks }}</td>
-                                        {% if datisd.room_temp < 25 and datisd.status_of_servera == "MAINS" and datisd.status_of_serverb == "STANDBY" and datisd.status_of_ups == "NORMAL" and datisd.status_of_ac == "SVCBL" or datisd.room_temp < 25 and datisd.status_of_servera == "STANDBY" and datisd.status_of_serverb == "MAINS" and datisd.status_of_ups == "NORMAL" and datisd.status_of_ac == "SVCBL" %}
-                                            <td>Pass</td>
-                                        {% else %}
-                                            <td>Fail</td>
-                                        {% endif %}  
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
+                                    <tr>  
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>Azimuth Angle</th>
+                                        <th>30Hz Modulation</th>
+                                        <th>9960Hz Modulation</th>
+                                        <th>9960Hz Deviation</th>
+                                        <th>Field Intensity</th>
+                                        <th>Remarks</th>
+                                      <th>Test</th> 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for cdvordd in mrec %}
+                                    <tr>
+                                     <td>{{ cdvordd.date }}</td>
+                                        <td>{{ cdvordd.time }}</td>
+                                        <td>{{ cdvordd.azimuth_angle }}</td>
+                                        <td>{{ cdvordd.number_30hz_modulation }}</td>
+                                        <td>{{ cdvordd.number_9960hz_modulation }}</td>
+                                        <td>{{ cdvordd.number_9960hz_deviation }}</td>
+                                        <td>{{ cdvordd.field_intensity }}</td>
+                                        <td>{{ cdvordd.remarks }}</td>
+                        {% if cdvordd.azimuth_angle < 25 and cdvordd.number_30hz_modulation >= 28 and cdvordd.number_30hz_modulation < 31 and cdvordd.number_9960hz_modulation >= 28 and cdvordd.number_9960hz_modulation < 31 and cdvordd.number_9960hz_deviation >= 15 and cdvordd.number_9960hz_deviation < 18 and cdvordd.field_intensity >= -1 and cdvordd.field_intensity < 2 %}
+                        <td>Pass</td>
+                                    {% else %}
+                                        <td>Fail</td>
+                                    {% endif %}  -->
+                                    </tr>
+                                    {% endfor %}
+                                 </tbody>
                                 </table>
                             </div>
                             <div class="modal-footer">
@@ -386,36 +360,37 @@
     <script>
 
         $(function(){
-                if($("#room_temp").val()<"25"){
-                     $('#room_temp').css('border-color', 'pale-green');
-                }else{
-                   $('#room_temp').css('border-color', 'red');
-                }
+            if($("#azimuth_angle").val()<"25"){
+               $('#azimuth_angle').css('border-color', 'pale-green');
+            }else{
+               $('#azimuth_angle').css('border-color', 'red');
+            }
 
-                if($("#status_of_AC").val()=="SVCBL"){
-                     $('#status_of_AC').css('border-color', 'pale-green');
-                }else{
-                   $('#status_of_AC').css('border-color', 'red');
-                }
+            if($("#number_30hz_modulation").val()>="28" && $("#number_30hz_modulation").val()<"31"){
+               $('#number_30hz_modulation').css('border-color', 'pale-green');
+            }else{
+               $('#number_30hz_modulation').css('border-color', 'red');
+            }
 
-                if($("#status_of_UPS").val()=="NORMAL"){
-                     $('#status_of_UPS').css('border-color', 'pale-green');
-                }else{
-                   $('#status_of_UPS').css('border-color', 'red');
-                }
+            if($("#number_9960hz_modulation").val()>="28" && $("#number_9960hz_modulation").val()<"31"){
+               $('#number_9960hz_modulation').css('border-color', 'pale-green');
+            }else{
+               $('#number_9960hz_modulation').css('border-color', 'red');
+            }
 
-                if($("#status_of_serverB").val()=="MAINS" && $("#status_of_serverA").val()=="STANDBY" ){
-                     $('#status_of_serverB').css('border-color', 'pale-green');
-                     $('#status_of_serverA').css('border-color', 'pale-green');
-                }
-                else if($("#status_of_serverA").val()=="MAINS" && $("#status_of_serverB").val()=="STANDBY" ){
-                     $('#status_of_serverA').css('border-color', 'pale-green');
-                     $('#status_of_serverB').css('border-color', 'pale-green');
-                }else{
-                   $('#status_of_serverA').css('border-color', 'red');
-                   $('#status_of_serverB').css('border-color', 'red');
-                } 
-            });
+             if($("#number_9960hz_deviation").val()>="15" && $("#number_9960hz_deviation").val()<"18"){
+               $('#number_9960hz_deviation').css('border-color', 'pale-green');
+            }else{
+               $('#number_9960hz_deviation').css('border-color', 'red');
+            }
+
+             if($("#field_intensity").val()>= -1 && $("#field_intensity").val()<"2"){
+               $('#field_intensity').css('border-color', 'pale-green');
+            }else{
+               $('#field_intensity').css('border-color', 'red');
+            }
+           
+        });
     </script>
 </body>
 

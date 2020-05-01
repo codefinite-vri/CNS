@@ -19,9 +19,9 @@ def cdvordrep(request, id) :
      cdvor_d = cdvor_d.values('p_id','date','time','azimuth_angle','number_30hz_modulation','number_9960hz_modulation','number_9960hz_deviation','field_intensity','remarks')
      cdvor_d = cdvor_d.filter(emp_id=id).order_by('-p_id') 
      return render(request,'engineer/cdvor/cdvorrepsub.html',{'id':id,'cdvor_d':cdvor_d,'supdetails':supdetails}) 
-#   else :
- #     messages.add_message(request,30, 'Unauthorized Access')
-  #    return routebackdatisd(request, uid)  
+   else :
+     messages.add_message(request,30, 'Unauthorized Access')
+     return routebackdatisd(request, uid)  
  else : 
      return render(request,'login/login.html')
 
@@ -128,11 +128,12 @@ def cdvord(request, id) :
         supdetails = models.Supervisor.objects.all()
         supdetails = supdetails.values('name','contact','email').filter(dept='N')
         return render(request,'engineer/cdvor/cdvordailyrep.html',{'supdetails':supdetails,'cdvor_d':cdvor_d,'id':id,'cdvord':cdvord,'cdvordlogs':cdvordlogs}) 
-  #   else :
-   #     messages.add_message(request,30, 'You cannot make changes to pending report!')
-   #     return routebackdatisd(request, id)
-  # else :
-   #    return routebackdatisd(request, uid)
+     else :
+        messages.add_message(request,30, 'You cannot make changes to pending report!')
+        return routebackcdvord(request, id)
+   else :
+     messages.add_message(request,30, 'You cannot make changes to pending report!')
+     return routebackcdvord(request, uid)
  else : 
    return render(request,'login/login.html')
 
@@ -235,7 +236,6 @@ def routebackcdvord(request, id) :
         
     if currdate > wdate :  #if it goes beyond 7 days
         cwr = 0
-    print(flag)     
     if flag :    
         if  temp1 < temp : #report submitted after deadline
             cdvorwsub_deadline = temp1    
@@ -258,7 +258,6 @@ def routebackcdvord(request, id) :
             elif status == "PENDING" :
                 cwr=0
     #!!!!!!!!!!!!!!!!!!!!!!!!!!!cdvor monthly!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    print(cwr)
     p_id = models.Cdvormonthly.objects.all()
     p_id = p_id.values('p_id')
     p_id = p_id.order_by('-p_id')
@@ -300,8 +299,8 @@ def routebackcdvord(request, id) :
                 cursor.execute(sql,val)
             pending = pending + timedelta(days=1)    
         cmr = 0
-         
-    if flag :    
+              
+    if flag :   
         if  temp1 < temp : #report submitted after deadline
             cdvormsub_deadline = temp1    
             if statusm == "COMPLETED" or statusm == "COMPLETED WITH ERRORS" :
@@ -312,18 +311,18 @@ def routebackcdvord(request, id) :
         elif temp == temp1 and temp == currdate : # report submitted on a day same as deadline
             cdvormsub_deadline = temp    
             if statusm == "COMPLETED" or statusm == "COMPLETED WITH ERRORS" :
+                print("hello")
                 cmr=1  
             elif statusm == "PENDING" :
                 cmr=0
             
-        elif temp1 < wdate and temp1 > temp : #report submitted before the deadline 
+        elif temp1 < wdatem and temp1 > temp : #report submitted before the deadline 
             cdvormsub_deadline = temp1   
             if statusm == "COMPLETED" or statusm == "COMPLETED WITH ERRORS" :
                 cmr=1  
             elif statusm == "PENDING" :
                 cmr=0
     
-    print(statusm)
     cdvordaily=[entry for entry in models.Cdvordaily.objects.filter(emp_id=id).values().order_by('-date')]
     for item in cdvordaily:
         item.update( {"type":"Cdvordaily"})

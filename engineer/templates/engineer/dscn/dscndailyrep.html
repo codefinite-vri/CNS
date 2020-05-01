@@ -66,6 +66,14 @@
 							  </div>
 							</div>
 
+							<hr>
+							<div class="form-group row has-warning">
+							  <label for="io_led" class="col-sm-6 col-form-label">I/O LED*</label>
+							  <div>
+							   	<input type="text" class="form-control form-control-sm" id="io_led" name="ioled" readonly="true" value="{{ dscnd.io_led }}">
+							  </div>
+							</div>
+
 
 							  <hr>
 							<div class="form-group row has-warning">
@@ -394,55 +402,61 @@
 <script>
 	$(function(){
             if($("#sat_led").val()=="STEADY ON"){
-            	 $('#sat_led').css('border-color', 'pale-green');
+            	 $('#sat_led').css('border-color', 'green');
             }else{
                $('#sat_led').css('border-color', 'red');
             }
 
-            if($("#odu_led").val()=="STEADY ON"){
-            	 $('#odu_led').css('border-color', 'pale-green');
+			if($("#io_led").val()=="STEADY ON"){
+            	 $('#io_led').css('border-color', 'green');
+            }else{
+               $('#io_led').css('border-color', 'red');
+            }
+
+			if($("#odu_led").val()=="STEADY ON"){
+            	 $('#odu_led').css('border-color', 'green');
             }else{
                $('#odu_led').css('border-color', 'red');
             }
 
             if($("#alarm_led").val()=="OFF"){
-            	 $('#alarm_led').css('border-color', 'pale-green');
+            	 $('#alarm_led').css('border-color', 'green');
             }else{
                $('#alarm_led').css('border-color', 'red');
             }
 
             if($("#power_led").val()=="STEADY ON"){
-            	 $('#power_led').css('border-color', 'pale-green');
+            	 $('#power_led').css('border-color', 'green');
             }else{
                $('#power_led').css('border-color', 'red');
             }
 
             if($("#v35_led").val()=="RX/TX BLINKING" ){
-            	 $('#v35_led').css('border-color', 'pale-green');
+            	 $('#v35_led').css('border-color', 'green');
             }else{
                $('#v35_led').css('border-color', 'red');
             }
 
-            if($("#ip_voltage").val()>"219"){
-            	 $('#ip_voltage').css('border-color', 'pale-green');
+            if($("#ip_voltage").val()>"219" && $("#ip_voltage").val()<"241"){
+            	 $('#ip_voltage').css('border-color', 'green');
             }else{
-               $('ip_voltage').css('border-color', 'red');
+               $('#ip_voltage').css('border-color', 'red');
             }
 
             if($("#op_voltage").val()>"219" && $("#op_voltage").val()<"241"){
-            	 $('#op_voltage').css('border-color', 'pale-green');
+            	 $('#op_voltage').css('border-color', 'green');
             }else{
-               $('op_voltage').css('border-color', 'red');
+               $('#op_voltage').css('border-color', 'red');
             }
 
-            if($("#battery_voltage").val()>"180" && $("#battery_voltage").val()<"250"){
-            	 $('#battery_voltage').css('border-color', 'pale-green');
+            if($("#battery_voltage").val()>"179" && $("#battery_voltage").val()<"251"){
+            	 $('#battery_voltage').css('border-color', 'green');
             }else{
                $('#battery_voltage').css('border-color', 'red');
             }
 
             if($("#cof").val()=="OK" ){
-            	 $('#cof').css('border-color', 'pale-green');
+            	 $('#cof').css('border-color', 'green');
             }else{
                $('#cof').css('border-color', 'red');
             }

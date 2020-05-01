@@ -178,7 +178,7 @@ def logEng(request,id):
             dscnd_deadline = date.today()
         #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!dscn monthly!!!!!!!!!!!!!!!!!!!!!!!!!!
         
-        p_id = models.Datisweekly.objects.all()
+        p_id = models.Dscnmonthly.objects.all()
         p_id = p_id.values('p_id')
         p_id = p_id.order_by('-p_id')
         p_id = p_id.values('p_id').filter(a_id=1)[0]['p_id']
@@ -230,7 +230,7 @@ def logEng(request,id):
                 elif statusdm == "PENDING" :
                     dsmr=0
                 
-            elif temp1 < wdatedm and temp1 > temp : #report submitted before the deadline 
+            elif temp1 < wdatem and temp1 > temp : #report submitted before the deadline 
                 dscnmsub_deadline = temp1   
                 if statusdm == "COMPLETED" or statusdm == "COMPLETED WITH ERRORS" :
                     dsmr=1  

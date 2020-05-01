@@ -187,7 +187,7 @@ def routebackdatisd(request, id) :
 
     #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!dscn monthly!!!!!!!!!!!!!!!!!!!!!!!!!!
         
-    p_id = models.Datisweekly.objects.all()
+    p_id = models.Dscnmonthly.objects.all()
     p_id = p_id.values('p_id')
     p_id = p_id.order_by('-p_id')
     p_id = p_id.values('p_id').filter(a_id=1)[0]['p_id']
@@ -268,85 +268,7 @@ def routebackdatisd(request, id) :
     for i in com:
         i.update({'token':i['p_id']})
    
-    '''
-    #!!!!!!!!!!!!!!!!!!!!!vhfdaily!!!!!!!!!!!!!!!!!!!!!!!!
-    vdr = 0
-    statusvd = ""
-    currdate = date.today()            
-    vhfdsub_on = cursor.execute("select date from vhfdaily where date = %s",[date.today()])    
-    if vhfdsub_on :
-        statusvd = models.Vhfdaily.objects.all()
-        statusvd = statusvd.values('date','status')
-        statusvd = statusvd.order_by('-date')
-        statusvd = statusvd.values('status')
-        statusvd = statusvd.values('status').filter(a_id=1)[0]['status']
-        if statusvd == "PENDING" :
-            vhfdsub_on = currdate
-            vhfd_deadline = currdate
-            vdr=0
-        elif statusvd == "COMPLETED" :
-            vhfd_deadline = currdate + timedelta(days=1)
-            vhfdsub_on = currdate
-            vdr = 1 
-        elif statusvd == "COMPLETED WITH ERRORS" :
-            vhfd_deadline = currdate + timedelta(days=1)
-            vhfdsub_on = currdate
-            vdr = 1
-    else :
-        vhfd_deadline = models.Vhfdaily.objects.all()
-        vhfd_deadline = vhfd_deadline.values('date')
-        vhfd_deadline = vhfd_deadline.order_by('-date')
-        vhfd_deadline = vhfd_deadline.values('date').filter(a_id=1)[0]['date']
-        vhfdsub_on = vhfd_deadline
-        vhfd_deadline = vhfd_deadline + timedelta(days=2)
-        if (vhfd_deadline <= date.today()) :    
-         #   remarks = "---Report not submitted---"
-          #  statusvd = "COMPLETED"
-          #  val = ((date.today()-timedelta(days=1)),id,status,'1',remarks)
-          #  sql = "INSERT INTO vhfdaily (date,emp_id,status,f_id,remarks) values (%s ,%s,%s, %s,%s)"
-          #  cursor.execute(sql,val)  
-            vhfdsub_on = date.today()-timedelta(days=1)    
-        else : 
-            vhfd_deadline = date.today()
-        
-    
-    
-    #!!!!!!!!!!!!!!!!!!!!!!!vhfmonthly!!!!!!!!!!!!!!!!!!!!!!!!!!!!        
-    
-    vmr = 0
-    currdate = date.today()
-    wdate = models.Vhfmonthly.objects.all()
-    wdate = wdate.values('date')
-    wdate = wdate.order_by('-date')
-    wdate = wdate.values('date').filter(a_id=1)[0]['date']
-    wdate = str(wdate)
-    wdate = datetime.strptime(wdate, "%Y-%m-%d").date()
-    temp = wdate
-    wdate = wdate + timedelta(days=30) 
-    vhfmsub_on = temp
-    if currdate > wdate :
-        vhfmsub_deadline =  currdate 
-    else :
-        vhfmsub_deadline =  wdate
-        vmr = 1
-    #!!!!!!!!!!!!!!!!!!!!!!!!vhfyearly!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    vyr = 0
-    currdate = date.today()
-    wdate = models.Vhfyearly.objects.all()
-    wdate = wdate.values('date')
-    wdate = wdate.order_by('-date')
-    wdate = wdate.values('date').filter(a_id=1)[0]['date']
-    wdate = str(wdate)
-    wdate = datetime.strptime(wdate, "%Y-%m-%d").date()
-    temp = wdate
-    wdate = wdate + timedelta(days=365) 
-    vhfysub_on = temp
-    if currdate > wdate :
-        vhfysub_deadline =  currdate 
-    else :
-        vhfysub_deadline =  wdate
-        vyr = 1
-    return render(request,'./engineer/home.html',{'status':status,'dscnmsub_deadline':dscnmsub_deadline,'dscnmsub_on':dscnmsub_on,'dsmr':dsmr,'dswr':dswr,'dscnwsub_on':dscnwsub_on,'dscnwsub_deadline':dscnwsub_deadline,'dscnd_deadline':dscnd_deadline,'dscndsub_on':dscndsub_on,'dsdr':dsdr,'ddr':ddr,'dwr':dwr,'vdr':vdr,'vmr':vmr,'vyr':vyr,'currdate':currdate,'name':name1,'id':id,'empdet':empdetails,'datisdsub_on':datisdsub_on,'datisd_deadline':datisd_deadline,'datiswsub_on':datiswsub_on,'datiswsub_deadline':datiswsub_deadline,'vhfdsub_on':vhfdsub_on,'vhfd_deadline':vhfd_deadline,'vhfmsub_on':vhfmsub_on,'vhfmsub_deadline':vhfmsub_deadline,'vhfysub_on':vhfysub_on,'vhfysub_deadline':vhfysub_deadline})'''
+   # return render(request,'./engineer/home.html',{'status':status,'dscnmsub_deadline':dscnmsub_deadline,'dscnmsub_on':dscnmsub_on,'dsmr':dsmr,'dswr':dswr,'dscnwsub_on':dscnwsub_on,'dscnwsub_deadline':dscnwsub_deadline,'dscnd_deadline':dscnd_deadline,'dscndsub_on':dscndsub_on,'dsdr':dsdr,'ddr':ddr,'dwr':dwr,'vdr':vdr,'vmr':vmr,'vyr':vyr,'currdate':currdate,'name':name1,'id':id,'empdet':empdetails,'datisdsub_on':datisdsub_on,'datisd_deadline':datisd_deadline,'datiswsub_on':datiswsub_on,'datiswsub_deadline':datiswsub_deadline,'vhfdsub_on':vhfdsub_on,'vhfd_deadline':vhfd_deadline,'vhfmsub_on':vhfmsub_on,'vhfmsub_deadline':vhfmsub_deadline,'vhfysub_on':vhfysub_on,'vhfysub_deadline':vhfysub_deadline})'''
     return render(request,'./engineer/home.html',{'dscnd_deadline':dscnd_deadline,'dscndsub_on':dscndsub_on,'dsdr':dsdr,'statusdsd':statusdsd,'wdatedm':wdatedm,'statusdm':statusdm,'dscnmsub_on':dscnmsub_on,'dscnmsub_deadline':dscnmsub_deadline,'dsmr':dsmr,'com':com,'wdate':wdate,'supdetails':supdetails,'statusd':statusd,'status':status,'ddr':ddr,'dwr':dwr,'currdate':currdate,'name':name1,'id':id,'empdet':empdetails,'datisdsub_on':datisdsub_on,'datisd_deadline':datisd_deadline,'datiswsub_on':datiswsub_on,'datiswsub_deadline':datiswsub_deadline})
   else :
     return render(request,'login/login.html')  

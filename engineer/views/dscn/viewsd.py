@@ -122,62 +122,64 @@ def dscndrepsub(request,id):
          val = (id,p_id,remarks,sled,currdate,currtime)
          sql = "INSERT INTO dscndlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s ,%s, %s , %s,%s)"
          cursor.execute(sql,val)
+     
+     if ioled != 'STEADY ON' :
+         f=3
+         remarks = "I/O LED not steady on"
+         val = (id,p_id,remarks,ioled,currdate,currtime)
+         sql = "INSERT INTO dscndlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s ,%s, %s , %s,%s)"
+         cursor.execute(sql,val)
+     
      if oled != 'STEADY ON' :
          f=3
          remarks = "ODU LED not steady on"
-         val = (id,p_id,remarks,sled,currdate,currtime)
-         sql = "INSERT INTO dscndlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s ,%s, %s , %s,%s)"
-         cursor.execute(sql,val)
-     if sled != 'STEADY ON' :
-         f=3
-         remarks = "I/O LED not steady on"
-         val = (id,p_id,remarks,sled,currdate,currtime)
+         val = (id,p_id,remarks,oled,currdate,currtime)
          sql = "INSERT INTO dscndlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s ,%s, %s , %s,%s)"
          cursor.execute(sql,val)
      if pwled != 'STEADY ON' :
          f=3
          remarks = "Power LED not steady on"
-         val = (id,p_id,remarks,sled,currdate,currtime)
+         val = (id,p_id,remarks,pwled,currdate,currtime)
          sql = "INSERT INTO dscndlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s ,%s, %s , %s,%s)"
          cursor.execute(sql,val)
         
      if v35led != 'RX/TX BLINKING' :
          f=3
          remarks = "Rx/Tx -not Blinking"
-         val = (id,p_id,remarks,sled,currdate,currtime)
+         val = (id,p_id,remarks,v35led,currdate,currtime)
          sql = "INSERT INTO dscndlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s ,%s, %s , %s,%s)"
          cursor.execute(sql,val)
          
      if aled != 'OFF' :
          f=3
          remarks = "Alarm LED was turned ON"
-         val = (id,p_id,remarks,sled,currdate,currtime)
+         val = (id,p_id,remarks,aled,currdate,currtime)
          sql = "INSERT INTO dscndlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s ,%s, %s , %s,%s)"
          cursor.execute(sql,val)
      
      if int(iv) < 220 or int(iv) > 240 :
          f=3
          remarks = "UPS I/P Voltage exceeding normal voltage"
-         val = (id,p_id,remarks,sled,currdate,currtime)
+         val = (id,p_id,remarks,iv,currdate,currtime)
          sql = "INSERT INTO dscndlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s ,%s, %s , %s,%s)"
          cursor.execute(sql,val)
      if int(ov) < 220 or int(ov) > 240 :
          f=3
          remarks = "UPS O/P Voltage exceeding normal voltage"
-         val = (id,p_id,remarks,sled,currdate,currtime)
+         val = (id,p_id,remarks,ov,currdate,currtime)
          sql = "INSERT INTO dscndlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s ,%s, %s , %s,%s)"
          cursor.execute(sql,val)
      if int(bv) < 180 or int(bv) > 250 :
          f=3
          remarks = "UPS Battery Voltage exceeding normal voltage"
-         val = (id,p_id,remarks,sled,currdate,currtime)
+         val = (id,p_id,remarks,bv,currdate,currtime)
          sql = "INSERT INTO dscndlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s ,%s, %s , %s,%s)"
          cursor.execute(sql,val)
       
      if  cof != 'OK' :
          f=3
          remarks = "C/O Function not OK"
-         val = (id,p_id,remarks,sled,currdate,currtime)
+         val = (id,p_id,remarks,cof,currdate,currtime)
          sql = "INSERT INTO dscndlogs (emp_id,p_id,remarks,value,date,time) values (%s,%s ,%s, %s , %s,%s)"
          cursor.execute(sql,val)
     
@@ -282,7 +284,7 @@ def updscndaily(request, id) :
          f=3
          cursor.execute("update dscndaily set IO_LED = %s where p_id = %s",[ioled,id])
          remarks = "IO LED not steady on(update)"
-         val = (emp_id,p_id,remarks,oled,currdate,currtime)
+         val = (emp_id,p_id,remarks,ioled,currdate,currtime)
          sql = "INSERT INTO dscndlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
          cursor.execute(sql,val)
      else :

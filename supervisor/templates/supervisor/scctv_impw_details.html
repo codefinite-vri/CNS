@@ -2,12 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Daily DATIS Maintenance Report</title>
+    <title>Weekly SCCTV Maintenance Report</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="{% static 'supervisor/datisstyle.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Gotu&family=Righteous&display=swap" rel="stylesheet">
@@ -30,44 +30,40 @@
         <div class="row">
             <div class="col-sm-7">
 
-              {% if temp.unit_incharge_approval == NONE %}
-
-                  {% if temp.room_temp == None %}             
+                    {% if temp.unit_incharge_approval == NONE %}
+                    {% if temp.ups_ip_voltage == None %}             
                         <div class="alert alert-danger">
                           <strong>Report Not Submitted</strong>
 
-                      {% elif temp.room_temp < 25 and temp.status_of_servera == "MAINS" and temp.status_of_serverb == "STANDBY" and temp.status_of_ups == "NORMAL" and temp.status_of_ac == "SVCBL" or temp.room_temp < 25 and temp.status_of_servera == "STANDBY" and temp.status_of_serverb == "MAINS" and temp.status_of_ups == "NORMAL" and temp.status_of_ac == "SVCBL" %}
-                        <div class="alert alert-success">
-                          <strong> All maintenance entries matched with standard values.</strong>                   
+                    {% elif temp.ups_ip_voltage <= 235 and  temp.ups_ip_voltage >= 225 and temp.ups_op_voltage <= 230 and temp.ups_op_voltage >= 220 and temp.ups_battery_status == "FULL" and temp.server_status == "ON" and temp.camera_nas_status_in_vrs == "OK" and temp.workstns_n_client_softw_check == "OK" and temp.cameras_client_ivms_softw == "OK" and temp.nas_free_capacity != 0 %}
+                <div class="alert alert-success">
+                    <strong> All maintenance entries matched with standard values.</strong> 
+                                
+                {% else %}             
+                <div class="alert alert-danger">
+                    <strong>Maintenance values do not match standards.</strong>  
+                   
+                {% endif %}
+                {% else %}
+                {% if temp.unit_incharge_approval == "NO" %}
+                  <div class="alert alert-danger">
+                    <strong>Report Declined; Waiting for update.</strong>
+             
+                {% endif %}
+                {% if temp.unit_incharge_approval == "YES" %}
+                  <div class="alert alert-success">
+                    <strong>Report Approved.</strong> 
+                
+                {% endif %}
 
-                      {% else %}             
-                        <div class="alert alert-danger">
-                            <strong>Maintenance values do not match standards.</strong>  
-                      
-
-                  {% endif %}
-
-              {% else %}
-
-                  {% if temp.unit_incharge_approval == "NO" %}
-                    <div class="alert alert-danger">
-                      <strong>Report Declined; Waiting for update.</strong>
-                 
-                  {% endif %}
-
-                  {% if temp.unit_incharge_approval == "YES" %}
-                    <div class="alert alert-success">
-                      <strong>Report Approved.</strong> 
-
-                  {% endif %}
-
-              {% endif %}
-
-                <div class="card" style="text-align: center;">            
+                {% endif %}
+                <div class="card" style="text-align: center;">                  
+                   
+                  
                   
                   <form id="form-v">                    
                         <div class="card-body">
-                            <h2 class="card-title">DATIS-TERMA DAILY MAINTENANCE Report</h2>
+                            <h2 class="card-title">SCCTV WEEKLY MAINTENANCE Report</h2>
                           
                             {% for log in logs|slice:":1" %}
                             <div class="alert alert-light" style="height: 40px; padding-top: 0px">
@@ -78,60 +74,78 @@
                             {% endfor %}
                              <hr>
                             <div class="form-group row has-warning">
-                              <label for="room_temp" class="col-sm-6 col-form-label">Room Temperature*</label>
-                              <div>
-                                <input type="text" class="form-control form-control-sm" id="room_temp" name="Room Temperature" readonly="true" value="{{ temp.room_temp }}">
-                              </div>
-                            </div>
+                   <label for="ups_ip_voltage" class="col-sm-6 col-form-label">UPS Input Voltage</label>
+                  <div>
+                      <input type="text" class="form-control form-control-sm" id="ups_ip_voltage" name="upsip" readonly="true" value="{{ temp.ups_ip_voltage }}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="form-group row has-warning">
+                    <label for="ups_op_voltage" class="col-sm-6 col-form-label">UPS Output Voltage</label>
+                    <div>
+                      <input type="text" class="form-control form-control-sm" id="ups_op_voltage" name="upsop" readonly="true" value="{{ temp.ups_op_voltage }}">
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="form-group row has-warning">
+                    <label for="ups_battery_status" class="col-sm-6 col-form-label">UPS Battery Status</label>
+                    <div>
+                       <input type="text" class="form-control form-control-sm" id="ups_battery_status" name="upsbat" readonly="true" value="{{ temp.ups_battery_status }}">
+                    </div>
+                  </div>
 
+                  <hr> 
+                  <div class="form-group row has-warning">
+                    <label for="server_status" class="col-sm-6 col-form-label">Check all the server status</label>
+                    <div>
+                      <input type="text" class="form-control form-control-sm" id="server_status" name="ser" readonly="true" value="{{ temp.server_status }}">
+                    </div>
+                  </div>
 
-                              <hr>
-                            <div class="form-group row has-warning">
-                              <label for="status_of_AC" class="col-sm-6 col-form-label">Status of AC*</label>
-                              <div>
-                                 <input type="text" class="form-control form-control-sm" id="status_of_AC" name="Room Temperature" readonly="true" value="{{ temp.status_of_ac }}">
-                              </div>
-                            </div>
-                            
-                              <hr>  
-                            <div class="form-group row has-warning">
-                              <label for="status_of_UPS" class="col-sm-6 col-form-label">Status of UPS*</label>
-                              <div>
-                                <input type="text" class="form-control form-control-sm" id="status_of_UPS" name="Status of UPS" readonly="true" value="{{ temp.status_of_ups }}"/><br>
-                              </div>
-                            </div>
+                  <hr>  
+                  <div class="form-group row has-warning">
+                   <label for="camera_NAS_status_in_VRS" class="col-sm-6 col-form-label">Check Camera/NAS status in VRS servers</label>
+                  <div>
+                      <input type="text" class="form-control form-control-sm" id="camera_NAS_status_in_VRS" name="vrs" readonly="true" value="{{ temp.camera_nas_status_in_vrs }}">
+                    </div>
+                  </div>
 
+                  <hr>  
+                  <div class="form-group row has-warning">
+                   <label for="workstns_n_client_softw_check" class="col-sm-6 col-form-label">Check all the workstations and its client software</label>
+                  <div>
+                      <input type="text" class="form-control form-control-sm" id="workstns_n_client_softw_check" name="sw" readonly="true" value="{{ temp.workstns_n_client_softw_check }}">
+                    </div>
+                  </div>
 
-                              <hr>
-                              <div class="form-group row has-warning">
-                                <label for="status_of_server A" class="col-sm-6 col-form-label">Status of Server A*</label>
-                                <div>
-                                    <input type="text" class="form-control form-control-sm" id="status_of_serverA" name="Status of Server A" readonly="true" value="{{ temp.status_of_servera }}"/><br>
-                                </div>
-                              </div>
+                  <hr>  
+                  <div class="form-group row has-warning">
+                    <label for="cameras_client_IVMS_softw" class="col-sm-6 col-form-label">Check all cameras are working in client IVMS Software</label>
+                    <div>
+                      <input type="text" class="form-control form-control-sm" id="cameras_client_IVMS_softw" name="ivms" readonly="true" value="{{ temp.cameras_client_ivms_softw }}">
+                    </div>
+                  </div>
 
-                              
-                                <hr>  
-                              <div class="form-group row has-warning">
-                                <label for="status_of_serverB" class="col-sm-6 col-form-label">Status of Server B*</label>
-                                <div>
-                                    <input type="text" class="form-control form-control-sm" id="status_of_serverB" name="Status of Server B" readonly="true" value="{{ temp.status_of_serverb }}">
-                                </div>
-                              </div>
-
-                                
+                  <hr>  
+                  <div class="form-group row has-warning">
+                    <label for="NAS_free_capacity" class="col-sm-6 col-form-label">Check NAS free capacity</label>
+                    <div>
+                      <input type=float class="form-control form-control-sm" id="NAS_free_capacity" name="free" readonly="true" value="{{ temp.nas_free_capacity }}">
+                    </div>
+                  </div>                
                                 <hr>
                                 {% if temp.status != "PENDING" and temp.unit_incharge_approval == NONE %}
                                   {% if temp.status == "COMPLETED WITH ERRORS" %}                      
-                                      <button type="button" data-toggle="modal" data-target="#recheck" style="width: 100px; margin-right: 10%;"class="btn submitbut">DECLINE</button>
+                                      <button type="button" data-toggle="modal" data-target="#report" style="width: 100px; margin-right: 10%;"class="btn submitbut">DECLINE</button>
                                       
                                   {% endif %}
                                   {% if temp.unit_incharge_approval != "YES" %}
                                   <a href='/verify/{{names}}/{{temp.p_token}}' class="btn submitbut" >APPROVE</a>      
                                 {% endif %}
                                 {% endif %}
-</form></div>
-                                <div class="modal fade" id="recheck">
+                            </form>
+                        </div>
+                                <div class="modal fade" id="report">
                                       <div class="modal-dialog">
                                         <div class="modal-content">
                                           <div class="modal-header">
@@ -171,11 +185,10 @@
                                                       </div>
                                                   </div>
                                                   <hr>                                                  
-                                                  <button type="submit" class="btn btn-primary" value="SEND">Submit</button>
+                                                  <button type="submit" class="btn btn-primary" value="SEND">Submit</button>  
                                               </form>
                                             </div>
                                           </div>
-                                          
                                         </div>
                                       </div>
                                     </div>    
@@ -215,7 +228,7 @@
                         </div>
                     </div>    
                 </div>
-                {% if temp.room_temp != None %}
+
                 <div> 
                     <div class="logr">                       
                         <div class="card sidecard logrtitle"> REPORT LOG </div>
@@ -243,7 +256,7 @@
                         </div>
                     </div>
                 </div>   
-              {% endif %}
+              
                 <div class="modal fade" id="standardcheck">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -253,56 +266,44 @@
                             </div>
                             <div class="modal-body">
                                 <table class="table table-bordered table-condensed table-striped table-hover todaytasks">
-                                    <tr>
-                                        <th>VALUE LABEL</th>
-                                        <th>NORMAL VALUE</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Room Temperature</td>
-                                        <td>24 C</td>
-                                    </tr>
-                                    
-                                            <tr>
-                                        <td>Status of AC</td>
-                                        <td>Svcbl</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Status OF UPS</td>
-                                        <td>Normal</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Status of Server A</td>
-                                        <td>Main/Standby</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Status of Server B</td>
-                                        <td>Main/Standby</td>
-                                    </tr>
-                                    <!--    <tr>
-                                        <td>Date and time of servers wrt GPS CLK</td>
-                                        <td>Correct</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Status of Disk Array</td>
-                                        <td>OK</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Status of VHF TX used for ATIS</td>
-                                        <td>On-Line</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Status of VHF RX used for ATIS</td>
-                                        <td>On-Line</td>
-                                    </tr>
-                                        <tr>
-                                        <td>DATIS update</td>
-                                        <td>OK</td>
-                                    </tr>
-                                        <tr>
-                                        <td>Audio Quality of Datis Announcement</td>
-                                        <td>Good</td>
-                                    </tr>-->
-                              </table>
+                               <tr>
+                                  <th>VALUE LABEL</th>
+                                  <th>NORMAL VALUE</th>
+                              </tr>
+                              <tr>
+                                  <td>UPS Input Voltage</td>
+                                  <td>225-235V</td>
+                              </tr>
+                              
+                                  <tr>
+                                  <td>UPS Output Voltage</td>
+                                  <td>220-230V</td>
+                              </tr>
+                                  <tr>
+                                  <td>UPS Battery Status</td>
+                                  <td>FULL</td>
+                              </tr>
+                                  <tr>
+                                  <td>Check all the server status</td>
+                                  <td>ON</td>
+                              </tr>
+                              <tr>
+                                  <td>Check Camera/NAS status in VRS Servers</td>
+                                  <td>OK</td>
+                              </tr>
+                                 <tr>
+                                  <td>Check all workstations and its client software</td>
+                                  <td>OK</td>
+                              </tr>
+                                  <tr>
+                                  <td>Check all cameras are working in client IVMS software</td>
+                                  <td>OK</td>
+                              </tr>
+                              <tr>
+                                  <td>Check NAS free capacity</td>
+                                  <td>Not Zero</td>
+                              </tr>
+                          </table>
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -321,38 +322,42 @@
                             <div class="modal-body">
                                 <table class="table table-bordered table-condensed table-striped table-hover todaytasks mantab">
                                     <thead>
-                                        <tr>  
-                                          <th>Date</th>
-                                            <th>Time</th>
-                                            <th>Room Temp</th>
-                                            <th>Status of AC</th>
-                                          <th>Status of UPS</th>
-                                            <th>Status of server A</th>
-                                            <th>Status of server B</th>
-                                            <th>Remarks</th>
-                                            <th>Test</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody><!-- Need to change variables -->
-                                        {% for datisdd in mrec %}
-                                        <tr>
-                                         
-                                          <td>{{ datisdd.date }}</td>
-                                            <td>{{ datisdd.time }}</td>
-                                            <td>{{ datisdd.room_temp }}</td>
-                                            <td>{{ datisdd.status_of_ac }}</td>
-                                            <td>{{ datisdd.status_of_ups }}</td>
-                                            <td>{{ datisdd.status_of_servera }}</td>
-                                            <td>{{ datisdd.status_of_serverb }}</td>
-                                            <td>{{ datisdd.remarks }}</td>
-                                        {% if datisd.room_temp < 25 and datisd.status_of_servera == "MAINS" and datisd.status_of_serverb == "STANDBY" and datisd.status_of_ups == "NORMAL" and datisd.status_of_ac == "SVCBL" or datisd.room_temp < 25 and datisd.status_of_servera == "STANDBY" and datisd.status_of_serverb == "MAINS" and datisd.status_of_ups == "NORMAL" and datisd.status_of_ac == "SVCBL" %}
-                                            <td>Pass</td>
-                                        {% else %}
-                                            <td>Fail</td>
-                                        {% endif %}  
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
+                                    <tr>  
+                                        <th>Date</th>
+                                        <th>Time</th>
+                                        <th>UPS Input Voltage</th>
+                                        <th>UPS Output Voltage</th>
+                                        <th>UPS Battery Status</th>
+                                        <th>Server status</th>
+                                        <th>Camera/NAS status in VRS</th>
+                                        <th>Workstations and client software</th>
+                                        <th>Cameras in client IVMS S/W</th>
+                                        <th>NAS free capacity</th>
+                                        <th>Test</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for scctvww in mrec %} <!--check-->
+                                    <tr>
+                                     
+                                    <td>{{ scctvww.date }}</td>
+                                      <td>{{ scctvww.time }}</td>
+                                      <td>{{ scctvww.ups_ip_voltage }}</td>
+                                      <td>{{ scctvww.ups_op_voltage }}</td>
+                                      <td>{{ scctvww.ups_battery_status }}</td>
+                                      <td>{{ scctvww.server_status }}</td>
+                                      <td>{{ scctvww.camera_nas_status_in_vrs }}</td>
+                                      <td>{{ scctvww.workstns_n_client_softw_check }}</td>
+                                      <td>{{ scctvww.cameras_client_ivms_softw }}</td>
+                                      <td>{{ scctvww.nas_free_capacity }}</td>
+                                       {% if scctvww.ups_ip_voltage <= 235 and  scctvww.ups_ip_voltage >= 225 and scctvww.ups_op_voltage <= 230 and scctvww.ups_op_voltage >= 220 and scctvww.ups_battery_status == "FULL" and scctvww.server_status == "ON" and scctvww.camera_nas_status_in_vrs == "OK" and scctvww.workstns_n_client_softw_check == "OK" and scctvww.cameras_client_ivms_softw == "OK" and scctvww.nas_free_capacity != 0 %}
+                                       <td>Pass</td>
+                                     {% else %}
+                                      <td>Fail</td>
+                                   {% endif %}
+                                 </tr>
+                                   {% endfor %}
+                                 </tbody>
                                 </table>
                             </div>
                             <div class="modal-footer">
@@ -371,7 +376,7 @@
                             </div>
                             <div class="modal-body">
                               <h5>{{eng.name}}</h5>
-                              <h6>Email: <a href="{{ eng.email }}">{{eng.email}}</a></h6>
+                              <h6>Email: <a href="mailto:surajshah@aai.com">{{eng.email}}</a></h6>
                               <h6>Phone: {{eng.contact}}</h6>
                             </div>
                             <div class="modal-footer">
@@ -384,39 +389,58 @@
         </div>
     </div>   
     <script>
+$(function(){
 
-        $(function(){
-                if($("#room_temp").val()<"25"){
-                     $('#room_temp').css('border-color', 'pale-green');
-                }else{
-                   $('#room_temp').css('border-color', 'red');
-                }
+    if($("#ups_ip_voltage").val()<"225" || $("#ups_ip_voltage").val()>"235"){
+        $('#ups_ip_voltage').css('border-color', 'red');
+    }else{
+        $('#ups_ip_voltage').css('border-color', 'pale-green');
+  }
 
-                if($("#status_of_AC").val()=="SVCBL"){
-                     $('#status_of_AC').css('border-color', 'pale-green');
-                }else{
-                   $('#status_of_AC').css('border-color', 'red');
-                }
+    if($("#ups_op_voltage").val()<"220" || $("#ups_op_voltage").val()>"230"){
+        $('#ups_op_voltage').css('border-color', 'red');
+    }else{
+        $('#ups_op_voltage').css('border-color', 'pale-green');
+    }
 
-                if($("#status_of_UPS").val()=="NORMAL"){
-                     $('#status_of_UPS').css('border-color', 'pale-green');
-                }else{
-                   $('#status_of_UPS').css('border-color', 'red');
-                }
+    if($("#ups_battery_status").val()!="FULL"){
+        $('#ups_battery_status').css('border-color', 'red');
+    }else{
+        $('#ups_battery_status').css('border-color', 'pale-green');
+    }
 
-                if($("#status_of_serverB").val()=="MAINS" && $("#status_of_serverA").val()=="STANDBY" ){
-                     $('#status_of_serverB').css('border-color', 'pale-green');
-                     $('#status_of_serverA').css('border-color', 'pale-green');
-                }
-                else if($("#status_of_serverA").val()=="MAINS" && $("#status_of_serverB").val()=="STANDBY" ){
-                     $('#status_of_serverA').css('border-color', 'pale-green');
-                     $('#status_of_serverB').css('border-color', 'pale-green');
-                }else{
-                   $('#status_of_serverA').css('border-color', 'red');
-                   $('#status_of_serverB').css('border-color', 'red');
-                } 
-            });
-    </script>
+    if($("#server_status").val()!="ON"){
+        $('#server_status').css('border-color', 'red');
+    }else{
+        $('#server_status').css('border-color', 'pale-green');
+    }
+
+    if($("#camera_NAS_status_in_VRS").val()!="OK"){
+        $('#camera_NAS_status_in_VRS').css('border-color', 'red');
+    }else{
+        $('#camera_NAS_status_in_VRS').css('border-color', 'pale-green');
+    }
+
+    if($("#workstns_n_client_softw_check").val()!="OK"){
+        $('#workstns_n_client_softw_check').css('border-color', 'red');
+    }else{
+        $('#workstns_n_client_softw_check').css('border-color', 'pale-green');
+    }
+
+     if($("#cameras_client_IVMS_softw").val()!="OK"){
+        $('#cameras_client_IVMS_softw').css('border-color', 'red');
+    }else{
+        $('#cameras_client_IVMS_softw').css('border-color', 'pale-green');
+    }
+
+     if($("#NAS_free_capacity").val()=="0.0"){
+        $('#NAS_free_capacity').css('border-color', 'red');
+    }else{
+        $('#NAS_free_capacity').css('border-color', 'pale-green');
+    }
+
+});
+  </script> 
 </body>
 
 </html>

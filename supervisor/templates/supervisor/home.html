@@ -234,9 +234,10 @@
 								</table>
 							</div>
 							<div id="Weekly" class="tabcontent">
-								{% if sup.dept == 'C' %}
 								<h3 class="dateset">Weekly</h3>
 								<table class="table table-bordered table-condensed table-striped table-hover todaytasks">
+								
+								{% if sup.dept == 'C' %}
 									<tr data-href="{% url 'supervisor:datisweekly' %}">
 										<td>DATIS</td>
 									</tr>
@@ -248,7 +249,7 @@
 									{% endif %}
 
 									{% if sup.dept == 'N' %}
-									</tr>
+									
 									<tr data-href="{% url 'supervisor:cdvorweekly' %}">
 										<td>CDVOR</td>
 									</tr>
@@ -284,7 +285,7 @@
 
 									{% if sup.dept == 'N' %}
 									</tr>
-									<tr data-href="{% url 'supervisor:cdvordaily' %}">
+									<tr data-href="{% url 'supervisor:cdvormonthly' %}">
 										<td>CDVOR</td>
 									</tr>
 									<tr data-href="{% url 'supervisor:dmedaily' %}">
