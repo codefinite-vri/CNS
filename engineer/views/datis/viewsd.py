@@ -373,7 +373,7 @@ def editdatisdaily(request, p_id) :
      datisd = datisd.filter(p_id=p_id)
      datis_id = datisd.values('p_id').filter(p_id=p_id)[0]['p_id']
      datisdlogs = models.Datisdlogs.objects.all()
-     datisdlogs = datisdlogs.filter(date=date.today()).order_by('-log_id')    
+     datisdlogs = datisdlogs.filter(p_id=p_id).order_by('-log_id')    
      supdetails = models.Supervisor.objects.all()
      supdetails = supdetails.values('name','contact','email').filter(dept='C')
      return render(request,'engineer/datis/editdatisrepsub.html',{'supdetails':supdetails,'datisd':datisd,'id':datis_id,'datis_d':datis_d,'datisdlogs':datisdlogs}) 

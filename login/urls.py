@@ -7,9 +7,6 @@ from django.urls import path,include
 from . import views
 from engineer.views.datis import viewsd as datviewsd
 from engineer.views.datis import viewsw as datviewsw
-from engineer.views.vhf import viewsd as vhfviewsd
-from engineer.views.vhf import viewsm as vhfviewsm
-from engineer.views.vhf import viewsy as vhfviewsy
 from engineer.views.dscn import viewsd as dscnviewsd
 from engineer.views.dscn import viewsm as dscnviewsm
 from engineer.views.dscn import viewsw as dscnviewsw
@@ -32,30 +29,30 @@ urlpatterns = [
 
     #vhf 
     #daily
-    path('vhfdaily/<int:id>',vhfviewsd.vhfd),
-    path('vhfdailyrep/<int:id>',vhfviewsd.vhfdrep),
-    path('vhfrepsub/<int:id>',vhfviewsd.vhfdrepsub), 
-    path('vhfdailylogs/<int:id>',vhfviewsd.vhfdlogs), 
-    path('editvhfd/<int:vhfdaily_id>',vhfviewsd.editvhfdaily), 
-    path('upvhfrepsub/<int:id>',vhfviewsd.upvhfdaily),
-    path('routebackvd/<int:id>/',vhfviewsd.routebackvhfd),    
-    path('vhfdailyrec/<int:id>/',vhfviewsd.vhfdailyrec),    
+    #path('vhfdaily/<int:id>',vhfviewsd.vhfd),
+    #path('vhfdailyrep/<int:id>',vhfviewsd.vhfdrep),
+    #path('vhfrepsub/<int:id>',vhfviewsd.vhfdrepsub), 
+    #path('vhfdailylogs/<int:id>',vhfviewsd.vhfdlogs), 
+    #path('editvhfd/<int:vhfdaily_id>',vhfviewsd.editvhfdaily), 
+    #path('upvhfrepsub/<int:id>',vhfviewsd.upvhfdaily),
+    #path('routebackvd/<int:id>/',vhfviewsd.routebackvhfd),    
+    #path('vhfdailyrec/<int:id>/',vhfviewsd.vhfdailyrec),    
     
     #monthly
-    path('vhfmonthly/<int:id>',vhfviewsm.vhfm),
-    path('vhfmonthlyrep/<int:id>',vhfviewsm.vhfmrep),
-    path('vhfmrepsub/<int:id>',vhfviewsm.vhfmrepsub),
-    path('vhfmlogs/<int:id>',vhfviewsm.vhfmlogs),
-    path('editvhfm/<int:vhfmonthly_id>',vhfviewsm.editvhfmonthly),
-    path('upvhfmrepsub/<int:id>',vhfviewsm.upvhfmonthly),
+    #path('vhfmonthly/<int:id>',vhfviewsm.vhfm),
+    #path('vhfmonthlyrep/<int:id>',vhfviewsm.vhfmrep),
+    #path('vhfmrepsub/<int:id>',vhfviewsm.vhfmrepsub),
+    #path('vhfmlogs/<int:id>',vhfviewsm.vhfmlogs),
+    #path('editvhfm/<int:vhfmonthly_id>',vhfviewsm.editvhfmonthly),
+    #path('upvhfmrepsub/<int:id>',vhfviewsm.upvhfmonthly),
     
     #yearly
-    path('vhfyearly/<int:id>',vhfviewsy.vhfy),
-    path('vhfyearlyrep/<int:id>',vhfviewsy.vhfyrep),
-    path('vhfyrepsub/<int:id>',vhfviewsy.vhfyrepsub),
-    path('vhfylogs/<int:id>',vhfviewsy.vhfylogs),
-    path('editvhfy/<int:vhfyearly_id>',vhfviewsy.editvhfyearly),
-    path('upvhfyrepsub/<int:id>',vhfviewsy.upvhfyearly),
+    #path('vhfyearly/<int:id>',vhfviewsy.vhfy),
+    #path('vhfyearlyrep/<int:id>',vhfviewsy.vhfyrep),
+    #path('vhfyrepsub/<int:id>',vhfviewsy.vhfyrepsub),
+    #path('vhfylogs/<int:id>',vhfviewsy.vhfylogs),
+    #path('editvhfy/<int:vhfyearly_id>',vhfviewsy.editvhfyearly),
+    #path('upvhfyrepsub/<int:id>',vhfviewsy.upvhfyearly),
   
     #dscn #daily
     path('dscndaily/<int:id>',dscnviewsd.dscnd),

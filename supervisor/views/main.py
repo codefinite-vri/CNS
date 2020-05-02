@@ -255,7 +255,7 @@ def verify(request,names,id):
     str3=').values()'
     request.session['pid']=id
     request.session['name']=names
-    que=str1+logname+str2+str(id)+str3
+    que=str1+logname+str2+str(id)+str3+".order_by('-log_id')"
     exec(que,globals())
     # print("logs:")
     # print(logs)
@@ -380,6 +380,30 @@ def empdetails(request,id):
                 
         
         com=datisdaily+[i for i in datisweekly]+[i for i in dscnweekly]+[i for i in dscndaily]+[i for i in dscnmonthly]+[i for i in vhfdaily]+[i for i in vhfmonthly]
+        com=sorted(com,key=itemgetter('date'),reverse=True)
+        for i in com:
+
+            i.update({'token':encode(request,str(i['p_id']))})
+
+     
+     elif request.session.get('dept')=='S':
+  
+                
+        Scctvdaily=[entry for entry in models.Scctvdaily.objects.filter(emp_id=id).values().order_by('-date')]
+        for item in Scctvdaily:
+                item.update( {"type":"Scctvdaily"})
+                
+                
+        Scctvweekly=[entry for entry in models.Scctvweekly.objects.filter(emp_id=id).values().order_by('-date')]
+        for item in Scctvweekly:
+                item.update( {"type":"Scctvweekly"})
+                
+        Scctvmonthly=[entry for entry in models.Scctvmonthly.objects.filter(emp_id=id).values().order_by('-date')]
+        for item in Scctvmonthly:
+                item.update( {"type":"Scctvmonthly"})
+                
+        
+        com=[i for i in Scctvweekly]+[i for i in Scctvdaily]+[i for i in Scctvmonthly]
         com=sorted(com,key=itemgetter('date'),reverse=True)
         for i in com:
 
