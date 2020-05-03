@@ -329,30 +329,27 @@
                           <table class="table table-bordered table-condensed table-striped table-hover todaytasks mantab">
             <thead>
                 <tr>  
-                    <th>Date</th>
-                    <th>Time</th>
+                    <th>Date-Time</th>
                     <th>PS 5V</th>
                     <th>PS 12V</th>
                     <th>PS 28V</th>
                     <th>Outside temperature</th>
-                    <th>Sideband frequency</th><!--
-                    <th>Status of server A</th>
-                    <th>Status of server B</th>-->
+                    <th>Sideband frequency</th>
+                    <th>Remarks</th>
                     <th>Test</th>
-                    <!--<th>Test</th>-->
                 </tr>
             </thead>
             <tbody>
                 {% for cdvorww in cdvorw %}
                 <tr>
                  
-                <td>{{ cdvorww.date }}</td>
-                  <td>{{ cdvorww.time }}</td>
+                <td>{{ cdvorww.date }}<br>{{ cdvorww.time }}</td>
                  <td>{{ cdvorww.ps_5v }}</td>
                   <td>{{ cdvorww.ps_12v }}</td>
                   <td>{{ cdvorww.ps_28v }}</td>
                   <td>{{ cdvorww.outside_temp }}</td>
                   <td>{{ cdvorww.sideband_frequency }}</td>
+                  <td>{{ cdvorww.remarks }}</td>
             
                 {% if cdvorww.ps_5v >= 4.75 and cdvorww.ps_5v <= 5.25 and cdvorww.ps_12v >= 11.5 and cdvorww.ps_12v <= 12.5 and cdvorww.ps_28v >= 27 and cdvorww.ps_28v <= 29 and cdvorww.outside_temp >= -25 and cdvorww.outside_temp <= 70 and cdvorww.sideband_frequency == 10001 %}
                   <td>Pass</td>
@@ -380,37 +377,27 @@
 $(function(){
     if($("#ps_5v").val()>"5.25" || $("#ps_5v").val()<"4.75"){
         $('#ps_5v').css('border-color', 'red');
-    }else{
-        $('#ps_5v').css('border-color', 'pale-green');
 	}
 
     if($("#ps_12v").val()>"12.5" || $("#ps_12v").val()<"11.5" ){
         $('#ps_12v').css('border-color', 'red');
-    }else{
-        $('#ps_12v').css('border-color', 'pale-green');
     }
 
     if($("#ps_28v").val()>"29" || $("#ps_28v").val()<"27"){
         $('#ps_28v').css('border-color', 'red');
-    }else{
-        $('#ps_28v').css('border-color', 'pale-green');
     }
 
     if($("#outside_temp").val()<"-25" || $("#outside_temp").val()>"70"){
         $('#outside_temp').css('border-color', 'red');
-    }else{
-        $('#outside_temp').css('border-color', 'pale-green');
     }
 
     if( $("#sideband_frequency").val()!="10001"){
         $('#sideband_frequency').css('border-color', 'red');
-    }else{
-        $('#sideband_frequency').css('border-color', 'pale-green');
     }
 
 });
 	</script>	
-          <!--  <button onclick="window.location.href='/routebackdd/{{ id }}'">Back</button>-->
+         
            
 </body>
 </html>

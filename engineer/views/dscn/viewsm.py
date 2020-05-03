@@ -3,6 +3,7 @@ from django.db import connection
 from datetime import date,datetime
 # Create your views here.
 from login import models as models
+from django.contrib import messages
 
 def dscnmonthlyrec(request, id):
  if request.session.has_key('uid'):
@@ -10,7 +11,7 @@ def dscnmonthlyrec(request, id):
    if int(uid) == int(id):
      cursor = connection.cursor() 
      dscn_m = models.Dscnmonthly.objects.all()
-     dscn_m = dscn_m.values('p_id','date','time','status','cleaning_dscn_associated_eqpt','battery_backup_time_of_ups1nups2','ups_battery_voltage_on_load','antenna_n_cable_check','earth_resistance','eorn_voltage','eqpt_status_after_check')
+     dscn_m = dscn_m.values('p_id','date','time','status','cleaning_dscn_associated_eqpt','battery_backup_time_of_ups1nups2','ups_battery_voltage_on_load','antenna_n_cable_check','earth_resistance','eorn_voltage','eqpt_status_after_check','approval_date','approval_time')
      dscn_m = dscn_m.filter(emp_id=id).order_by('-p_id')     
      return render(request,'engineer/dscn/dscnmrecords.html',{'dscn_m':dscn_m,'id':id}) 
    else :
@@ -20,27 +21,32 @@ def dscnmonthlyrec(request, id):
    return render(request,'login/login.html')
 
 def dscnm(request, id) :
-  if request.session.has_key('uid'):
+ if request.session.has_key('uid'):
+   uid=request.session['uid'] 
+   if int(uid) == int(id):
      currtime = datetime.now().strftime("%H:%M:%S")
      currdate = date.today()
      dscn_m = models.Dscnmonthly.objects.all()
-     dscn_m = dscn_m.values('p_id','date','emp_id','time','status','cleaning_dscn_associated_eqpt','battery_backup_time_of_ups1nups2','ups_battery_voltage_on_load','antenna_n_cable_check','earth_resistance','eorn_voltage','eqpt_status_after_check')
+     dscn_m = dscn_m.values('p_id','date','emp_id','time','status','cleaning_dscn_associated_eqpt','battery_backup_time_of_ups1nups2','ups_battery_voltage_on_load','antenna_n_cable_check','earth_resistance','eorn_voltage','eqpt_status_after_check','unit_incharge_approval','remarks')
      dscn_m = dscn_m.filter(emp_id=id)
      dscnm = dscn_m.order_by('-p_id')   
-     dscn_m = dscn_m.filter(date=currdate)     
+     dscn_m = dscn_m.filter(date=currdate)   
+     uia = dscn_m.values('unit_incharge_approval')[0]['unit_incharge_approval']  
      dscnmlogs = models.Dscnmlogs.objects.all()
      dscnmlogs = dscnmlogs.filter(date=date.today()).order_by('-log_id')    
      supdetails = models.Supervisor.objects.all()
-     supdetails = supdetails.values('name','contact','email').filter(dept='C')
-     uia = models.Dscnmonthly.objects.all()
-     uia = uia.values('unit_incharge_approval').order_by('-date').filter(emp_id=id)[0]['unit_incharge_approval'] 
+     f = 1
      if uia == "NO" :
-       f=0
-     elif uia == None :
-       f=1 
-     print(f)    
-     return render(request,'engineer/dscn/dscnmonrep.html',{'dscn_m':dscn_m,'id':id,'f':f,'dscnm':dscnm,'supdetails':supdetails,'dscnmlogs':dscnmlogs}) 
-  else : 
+      f = 0
+     supdetails = supdetails.values('name','contact','email').filter(dept='C')
+     if dscnm :        
+       return render(request,'engineer/dscn/dscnmonrep.html',{'dscn_m':dscn_m,'f':f,'id':id,'dscnm':dscnm,'supdetails':supdetails,'dscnmlogs':dscnmlogs}) 
+     else :
+       messages.add_message(request,30, 'You cannot make changes to pending report!')
+       return routebackdatisd(request, id)
+   else :
+     return routebackdatisd(request, uid)
+ else : 
      return render(request,'login/login.html')
 
 def dscnmrep(request, id) :
@@ -52,7 +58,7 @@ def dscnmrep(request, id) :
      supdetails = models.Supervisor.objects.all()
      supdetails = supdetails.values('name','contact','email').filter(dept='C')
      dscn_m = models.Dscnmonthly.objects.all()
-     dscn_m = dscn_m.values('p_id','date','time','status','cleaning_dscn_associated_eqpt','battery_backup_time_of_ups1nups2','ups_battery_voltage_on_load','antenna_n_cable_check','earth_resistance','eorn_voltage','eqpt_status_after_check')
+     dscn_m = dscn_m.values('p_id','date','time','status','cleaning_dscn_associated_eqpt','battery_backup_time_of_ups1nups2','ups_battery_voltage_on_load','antenna_n_cable_check','earth_resistance','eorn_voltage','eqpt_status_after_check','remarks')
      dscn_m = dscn_m.filter(emp_id=id).order_by('-p_id') 
      return render(request,'engineer/dscn/dscnmrepsub.html',{'id':id,'dscn_m':dscn_m,'supdetails':supdetails}) 
    else :
@@ -90,7 +96,7 @@ def dscnmrepsub(request, id):
    sql = "INSERT INTO dscnmlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
    cursor.execute(sql,val)
    dscn_m = models.Dscnmonthly.objects.all()
-   dscn_m = dscn_m.values('p_id','date','time','status','cleaning_dscn_associated_eqpt','battery_backup_time_of_ups1nups2','ups_battery_voltage_on_load','antenna_n_cable_check','earth_resistance','eorn_voltage','eqpt_status_after_check')
+   dscn_m = dscn_m.values('p_id','date','time','status','cleaning_dscn_associated_eqpt','battery_backup_time_of_ups1nups2','ups_battery_voltage_on_load','antenna_n_cable_check','earth_resistance','eorn_voltage','eqpt_status_after_check','remarks')
    dscn_m = dscn_m.filter(emp_id=id)  
    dscnm = dscn_m.order_by('-p_id')   
    dscn_m = dscn_m.filter(date=currdate)     
@@ -154,7 +160,7 @@ def updscnmonthly(request, id):
    cursor.execute(sql,val)
    
    dscn_m = models.Dscnmonthly.objects.all()
-   dscn_m = dscn_m.values('p_id','date','emp_id','time','status','cleaning_dscn_associated_eqpt','battery_backup_time_of_ups1nups2','ups_battery_voltage_on_load','antenna_n_cable_check','earth_resistance','eorn_voltage','eqpt_status_after_check')
+   dscn_m = dscn_m.values('p_id','date','emp_id','time','status','cleaning_dscn_associated_eqpt','battery_backup_time_of_ups1nups2','ups_battery_voltage_on_load','antenna_n_cable_check','earth_resistance','eorn_voltage','eqpt_status_after_check','remarks')
    dscn_m = dscn_m.filter(emp_id=emp_id)  
    dscnm = dscn_m.order_by('-p_id')   
    dscn_m = dscn_m.filter(date=currdate)     
@@ -196,7 +202,7 @@ def finalmrepsub(request,p_id,id) :
         cursor = connection.cursor() 
         currdate = date.today()
         dscn_m = models.Dscnmonthly.objects.all()
-        dscn_m = dscn_m.values('p_id','date','time','status','cleaning_dscn_associated_eqpt','battery_backup_time_of_ups1nups2','ups_battery_voltage_on_load','antenna_n_cable_check','earth_resistance','eorn_voltage','eqpt_status_after_check')
+        dscn_m = dscn_m.values('p_id','date','time','status','cleaning_dscn_associated_eqpt','battery_backup_time_of_ups1nups2','ups_battery_voltage_on_load','antenna_n_cable_check','earth_resistance','eorn_voltage','eqpt_status_after_check','remarks')
         dscn_m = dscn_m.filter(emp_id=id)  
         dscnm = dscn_m.order_by('-p_id')   
         dscn_m = dscn_m.filter(date=currdate)     

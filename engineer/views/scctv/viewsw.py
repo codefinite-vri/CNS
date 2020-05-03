@@ -3,6 +3,7 @@ from django.db import connection
 from datetime import date,datetime,timedelta
 from engineer.views.scctv.viewsd import routebackscctvd
 from login import models as models
+from django.contrib import messages
 
 def scctvweeklyrec(request, id):
  if request.session.has_key('uid'):
@@ -289,7 +290,7 @@ def upscctvweekly(request, id) :
     else :
         status = "PENDING"
         val = (emp_id,p_id,"Procedure Followed",remarks,currdate,currtime)
-        sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
+        sql = "INSERT INTO scctvwlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
         cursor.execute(sql,val)  
          
     cursor.execute("update scctvweekly set status = %s where p_id = %s",[status,p_id])

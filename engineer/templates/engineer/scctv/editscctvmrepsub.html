@@ -239,11 +239,11 @@
                       <td>203-213V</td>
                     </tr>
                       <tr>
-                      <td>UPS Battry output voltage during AC power OFF (on both battery banks)</td>
+                      <td>UPS Battery output voltage during AC power OFF (on both battery banks)</td>
                       <td>181-191V</td>
                     </tr>
                       <tr>
-                      <td>UPS Battry output voltage after 15 min of AC main OFF (on both battery banks)</td>
+                      <td>UPS Battery output voltage after 15 min of AC main OFF (on both battery banks)</td>
                       <td>171-181V</td>
                     </tr>
                       <tr>
@@ -291,27 +291,26 @@
                           <table class="table table-bordered table-condensed table-striped table-hover todaytasks mantab">
             <thead>
                 <tr>  
-                   <th>Date</th>
-                    <th>Time</th>
+                   <th>Date-Time</th>
                     <th>UPS Input Voltage</th>
                     <th>UPS Output Voltage</th>
-                    <th>UPS Battery output voltage during AC power ON (on both battery banks)</th>
-                    <th>UPS Battery output voltage during AC power OFF (on both battery banks)</th>
-                    <th>UPS Battery output voltage after 15 min of AC main OFF (on both battery banks)</th>
-                    <th>Check all the Server Status</th>
-                    <th>Check all the Camera / NAS Status in VRS Servers</th>
-                    <th>Check NAS free Capacity</th>
+                    <th>UPS Battery O/P V - AC power ON</th>
+                    <th>UPS Battery O/P V - AC power OFF</th>
+                    <th>UPS Battery O/P V after 15m AC main OFF</th>
+                    <th>Server Status</th>
+                    <th>Camera / NAS Status in VRS Servers</th>
+                    <th>NAS free Capacity</th>
                     <th>OFC Link in all L2 and L3 Switches</th>
                     <th>Cleaning of Cameras and Equipment</th>
-                    <th>Check the rights of all users</th>
+                    <th>Rights of all users</th>
+                    <th>Remarks</th>
                     <th>Test</th>
                 </tr>
             </thead>
             <tbody>
                  {% for scctvmm in scctv_m %}  <!--check-->
                 <tr>
-                 <td>{{ scctvmm.date }}</td>
-                  <td>{{ scctvmm.time }}</td>
+                 <td>{{ scctvmm.date }}<br>{{ scctvmm.time }}</td>
                   <td>{{ scctvmm.ups_ip_voltage }}</td>
                   <td>{{ scctvmm.ups_op_voltage }}</td>
                   <td>{{ scctvmm.ups_battery_op_voltage_acpwron }}</td>
@@ -323,6 +322,7 @@
                   <td>{{ scctvmm.ofclinkto_l2l3_switches }}</td>
                   <td>{{ scctvmm.cleaning_camera_eqpt }}</td>
                   <td>{{ scctvmm.user_rights_check }}</td>
+                  <td>{{ scctvmm.remarks }}</td>
                     {% if scctvmm.ups_ip_voltage <= 235 and  scctvmm.ups_ip_voltage >= 225 and scctvmm.ups_op_voltage <= 230 and scctvmm.ups_op_voltage >= 220 and scctvmm.ups_battery_op_voltage_acpwron <= 213 and scctvmm.ups_battery_op_voltage_acpwron >= 203 and scctvmm.ups_battery_op_voltage_acpwroff <= 191 and scctvmm.ups_battery_op_voltage_acpwroff >= 181 and scctvmm.ups_battery_op_voltage_after15min_acpwroff <= 181 and scctvmm.ups_battery_op_voltage_after15min_acpwroff >= 171 and scctvmm.server_status == "ON" and scctvmm.cameras_in_vrs_server == "OK" and scctvmm.nas_free_capacity != 0 and scctvmm.ofclinkto_l2l3_switches == "BLINKING GREEN" and scctvmm.cleaning_camera_eqpt == "CARRIED OUT" and scctvmm.user_rights_check == "OK" %}
              <td>Pass</td>
                  {% else %}

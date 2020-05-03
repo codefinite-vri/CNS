@@ -331,33 +331,31 @@
 				                    <table class="table table-bordered table-condensed table-striped table-hover todaytasks mantab">
 				                        <thead>
 				                            <tr>  
-												<th>Date</th>
-				                                <th>Time</th>
+												<th>Date-Time</th>
 				                                <th>Azimuth Angle</th>
 				                                <th>30Hz Modulation</th>
-				                              <th>	9960Hz Modulation</th>
+				                                <th>9960Hz Modulation</th>
 				                                <th>9960Hz Deviation</th>
 				                                <th>Field Intensity</th>
 				                                <th>Remarks</th>
-				                            <!--    <th>Test</th>  -->
+				                           		<th>Test</th>
 				                            </tr>
 				                        </thead>
 				                        <tbody>
 				                            {% for cdvordd in cdvord %}
 				                            <tr>
-				                             <td>{{ cdvordd.date }}</td>
-				                                <td>{{ cdvordd.time }}</td>
+				                             <td>{{ cdvordd.date }}<br>{{ cdvordd.time }}</td>
 				                                <td>{{ cdvordd.azimuth_angle }}</td>
 				                                <td>{{ cdvordd.number_30hz_modulation }}</td>
 				                                <td>{{ cdvordd.number_9960hz_modulation }}</td>
 				                                <td>{{ cdvordd.number_9960hz_deviation }}</td>
 				                                <td>{{ cdvordd.field_intensity }}</td>
 				                                <td>{{ cdvordd.remarks }}</td>
-						<!--			{% if datisdd.azimuth_angle < 25 and datisdd.status_of_servera == "MAINS" and datisdd.status_of_serverb == "STANDBY" and datisdd.number_9960hz_modulation == "NORMAL" and datisdd.number_30hz_modulation == "SVCBL" or datisdd.azimuth_angle < 25 and datisdd.status_of_servera == "STANDBY" and datisdd.status_of_serverb == "MAINS" and datisdd.number_9960hz_modulation == "NORMAL" and datisdd.number_30hz_modulation == "SVCBL" %}
+									{% if cdvordd.azimuth_angle < 25 and cdvordd.number_30hz_modulation >= 28 and cdvordd.number_30hz_modulation < 31 and cdvordd.number_9960hz_modulation >= 28 and cdvordd.number_9960hz_modulation < 31 and cdvordd.number_9960hz_deviation >= 15 and cdvordd.number_9960hz_deviation < 18 and cdvordd.field_intensity >= -1 and cdvordd.field_intensity < 2 %}
 												<td>Pass</td>
 				                            {% else %}
 				                                <td>Fail</td>
-				                            {% endif %}  -->
+				                            {% endif %}  
 				                            </tr>
 				                            {% endfor %}
 				                         </tbody>

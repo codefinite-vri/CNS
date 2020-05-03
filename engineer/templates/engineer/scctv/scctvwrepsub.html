@@ -224,8 +224,7 @@
                           <table class="table table-bordered table-condensed table-striped table-hover todaytasks mantab">
             <thead>
                  <tr>  
-                    <th>Date</th>
-                    <th>Time</th>
+                    <th>Date-Time</th>
                     <th>UPS Input Voltage</th>
                     <th>UPS Output Voltage</th>
                     <th>UPS Battery Status</th>
@@ -234,6 +233,7 @@
                     <th>Workstations and client software</th>
                     <th>Cameras in client IVMS S/W</th>
                     <th>NAS free capacity</th>
+                    <th>Remarks</th>
                     <th>Test</th>
                 </tr>
             </thead>
@@ -241,8 +241,7 @@
                 {% for scctvww in scctv_w %} <!--check-->
                 <tr>
                  
-                <td>{{ scctvww.date }}</td>
-                  <td>{{ scctvww.time }}</td>
+                <td>{{ scctvww.date }}<br>{{ scctvww.time }}</td>
                   <td>{{ scctvww.ups_ip_voltage }}</td>
                   <td>{{ scctvww.ups_op_voltage }}</td>
                   <td>{{ scctvww.ups_battery_status }}</td>
@@ -251,6 +250,7 @@
                   <td>{{ scctvww.workstns_n_client_softw_check }}</td>
                   <td>{{ scctvww.cameras_client_ivms_softw }}</td>
                   <td>{{ scctvww.nas_free_capacity }}</td>
+                  <td>{{ scctvww.remarks }}</td>
                    {% if scctvww.ups_ip_voltage <= 235 and  scctvww.ups_ip_voltage >= 225 and scctvww.ups_op_voltage <= 230 and scctvww.ups_op_voltage >= 220 and scctvww.ups_battery_status == "FULL" and scctvww.server_status == "ON" and scctvww.camera_nas_status_in_vrs == "OK" and scctvww.workstns_n_client_softw_check == "OK" and scctvww.cameras_client_ivms_softw == "OK" and scctvww.nas_free_capacity != 0 %}
                    <td>Pass</td>
                  {% else %}

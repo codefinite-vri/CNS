@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'admin.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cnsvarun',
+        'NAME': 'cns',
         'USER':'root',
         'PASSWORD':'',
         'HOST':'localhost',

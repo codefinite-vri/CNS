@@ -277,8 +277,7 @@
 				                    <table class="table table-bordered table-condensed table-striped table-hover todaytasks mantab">
 				                        <thead>
 				                           <tr>  
-												<th>Date</th>
-												<th>Time</th>
+												<th>Date-Time</th>
 												<th>UPS Battery Indication</th>
 												<th>Status of Servers</th>
 												<th>NAS Status in VMS/VRM</th>
@@ -295,8 +294,7 @@
 										  {% for scctvd in scctv_d %}      <!--check-->
 										  <tr>
 										   
-											  <td>{{ scctvd.date }}</td>
-												<td>{{ scctvd.time }}</td>
+											  <td>{{ scctvd.date }}<br>{{ scctvd.time }}</td>
 												<td>{{ scctvd.ups_battery_indication }}</td>
 												<td>{{ scctvd.servers_on_condition }}</td>
 												<td>{{ scctvd.nas_status_in_vmsorvrm }}</td>
@@ -358,50 +356,34 @@
 	
 <script>
 	$(function(){
-            if($("#UPS_battery_indication").val()=="FULL"){
-            	 $('#UPS_battery_indication').css('border-color', 'pale-green');
-            }else{
+            if($("#UPS_battery_indication").val()!="FULL"){
                $('#UPS_battery_indication').css('border-color', 'red');
             }
 
-            if($("#Servers_ON_condition").val()=="OK"){
-            	 $('#Servers_ON_condition').css('border-color', 'pale-green');
-            }else{
+            if($("#Servers_ON_condition").val()!="OK"){
                $('#Servers_ON_condition').css('border-color', 'red');
             }
 
-            if($("#NAS_status_in_VMSorVRM").val()=="OK"){
-            	 $('#NAS_status_in_VMSorVRM').css('border-color', 'pale-green');
-            }else{
+            if($("#NAS_status_in_VMSorVRM").val()!="OK"){
                $('#NAS_status_in_VMSorVRM').css('border-color', 'red');
             }
 
-            if($("#recording_active_status_VRS_server").val()=="EQUALS TO TOTAL CAMERA"){
-            	 $('#recording_active_status_VRS_server').css('border-color', 'pale-green');
-            }else{
+            if($("#recording_active_status_VRS_server").val()!="EQUALS TO TOTAL CAMERA"){
             	 $('#recording_active_status_VRS_server').css('border-color', 'red');
             }
-            if($("#recording_active_status_RRS_server").val()=="PAUSE") {
-               $('#recording_active_status_RRS_server').css('border-color', 'pale-green');
-              }else{
+            if($("#recording_active_status_RRS_server").val()!="PAUSE") {
                $('#recording_active_status_RRS_server').css('border-color', 'red');
             }
 
-            if($("#database_status_VMS").val()=="OK"){
-            	 $('#database_status_VMS').css('border-color', 'pale-green');
-            }else{
+            if($("#database_status_VMS").val()!="OK"){
                $('#database_status_VMS').css('border-color', 'red');
             }
 
-            if($("#cameras_IVMS").val()=="OK"){
-            	 $('#cameras_IVMS').css('border-color', 'pale-green');
-            }else{
+            if($("#cameras_IVMS").val()!="OK"){
                $('#cameras_IVMS').css('border-color', 'red');
             }
 
-            if($("#eqpt_cleaning").val()=="CARRIED OUT"){
-            	 $('#eqpt_cleaning').css('border-color', 'pale-green');
-            }else{
+            if($("#eqpt_cleaning").val()!="CARRIED OUT"){
                $('#eqpt_cleaning').css('border-color', 'red');
             }
            

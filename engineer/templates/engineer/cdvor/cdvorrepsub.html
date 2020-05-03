@@ -274,30 +274,6 @@
 				          		<td>Field Intensity</td>
 				          		<td>-1 - 1</td>
 				          	</tr>
-				          	<!--	<tr>
-				          		<td>Date and time of servers wrt GPS CLK</td>
-				          		<td>Correct</td>
-				          	</tr>
-				          		<tr>
-				          		<td>Status of Disk Array</td>
-				          		<td>OK</td>
-				          	</tr>
-				          		<tr>
-				          		<td>Status of VHF TX used for ATIS</td>
-				          		<td>On-Line</td>
-				          	</tr>
-				          		<tr>
-				          		<td>Status of VHF RX used for ATIS</td>
-				          		<td>On-Line</td>
-				          	</tr>
-				          		<tr>
-				          		<td>DATIS update</td>
-				          		<td>OK</td>
-				          	</tr>
-				          		<tr>
-				          		<td>Audio Quality of Datis Announcement</td>
-				          		<td>Good</td>
-				          	</tr>-->
 				          </table>
 				        </div>
 				        <div class="modal-footer">
@@ -319,15 +295,14 @@
 				          <table class="table table-bordered table-condensed table-striped table-hover todaytasks mantab">
             <thead>
                 <tr>  
-					<th>Date</th>
-					<th>Time</th>
+					<th>Date-Time</th>
 					<th>Azimuth Angle</th>
 					<th>30Hz Modulation</th>
 					 <th>9960Hz Modulation</th>
-				  <th>9960Hz Deviation</th>
+				     <th>9960Hz Deviation</th>
 					<th>Field Intensity</th>
                     <th>Remarks</th>
-<!--                    <th>Test</th>  -->
+                   <th>Test</th>  
 
 			  </tr>
 		  </thead>
@@ -335,15 +310,19 @@
 			  {% for cdvord in cdvor_d %}
 			  <tr>
 			   
-				  <td>{{ cdvord.date }}</td>
-					<td>{{ cdvord.time }}</td>
+				  <td>{{ cdvord.date }}<br>{{ cdvord.time }}</td>
 					<td>{{ cdvord.azimuth_angle }}</td>
 					<td>{{ cdvord.number_30hz_modulation }}</td>
 					<td>{{ cdvord.number_9960hz_modulation }}</td>
 					<td>{{ cdvord.number_9960hz_deviation }}</td>
 					<td>{{ cdvord.field_intensity }}</td>
 					<td>{{ cdvord.remarks }}</td>
-			  </tr>
+			  {% if cdvord.azimuth_angle < 25 and cdvord.number_30hz_modulation >= 28 and cdvord.number_30hz_modulation < 31 and cdvord.number_9960hz_modulation >= 28 and cdvord.number_9960hz_modulation < 31 and cdvord.number_9960hz_deviation >= 15 and cdvord.number_9960hz_deviation < 18 and cdvord.field_intensity >= -1 and cdvord.field_intensity < 2 %}
+												<td>Pass</td>
+				                            {% else %}
+				                                <td>Fail</td>
+				                            {% endif %}  
+				                            </tr>
 			  {% endfor %}
 				</tbody>
 				          </table>

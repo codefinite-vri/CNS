@@ -409,43 +409,41 @@
     </div>   
     <script>
     	$(function(){
-        if($("#bearing_deviation_1").val()>="1"){
-            $('#measured_bearing_1').css('border-color', 'red');
-        }else{
-            $('#measured_bearing_1').css('border-color', 'pale-green');
-        }
+        if($("#bearing_deviation_1").val() >= '1.0' ){
+        $('#measured_bearing_1').css('border-color', 'red');
+        $('#bearing_deviation_1').css('border-color', 'red');
+  
+    }
 
-        if($("#bearing_deviation_2").val()>="1"){
-            $('#measured_bearing_2').css('border-color', 'red');
-        }else{
-            $('#measured_bearing_2').css('border-color', 'pale-green');
-        }
-        
-        if($("#bearing_deviation_3").val()>="1"){
-            $('#measured_bearing_3').css('border-color', 'red');
-        }else{
-            $('#measured_bearing_3').css('border-color', 'pale-green');
-        }
-       
-        if($("#bearing_deviation_4").val()>="1"){
-            $('#measured_bearing_4').css('border-color', 'red');
-        }else{
-            $('#measured_bearing_4').css('border-color', 'pale-green');
-        }
+    if($("#bearing_deviation_2").val() >= '1.0' ){
+        $('#measured_bearing_2').css('border-color', 'red');
+        $('#bearing_deviation_2').css('border-color', 'red');
+  
+    }
+    
+    if($("#bearing_deviation_3").val() >= '1.0' ){
+        $('#measured_bearing_3').css('border-color', 'red');
+        $('#bearing_deviation_3').css('border-color', 'red');
+  
+    }
+   
+    if($("#bearing_deviation_4").val() >='1.0' ){
+        $('#measured_bearing_4').css('border-color', 'red');
+        $('#bearing_deviation_4').css('border-color', 'red');
+  
+    }
 
-         if($("#bearing_deviation_5").val()>="1"){
-            $('#measured_bearing_5').css('border-color', 'red');
-        }else{
-            $('#measured_bearing_5').css('border-color', 'pale-green');
-        }
+     if($("#bearing_deviation_5").val() >='1.0' ){
+        $('#measured_bearing_5').css('border-color', 'red');
+        $('#bearing_deviation_5').css('border-color', 'red');
+  
+    }
 
-         if($("#error_spread").val()>="0.5"){
-            $('#error_spread').css('border-color', 'red');
-        }else{
-            $('#error_spread').css('border-color', 'pale-green');
-        }
+     if($("#error_spread").val() >= '0.5' ){
+        $('#error_spread').css('border-color', 'red');
+    }
 
-    });
+});
         
     </script>
 </body>

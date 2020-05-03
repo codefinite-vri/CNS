@@ -6,6 +6,8 @@ from django.core.mail import send_mail
 from django.contrib import messages
 from login import views 
 from operator import itemgetter
+from engineer.views.datis.viewsd import routebackdatisd
+
 # Create your views here.
   
 def homedsd(request, id, p_id) :
@@ -52,10 +54,12 @@ def dscndailyrec(request, id) :
     
 def dscnd(request, id) :
   if request.session.has_key('uid'):
+    uid=request.session['uid'] 
+    if int(uid) == int(id):
      currdate= date.today()
      cursor = connection.cursor() 
      dscn_d = models.Dscndaily.objects.all()
-     dscn_d = dscn_d.values('p_id','date','time','status','sat_led','odu_led','io_led','alarm_led','power_led','v35_led','ip_voltage','op_voltage','battery_voltage','coro_function')
+     dscn_d = dscn_d.values('p_id','date','time','status','sat_led','odu_led','io_led','alarm_led','power_led','v35_led','ip_voltage','op_voltage','battery_voltage','coro_function','remarks')
      dscn_d = dscn_d.filter(emp_id=id)  
      dscnd = dscn_d.order_by('-p_id')   
      dscn_d = dscn_d.filter(date=currdate)     
@@ -63,7 +67,13 @@ def dscnd(request, id) :
      dscndlogs = dscndlogs.filter(date=date.today()).order_by('-log_id')    
      supdetails = models.Supervisor.objects.all()
      supdetails = supdetails.values('name','contact','email').filter(dept='C')
-     return render(request,'engineer/dscn/dscndailyrep.html',{'supdetails':supdetails,'dscn_d':dscn_d,'id':id,'dscnd':dscnd,'dscndlogs':dscndlogs})
+     if dscn_d :
+        return render(request,'engineer/dscn/dscndailyrep.html',{'supdetails':supdetails,'dscn_d':dscn_d,'id':id,'dscnd':dscnd,'dscndlogs':dscndlogs})
+     else :
+        messages.add_message(request,30, 'You cannot make changes to pending report!')
+        return routebackdatisd(request, uid)
+    else :
+     return routebackdatisd(request, uid)
   else :
      return render(request,'login/login.html')
    
@@ -196,7 +206,7 @@ def dscndrepsub(request,id):
           status = "PENDING"      
      cursor.execute("update dscndaily set status = %s where p_id = %s",[status,p_id])
      dscn_d = models.Dscndaily.objects.all()
-     dscn_d = dscn_d.values('p_id','date','time','status','sat_led','odu_led','io_led','alarm_led','power_led','v35_led','ip_voltage','op_voltage','battery_voltage','coro_function')
+     dscn_d = dscn_d.values('p_id','date','time','status','sat_led','odu_led','io_led','alarm_led','power_led','v35_led','ip_voltage','op_voltage','battery_voltage','coro_function','remarks')
      dscn_d = dscn_d.filter(emp_id=id)  
      dscnd = dscn_d.order_by('-p_id')   
      dscn_d = dscn_d.filter(date=currdate)     
@@ -218,7 +228,7 @@ def editdscndaily(request,p_id):
      emp_id = models.Dscndaily.objects.all()
      emp_id = emp_id.values('emp_id').filter(p_id=p_id)[0]['emp_id']
      dscnd = models.Dscndaily.objects.all()
-     dscnd = dscnd.values('p_id','date','time','status','emp_id','sat_led','odu_led','io_led','alarm_led','power_led','v35_led','ip_voltage','op_voltage','battery_voltage','coro_function','remarks','unit_incharge_approval')
+     dscnd = dscnd.values('p_id','date','time','status','emp_id','sat_led','odu_led','io_led','alarm_led','power_led','v35_led','ip_voltage','op_voltage','battery_voltage','coro_function','remarks','unit_incharge_approval','remarks')
      dscn_d = dscnd.filter(emp_id=emp_id).order_by('-p_id')     
      dscnd = dscnd.filter(p_id=p_id)
      dscndlogs = models.Dscndlogs.objects.all()
@@ -265,7 +275,7 @@ def updscndaily(request, id) :
          cursor.execute("update dscndaily set SAT_LED = %s where p_id = %s",[sled,id])
          remarks = "SAT LED not steady on(update)"
          val = (emp_id,p_id,remarks,sled,currdate,currtime)
-         sql = "INSERT INTO dscndlogs (emp_id,remarks,value,date,time) values (%s ,%s, %s ,%s, %s,%s)"
+         sql = "INSERT INTO dscndlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s, %s ,%s, %s,%s)"
          cursor.execute(sql,val)
      else :
          cursor.execute("update dscndaily set SAT_LED = %s where p_id = %s",[sled,id])
@@ -332,13 +342,13 @@ def updscndaily(request, id) :
         
      if int(ov) < 220 or int(ov) > 240 :
          f=3
-         cursor.execute("update dscndaily set OP_voltage = %s where p_id = %s",[iv,id])
+         cursor.execute("update dscndaily set OP_voltage = %s where p_id = %s",[ov,id])
          remarks = "UPS O/P Voltage exceeding normal voltage(update)"
          val = (emp_id,p_id,remarks,ov,currdate,currtime)
          sql = "INSERT INTO dscndlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
          cursor.execute(sql,val)
      else :
-         cursor.execute("update dscndaily set OP_voltage = %s where p_id = %s",[iv,id])
+         cursor.execute("update dscndaily set OP_voltage = %s where p_id = %s",[ov,id])
      
      if int(bv) < 180 or int(bv) > 250 :
          f=3
@@ -376,7 +386,7 @@ def updscndaily(request, id) :
       
      
      dscn_d = models.Dscndaily.objects.all()
-     dscn_d = dscn_d.values('p_id','date','time','status','sat_led','odu_led','io_led','alarm_led','power_led','v35_led','ip_voltage','op_voltage','battery_voltage','coro_function')
+     dscn_d = dscn_d.values('p_id','date','time','status','sat_led','odu_led','io_led','alarm_led','power_led','v35_led','ip_voltage','op_voltage','battery_voltage','coro_function','remarks')
      dscnd = dscn_d
      dscnd = dscnd.filter(emp_id=emp_id).order_by('-p_id')
      dscn_d = dscn_d.filter(date=currdate)
@@ -418,7 +428,7 @@ def finalddrepsub(request,p_id,id) :
         cursor = connection.cursor() 
         currdate = date.today()
         dscn_d = models.Dscndaily.objects.all()
-        dscn_d = dscn_d.values('p_id','date','time','status','sat_led','odu_led','io_led','alarm_led','power_led','v35_led','ip_voltage','op_voltage','battery_voltage','coro_function')
+        dscn_d = dscn_d.values('p_id','date','time','status','sat_led','odu_led','io_led','alarm_led','power_led','v35_led','ip_voltage','op_voltage','battery_voltage','coro_function','remarks')
         dscn_d = dscn_d.filter(emp_id=id)
         dscnd = dscn_d.order_by('-p_id')
         dscn_d = dscn_d.filter(date=currdate)     

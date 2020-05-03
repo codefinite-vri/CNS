@@ -299,15 +299,13 @@
                           <table class="table table-bordered table-condensed table-striped table-hover todaytasks mantab">
             <thead>
                 <tr>  
-                    <th>Date</th>
-                    <th>Time</th>
+                    <th>Date-Time</th>
                     <th>Server A/B</th>
                     <th>UPS Input</th>
                     <th>UPS Output</th>
                     <th>Dust Free</th>
-                    <th>LAN Status</th><!--
-                    <th>Status of server A</th>
-                    <th>Status of server B</th>-->
+                    <th>LAN Status</th>
+                    <th>Remarks</th>
                     <th>Test</th>
                     <!--<th>Test</th>-->
                 </tr>
@@ -316,13 +314,13 @@
                 {% for datisww in datisw %}
                 <tr>
                  
-                <td>{{ datisww.date }}</td>
-                  <td>{{ datisww.time }}</td>
+                <td>{{ datisww.date }}<br>{{ datisww.time }}</td>
                  <td>{{ datisww.serveraorb }}</td>
                   <td>{{ datisww.ups_ip }}</td>
                   <td>{{ datisww.ups_op }}</td>
                   <td>{{ datisww.dust_free }}</td>
                   <td>{{ datisww.lan_status }}</td>
+                  <td>{{ datisww.remarks }}</td>
                   {% if datisww.serveraorb == "A" or datisww.serveraorb == "B" %}  
                   {% if datisww.ups_ip < 231 and datisww.ups_ip > 199 %}
                   {% if datisww.ups_op == 230 and datisww.dust_free == "OK" and datisww.lan_status == "OK" %}
@@ -358,26 +356,18 @@ $(function(){
 
     if($("#UPS_ip").val()<"200" || $("#UPS_ip").val()>"230"){
         $('#UPS_ip').css('border-color', 'red');
-    }else{
-        $('#UPS_ip').css('border-color', 'pale-green');
 	}
-
+  
     if($("#UPS_op").val()!="230"){
         $('#UPS_op').css('border-color', 'red');
-    }else{
-        $('#UPS_op').css('border-color', 'pale-green');
     }
 
     if($("#Dust_free").val()!="OK"){
         $('#Dust_free').css('border-color', 'red');
-    }else{
-        $('#Dust_free').css('border-color', 'pale-green');
     }
 
     if($("#LAN_status").val()!="OK"){
         $('#LAN_status').css('border-color', 'red');
-    }else{
-        $('#LAN_status').css('border-color', 'pale-green');
     }
 
 });

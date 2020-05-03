@@ -32,31 +32,13 @@
                     
                   <th>Date-Time</th>
                   <th style="width: 150px;">Status</th>
-                  <th>Measured Bearing 1</th>
-                  <th>Bearing Deviation 1</th>
-                  <th>Measured Bearing 2</th>
-                  <th>Bearing Deviation 2</th>
-                  <th>Measured Bearing 3</th>
-                  <th>Bearing Deviation 3</th>
-                  <th>Measured Bearing 4</th>
-                  <th>Bearing Deviation 4</th>
-                  <th>Measured Bearing 5</th>
-                  <th>Bearing Deviation 5</th>
+                  <th>Measured Bearing </th>
+                  <th>Bearing Deviation</th>
                   <th>Error Spread</th>
                   <th>Test</th>  
                   <th>Approval Status</th>
                   <th>Approval Date</th>
                   <th>Approval time</th>
-                  
-             
-              <!--   <th>datetime_of_servers_wrt_GPS_CLK</th>
-                  <th>status_of_Disk_array</th>
-                  <th>VHFTX_ATIS_status</th>
-                 <th>VHFRX_ATIS_status</th>
-                  <th>DATIS_update</th>
-                  <th>Audio_quality</th>
-                  <th>REMARKS</th>
-                  <th>Unit_incharge_approval</th>-->
                 </tr>
               </thead>
               <tbody>
@@ -64,16 +46,16 @@
                 <tr>
                   <td>{{ cdvorm.time }}<br>{{ cdvorm.date }}</td>
                   <td>{{ cdvorm.status }}</td>
-                  <td>{{ cdvorm.measured_bearing_1 }}</td>
-                  <td>{{ cdvorm.bearing_deviation_1 }}</td>
-                  <td>{{ cdvorm.measured_bearing_2 }}</td>
-                  <td>{{ cdvorm.bearing_deviation_2 }}</td>
-                  <td>{{ cdvorm.measured_bearing_3 }}</td>
-                  <td>{{ cdvorm.bearing_deviation_3 }}</td>
-                  <td>{{ cdvorm.measured_bearing_4 }}</td>
-                  <td>{{ cdvorm.bearing_deviation_4 }}</td>
-                  <td>{{ cdvorm.measured_bearing_5 }}</td>
-                  <td>{{ cdvorm.bearing_deviation_5 }}</td>
+                  <td>1: {{ cdvorm.measured_bearing_1 }}<br>
+                  2:{{ cdvorm.measured_bearing_2 }}<br>
+                  3:{{ cdvorm.measured_bearing_3 }}<br>
+                  4:{{ cdvorm.measured_bearing_4 }}<br>
+                  5:{{ cdvorm.measured_bearing_5 }}</td>
+                  <td>1: {{ cdvorm.bearing_deviation_1 }}<br>
+                  2:{{ cdvorm.bearing_deviation_2 }}<br>
+                  3:{{ cdvorm.bearing_deviation_3 }}<br>
+                  4:{{ cdvorm.bearing_deviation_4 }}<br>
+                  5:{{ cdvorm.bearing_deviation_5 }}</td>
                   <td>{{ cdvorm.error_spread }}</td>
                   {% if cdvorm.bearing_deviation_1 < 1 and cdvorm.bearing_deviation_2 < 1 and cdvorm.bearing_deviation_3 < 1 and cdvorm.bearing_deviation_4 < 1 and cdvorm.bearing_deviation_5 < 1 and cdvorm.error_spread < 0.5 %}
                    <td>Pass</td>

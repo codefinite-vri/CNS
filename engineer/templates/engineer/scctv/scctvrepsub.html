@@ -239,8 +239,7 @@
 				          <table class="table table-bordered table-condensed table-striped table-hover todaytasks mantab">
             <thead>
                 <tr>  
-					<th>Date</th>
-					<th>Time</th>
+					<th>Date-Time</th>
 					<th>UPS Battery Indication</th>
 					<th>Status of Servers</th>
 					<th>NAS Status in VMS/VRM</th>
@@ -257,8 +256,7 @@
 			  {% for datisd in scctv_d %}  <!--check-->
 			  <tr>
 			   
-				  <td>{{ datisd.date }}</td>
-					<td>{{ datisd.time }}</td>
+				  <td>{{ datisd.date }}<br>{{ datisd.time }}</td>
 					<td>{{ datisd.ups_battery_indication }}</td>
 					<td>{{ datisd.servers_on_condition }}</td>
 					<td>{{ datisd.nas_status_in_vmsorvrm }}</td>
@@ -317,7 +315,6 @@
 			</div>
 
 	</div>
-	<!--ADDITION-->
 
 </body>
-
+</html>

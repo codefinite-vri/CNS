@@ -36,7 +36,7 @@
                         <div class="alert alert-danger">
                           <strong>Report Not Submitted</strong>
 
-                      {% elif cdvorw.ps_5v >= 4.75 and cdvorw.ps_5v <= 5.25 and cdvorw.ps_12v >= 11.5 and cdvorw.ps_12v <= 12.5 and cdvorw.ps_28v >= 27 and cdvorw.ps_28v <= 29 and cdvorw.outside_temp >= -25 and cdvorw.outside_temp <= 70 and cdvorw.sideband_frequency == 10001 %}
+                      {% elif temp.ps_5v >= 4.75 and temp.ps_5v <= 5.25 and temp.ps_12v >= 11.5 and temp.ps_12v <= 12.5 and temp.ps_28v >= 27 and temp.ps_28v <= 29 and temp.outside_temp >= -25 and temp.outside_temp <= 70 and temp.sideband_frequency == 10001 %}
                         <div class="alert alert-success">
                           <strong> All maintenance entries matched with standard values.</strong>                   
 
@@ -81,21 +81,21 @@
 			                  <div class="form-group row has-warning">
 			                    <label for="ps_5v" class="col-sm-6 col-form-label">PS 5V</label>
 			                    <div>
-			                      <input type="text" class="form-control form-control-sm" id="ps_5v" name="PS 5V" readonly="true" value="{{ cdvorw.ps_5v }}">
+			                      <input type="text" class="form-control form-control-sm" id="ps_5v" name="PS 5V" readonly="true" value="{{ temp.ps_5v }}">
 			                    </div>
 			                  </div>
 			                  <hr>
 			                  <div class="form-group row has-warning">
 			                    <label for="ps_12v" class="col-sm-6 col-form-label">PS 12V</label>
 			                    <div>
-			                      <input type="text" class="form-control form-control-sm" id="ps_12v" name="PS 12V" readonly="true" value="{{ cdvorw.ps_12v }}">
+			                      <input type="text" class="form-control form-control-sm" id="ps_12v" name="PS 12V" readonly="true" value="{{ temp.ps_12v }}">
 			                    </div>
 			                  </div>
 			                  <hr>
 			                  <div class="form-group row has-warning">
 			                    <label for="ps_28v" class="col-sm-6 col-form-label">PS 28V</label>
 			                    <div>
-			                       <input type="text" class="form-control form-control-sm" id="ps_28v" name="PS 28V" readonly="true" value="{{ cdvorw.ps_28v }}">
+			                       <input type="text" class="form-control form-control-sm" id="ps_28v" name="PS 28V" readonly="true" value="{{ temp.ps_28v }}">
 			                    </div>
 			                  </div>
 
@@ -104,7 +104,7 @@
 			                    <label for="outside_temp" class="col-sm-6 col-form-label">Outside temperature</label>
 			                    <div>
 			                    	
-			                      <input type="text" class="form-control form-control-sm" id="outside_temp" name="Outside temp" readonly="true" value="{{ cdvorw.outside_temp }}">
+			                      <input type="text" class="form-control form-control-sm" id="outside_temp" name="Outside temp" readonly="true" value="{{ temp.outside_temp }}">
 			                    </div>
 			                  </div>
 
@@ -112,7 +112,7 @@
 			                  <div class="form-group row has-warning">
 			                    <label for="sideband_frequency" class="col-sm-6 col-form-label">Sideband Frequency</label>
 			                    <div>
-			                      <input type="text" class="form-control form-control-sm" id="sideband_frequency" name="Sideband frequency" readonly="true" value="{{ cdvorw.sideband_frequency }}">
+			                      <input type="text" class="form-control form-control-sm" id="sideband_frequency" name="Sideband frequency" readonly="true" value="{{ temp.sideband_frequency }}">
 			                    </div>
 			                  </div>
 
