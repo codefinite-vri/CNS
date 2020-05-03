@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 03, 2020 at 10:06 AM
+-- Generation Time: May 03, 2020 at 07:44 PM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -772,7 +772,7 @@ CREATE TABLE IF NOT EXISTS `datisdaily` (
   KEY `a_id` (`a_id`),
   KEY `emp_id` (`emp_id`),
   KEY `f_id` (`f_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `datisdaily`
@@ -800,7 +800,8 @@ INSERT INTO `datisdaily` (`p_id`, `date`, `time`, `a_id`, `emp_id`, `Status`, `f
 (74, '2020-04-30', '17:34:52', 1, 4156, 'PENDING', 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '---Report not submitted---', NULL, NULL, NULL),
 (75, '2020-05-01', '00:27:17', 1, 4156, 'PENDING', 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '---Report not submitted---', NULL, NULL, NULL),
 (76, '2020-05-02', '16:14:12', 1, 4156, 'COMPLETED', 2, 24, 'SVCBL', 'NORMAL', 'MAINS', 'STANDBY', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(77, '2020-05-03', '00:56:06', 1, 4156, 'COMPLETED', 2, 24, 'SVCBL', 'NORMAL', 'MAINS', 'STANDBY', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'YES', '2020-05-03', '01:04:15');
+(77, '2020-05-03', '00:56:06', 1, 4156, 'COMPLETED', 2, 24, 'SVCBL', 'NORMAL', 'MAINS', 'STANDBY', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'YES', '2020-05-03', '01:04:15'),
+(78, '2020-05-04', '00:38:42', 1, 4156, 'COMPLETED', 2, 24, 'SVCBL', 'NORMAL', 'MAINS', 'STANDBY', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -820,7 +821,7 @@ CREATE TABLE IF NOT EXISTS `datisdlogs` (
   PRIMARY KEY (`log_id`),
   KEY `emp_id` (`emp_id`),
   KEY `p_id` (`p_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `datisdlogs`
@@ -853,7 +854,10 @@ INSERT INTO `datisdlogs` (`log_id`, `emp_id`, `p_id`, `value`, `Remarks`, `Date`
 (124, 4156, 77, 'MAINS', 'Status of ServerA and serverB is on MAINS(update)', '2020-05-03', '00:57:41'),
 (125, 4156, 77, 'bye', 'Procedure Followed', '2020-05-03', '00:57:41'),
 (126, 4156, 77, 'good', 'Final submit with errors', '2020-05-03', '00:57:48'),
-(127, 4156, 77, 'ok', 'All parameters NORMAL', '2020-05-03', '01:03:25');
+(127, 4156, 77, 'ok', 'All parameters NORMAL', '2020-05-03', '01:03:25'),
+(128, 4156, 78, '25', 'Temperature exceeds 24 degrees', '2020-05-04', '00:38:42'),
+(129, 4156, 78, 'NON SVCBL', 'Status of ac not correct', '2020-05-04', '00:38:42'),
+(130, 4156, 78, 'ok', 'All parameters NORMAL', '2020-05-04', '00:39:04');
 
 -- --------------------------------------------------------
 
@@ -998,18 +1002,44 @@ CREATE TABLE IF NOT EXISTS `dgmreports` (
   `r_type` varchar(30) NOT NULL,
   `r_status` varchar(30) NOT NULL,
   `r_count` int(11) NOT NULL,
-  `r_date` datetime NOT NULL,
   PRIMARY KEY (`r_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `dgmreports`
 --
 
-INSERT INTO `dgmreports` (`r_id`, `r_type`, `r_status`, `r_count`, `r_date`) VALUES
-(1, 'DATIS-Daily', 'PENDING', 84, '2020-04-29 05:09:05'),
-(2, 'DATIS-Daily', 'COMPLETED', 17, '2020-04-29 09:06:00'),
-(3, 'DATIS-Daily', 'COMPLETED WITH ERRORS', 7, '2020-04-29 06:10:13');
+INSERT INTO `dgmreports` (`r_id`, `r_type`, `r_status`, `r_count`) VALUES
+(1, 'datisd', 'PENDING', 84),
+(2, 'datisd', 'COMPLETED', 18),
+(3, 'datisd', 'COMPLETED WITH ERRORS', 7),
+(4, 'dscnd', 'PENDING', 0),
+(5, 'dscnd', 'COMPLETED', 0),
+(6, 'dscnd', 'COMPLETED WITH ERRORS', 0),
+(7, 'cdvord', 'PENDING', 0),
+(8, 'cdvord', 'COMPLETED', 0),
+(9, 'cdvord', 'COMPLETED WITH ERRORS', 0),
+(10, 'scctvd', 'PENDING', 0),
+(11, 'scctvd', 'COMPLETED', 0),
+(16, 'datisw', 'COMPLETED', 0),
+(15, 'datisw', 'PENDING', 0),
+(14, 'scctvd', 'COMPLETED WITH ERRORS', 0),
+(17, 'datisw', 'COMPLETED WITH ERRORS', 0),
+(18, 'cdvorw', 'PENDING', 0),
+(19, 'cdvorw', 'COMPLETED', 0),
+(20, 'cdvorw', 'COMPLETED WITH ERRORS', 0),
+(21, 'scctvw', 'PENDING', 0),
+(22, 'scctvw', 'COMPLETED', 0),
+(23, 'scctvw', 'COMPLETED WITH ERRORS', 0),
+(24, 'cdvorm', 'PENDING', 0),
+(25, 'cdvorm', 'COMPLETED', 0),
+(26, 'cdvorm', 'COMPLETED WITH ERRORS', 0),
+(27, 'scctvm', 'PENDING', 0),
+(28, 'scctvm', 'COMPLETED', 0),
+(29, 'scctvm', 'COMPLETED WITH ERRORS', 0),
+(30, 'dscnm', 'PENDING', 0),
+(31, 'dscnm', 'COMPLETED', 0),
+(32, 'dscnm', 'COMPLETED WITH ERRORS', 0);
 
 -- --------------------------------------------------------
 
@@ -1195,7 +1225,8 @@ INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALU
 ('hdzauvhjgq5w9dessfwg693hfw05n0eq', 'Y2I3ZWY1ZWFhOGY5YmVjY2RjYTdkNzZkYmVlODNiMjkzMjBkNTg2Mjp7InR5cGUiOiJlIiwidWlkIjoiNDEyMyJ9', '2020-05-10 20:59:18.092572'),
 ('xaf0hf0nqpmlx0v2ry89cpv05f1gaez1', 'MWM1NjA3NWI2ZmM2ZWMzYzhmOGI0MDM1NTdjMGIzNzFhY2FiMDI2YTp7InR5cGUiOiJlIiwidWlkIjoiNDEzMSJ9', '2020-05-12 18:47:44.044217'),
 ('439r2bscgpyaw276zesl6rosffkmwu7o', 'YmM1MTRlMTRlMmIzMTJkYzM0ZmI0NGE0Mjk0ZDhjYzVjOTM3MThmZjp7InR5cGUiOiJlIiwidWlkIjoiNDE0NCJ9', '2020-05-16 20:02:42.778531'),
-('1olcropto0nujcgqkw0grte7m63df0q1', 'ZjZiMjUzODgzMjgwZjRkNDY1YzI2YjkyMTE2NzZmMjExMDExZTE5NDp7InR5cGUiOiJlIiwidWlkIjoiNDE2OSJ9', '2020-05-17 07:26:23.049698');
+('1olcropto0nujcgqkw0grte7m63df0q1', 'ZjZiMjUzODgzMjgwZjRkNDY1YzI2YjkyMTE2NzZmMjExMDExZTE5NDp7InR5cGUiOiJlIiwidWlkIjoiNDE2OSJ9', '2020-05-17 07:26:23.049698'),
+('ir5auvf36qeavffshclrrj9ofy5gk7qz', 'NmE1ZGM2NDBiNTc1MGEwNzJlZTA1MzMwNTU1MTdiMTU0ZTE5NmZjZTp7InR5cGUiOiJlIiwidWlkIjoiNDE1NiJ9', '2020-05-17 18:46:28.771225');
 
 -- --------------------------------------------------------
 
@@ -1913,7 +1944,7 @@ CREATE TABLE IF NOT EXISTS `scctvdaily` (
   KEY `a_id` (`a_id`),
   KEY `emp_id` (`emp_id`),
   KEY `scctvdaily_ibfk_3` (`f_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `scctvdaily`
@@ -1925,7 +1956,9 @@ INSERT INTO `scctvdaily` (`p_id`, `date`, `time`, `status`, `a_id`, `emp_id`, `f
 (3, '2020-04-28', '07:11:08', 'COMPLETED', 1, 4131, 3, 'FULL', 'OK', 'OK', '32', 'PAUSE', 'OK', 'OK', 'OK', NULL, 'YES', '2020-04-28', '19:10:05'),
 (35, '2020-04-29', '17:37:15', 'COMPLETED WITH ERRORS', 1, 4131, 2, 'FULL', 'OK', 'OK', 'EQUALS TO TOTAL CAMERA', 'ON', 'OK', 'OK', 'CARRIED OUT', NULL, NULL, NULL, NULL),
 (36, '2020-04-30', '22:41:20', 'PENDING', 1, 4131, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '---Report not submitted---', NULL, NULL, NULL),
-(37, '2020-05-01', '22:41:20', 'PENDING', 1, 4131, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '---Report not submitted---', NULL, NULL, NULL);
+(37, '2020-05-01', '22:41:20', 'PENDING', 1, 4131, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '---Report not submitted---', NULL, NULL, NULL),
+(38, '2020-05-02', '22:29:19', 'PENDING', 1, 4131, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '---Report not submitted---', NULL, NULL, NULL),
+(39, '2020-05-03', '22:37:24', 'COMPLETED', 1, 4131, 2, 'FULL', 'OK', 'OK', 'EQUALS TO TOTAL CAMERA', 'PAUSE', 'OK', 'OK', 'CARRIED OUT', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1945,7 +1978,7 @@ CREATE TABLE IF NOT EXISTS `scctvdlogs` (
   PRIMARY KEY (`log_id`),
   KEY `emp_id` (`emp_id`),
   KEY `p_id` (`p_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `scctvdlogs`
@@ -1960,7 +1993,18 @@ INSERT INTO `scctvdlogs` (`log_id`, `emp_id`, `p_id`, `value`, `remarks`, `date`
 (6, 4131, 35, 'ON', 'Status of RRS camera is ON', '2020-04-29', '17:33:53'),
 (7, 4131, 35, 'NOT OK', 'Status of ivms server is NOT OK', '2020-04-29', '17:33:53'),
 (8, 4131, 35, 'ON', 'Status of RRS camera is ON', '2020-04-29', '17:37:15'),
-(9, 4131, 35, 'bye', 'Final submit with errors', '2020-04-29', '17:38:29');
+(9, 4131, 35, 'bye', 'Final submit with errors', '2020-04-29', '17:38:29'),
+(10, 4131, 39, 'ON', 'Status of RRS camera is ON', '2020-05-03', '22:36:02'),
+(11, 4131, 39, 'NOT CARRIED OUT', 'Cleaning of equipments not carried out', '2020-05-03', '22:36:02'),
+(12, 4131, 39, 'bye', 'Procedure Followed', '2020-05-03', '22:36:23'),
+(13, 4131, 39, 'DISCHARGED', 'UPS Battery Indication is \'DISCHARGED\' ', '2020-05-03', '22:36:23'),
+(14, 4131, 39, 'NOT OK', 'ALL SERVERS NOT IN ON STATE', '2020-05-03', '22:36:23'),
+(15, 4131, 39, 'NOT OK', 'NAS status in VMS/VRM is NOT OK ', '2020-05-03', '22:36:23'),
+(16, 4131, 39, 'ON', 'Status of RRS camera is ON', '2020-05-03', '22:36:23'),
+(17, 4131, 39, 'NOT CARRIED OUT', 'Cleaning of equipments not carried out', '2020-05-03', '22:36:23'),
+(18, 4131, 39, 'hello', 'Procedure Followed', '2020-05-03', '22:37:06'),
+(19, 4131, 39, 'ON', 'Status of RRS camera is ON', '2020-05-03', '22:37:06'),
+(20, 4131, 39, 'All parameters NORMAL', 'done', '2020-05-03', '22:37:24');
 
 -- --------------------------------------------------------
 

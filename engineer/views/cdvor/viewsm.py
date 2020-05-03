@@ -84,8 +84,12 @@ def cdvormrepsubm(request, id):
             sql = "INSERT INTO cdvormlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
             cursor.execute(sql,val)
             cursor.execute("update cdvormonthly set unit_incharge_approval = %s where p_id = %s",[None,p_id])
+            cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['25'])
+  
         else:
-            statusm = "PENDING"    
+            statusm = "PENDING"
+            cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['24'])
+      
         print(statusm)    
         cursor.execute("update cdvormonthly set status = %s where p_id = %s",[statusm,p_id])
         cdvor_m = models.Cdvormonthly.objects.all()
@@ -184,6 +188,9 @@ def upcdvormonthly(request, id) :
             sql = "INSERT INTO cdvormlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
             cursor.execute(sql,val)
             cursor.execute("update cdvormonthly set unit_incharge_approval = %s where p_id = %s",[None,id])
+            cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['25'])
+            cursor.execute("update dgmreports set r_count = r_count - 1 where r_id = %s",['24'])
+  
         else: 
             val = (emp_id,p_id,"Procedure Followed",remarks,currdate,currtime)
             sql = "INSERT INTO cdvormlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
@@ -228,6 +235,9 @@ def finalmrepsub(request,p_id,id):
     cursor.execute(sql,val)
     cursor.execute("update cdvormonthly set status = %s where p_id = %s",["COMPLETED WITH ERRORS",p_id])
     cursor.execute("update cdvormonthly set unit_incharge_approval = %s where p_id = %s",[None,p_id])
+    cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['26'])
+    cursor.execute("update dgmreports set r_count = r_count - 1 where r_id = %s",['24'])
+  
    
     #code for notification to supervisor will come over here 
     if request.session.has_key('uid'):

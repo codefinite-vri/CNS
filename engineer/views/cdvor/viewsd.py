@@ -61,10 +61,13 @@ def cdvordrepsubm(request, id) :
           sql = "INSERT INTO cdvordlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
           cursor.execute(sql,val)
           cursor.execute("update cdvordaily set unit_incharge_approval = %s where p_id = %s",[None,p_id])
-    
+          cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['8'])
+          
     else :
           f=2   
           status = "PENDING"
+          cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['7'])
+          
     cursor.execute("update cdvordaily set status = %s where p_id = %s",[status,p_id])
     f=0
     
@@ -467,6 +470,9 @@ def upcdvordaily(request, id) :
           cursor.execute("update cdvordaily set field_intensity = %s where p_id = %s",[field_intensity,id])
           cursor.execute("update cdvordaily set status = %s where p_id = %s",["COMPLETED",id])
           cursor.execute("update cdvordaily set unit_incharge_approval = %s where p_id = %s",[None,id])
+          cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['8'])
+          cursor.execute("update dgmreports set r_count = r_count - 1 where r_id = %s",['7'])
+  
    
     else :
           val = (emp_id,p_id,"Procedure Followed",remarks,currdate,currtime)
@@ -516,7 +522,9 @@ def finalrepsub(request,p_id, id):
     cursor.execute(sql,val)
     cursor.execute("update cdvordaily set status = %s where p_id = %s",["COMPLETED WITH ERRORS",p_id])
     cursor.execute("update cdvordaily set unit_incharge_approval = %s where p_id = %s",[None,p_id])
-    
+    cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['9'])
+    cursor.execute("update dgmreports set r_count = r_count - 1 where r_id = %s",['7'])
+  
     if request.session.has_key('uid'):
         cursor = connection.cursor() 
         currdate = date.today()

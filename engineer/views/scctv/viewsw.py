@@ -133,7 +133,6 @@ def scctvwrepsubw(request, id) :
     
 
     if (upsip <= 235 and  upsip >= 225 and upsop <= 230 and upsop >= 220 and upsbat == "FULL" and ser == "ON" and nas == "OK" and sw == "OK" and ivms == "OK" and free != 0 ):
-       
         status = "COMPLETED"
         remarks = "Parameters normal at the first submit!"
         value = "All parameters NORMAL"
@@ -141,10 +140,11 @@ def scctvwrepsubw(request, id) :
         sql = "INSERT INTO scctvwlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
         cursor.execute(sql,val)
         cursor.execute("update scctvweekly set unit_incharge_approval = %s where p_id = %s",[None,p_id])
-
+        cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['22'])
     else :
-         
         status = "PENDING"
+        cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['21'])
+  
     cursor.execute("update scctvweekly set status = %s where p_id = %s",[status,p_id])
     f=0
     if not(upsip <= 235 and upsip >= 225):  
@@ -286,7 +286,9 @@ def upscctvweekly(request, id) :
         sql = "INSERT INTO scctvwlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
         cursor.execute(sql,val)
         cursor.execute("update scctvweekly set unit_incharge_approval = %s where p_id = %s",[None,p_id])
-
+        cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['22'])
+        cursor.execute("update dgmreports set r_count = r_count - 1 where r_id = %s",['21'])
+  
     else :
         status = "PENDING"
         val = (emp_id,p_id,"Procedure Followed",remarks,currdate,currtime)
@@ -391,7 +393,9 @@ def finalwrepsub(request,p_id,id):
     cursor.execute(sql,val)
     cursor.execute("update scctvweekly set status = %s where p_id = %s",["COMPLETED WITH ERRORS",p_id])
     cursor.execute("update scctvweekly set unit_incharge_approval = %s where p_id = %s",[None,p_id])
-   
+    cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['23'])
+    cursor.execute("update dgmreports set r_count = r_count - 1 where r_id = %s",['21'])
+  
     #code for notification to supervisor will come over here 
     if request.session.has_key('uid'):
         cursor = connection.cursor() 

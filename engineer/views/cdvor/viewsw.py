@@ -92,8 +92,12 @@ def cdvorwrepsubw(request, id):
             sql = "INSERT INTO cdvorwlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
             cursor.execute(sql,val)
             cursor.execute("update cdvorweekly set unit_incharge_approval = %s where p_id = %s",[None,p_id])
+            cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['19'])
+          
         else :
-            status = "PENDING"    
+            status = "PENDING"   
+            cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['18'])
+   
         print(status)    
         cursor.execute("update cdvorweekly set status = %s where p_id = %s",[status,p_id])
         cdvor_w = models.Cdvorweekly.objects.all()
@@ -254,7 +258,9 @@ def upcdvorweekly(request, id) :
         sql = "INSERT INTO cdvorwlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
         cursor.execute(sql,val)
         cursor.execute("update cdvorweekly set unit_incharge_approval = %s where p_id = %s",[None,id])
-   
+        cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['19'])
+        cursor.execute("update dgmreports set r_count = r_count - 1 where r_id = %s",['18'])
+  
     else : 
         val = (emp_id,p_id,"Procedure Followed",remarks,currdate,currtime)
         sql = "INSERT INTO cdvorwlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
@@ -321,7 +327,9 @@ def finalwrepsub(request,p_id,id):
     cursor.execute(sql,val)
     cursor.execute("update cdvorweekly set status = %s where p_id = %s",["COMPLETED WITH ERRORS",p_id])
     cursor.execute("update cdvorweekly set unit_incharge_approval = %s where p_id = %s",[None,p_id])
-   
+    cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['20'])
+    cursor.execute("update dgmreports set r_count = r_count - 1 where r_id = %s",['18'])
+  
     #code for notification to supervisor will come over here 
     if request.session.has_key('uid'):
         cursor = connection.cursor() 

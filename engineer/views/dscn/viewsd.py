@@ -201,9 +201,11 @@ def dscndrepsub(request,id):
           sql = "INSERT INTO dscndlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
           cursor.execute(sql,val)
           cursor.execute("update dscndaily set unit_incharge_approval = %s where p_id = %s",[None,p_id])
-   
+          cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['5'])
      else :
-          status = "PENDING"      
+          status = "PENDING"    
+          cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['4'])
+    
      cursor.execute("update dscndaily set status = %s where p_id = %s",[status,p_id])
      dscn_d = models.Dscndaily.objects.all()
      dscn_d = dscn_d.values('p_id','date','time','status','sat_led','odu_led','io_led','alarm_led','power_led','v35_led','ip_voltage','op_voltage','battery_voltage','coro_function','remarks')
@@ -379,6 +381,9 @@ def updscndaily(request, id) :
           cursor.execute(sql,val)
           cursor.execute("update dscndaily set status = %s where p_id = %s",[status,id])
           cursor.execute("update dscndaily set unit_incharge_approval = %s where p_id = %s",[None,id])
+          cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['5'])
+          cursor.execute("update dgmreports set r_count = r_count - 1 where r_id = %s",['4'])
+  
      else :
           val = (emp_id,p_id,"Procedure Followed",rmarks,currdate,currtime)
           sql = "INSERT INTO dscndlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
@@ -423,7 +428,9 @@ def finalddrepsub(request,p_id,id) :
     cursor.execute(sql,val)
     cursor.execute("update dscndaily set status = %s where p_id = %s",["COMPLETED WITH ERRORS",p_id])
     cursor.execute("update dscndaily set unit_incharge_approval = %s where p_id = %s",[None,p_id])
-    
+    cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['6'])
+    cursor.execute("update dgmreports set r_count = r_count - 1 where r_id = %s",['4'])
+  
     if request.session.has_key('uid'):
         cursor = connection.cursor() 
         currdate = date.today()

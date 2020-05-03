@@ -401,6 +401,9 @@ def upscctvdaily(request, id) :
           sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s ,%s,%s, %s)"
           cursor.execute(sql,val)
           cursor.execute("update scctvdaily set unit_incharge_approval = %s where p_id = %s",[None,p_id])
+          cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['11'])
+          cursor.execute("update dgmreports set r_count = r_count - 1 where r_id = %s",['10'])
+  
     else :
           f=2   
           status = "PENDING"
@@ -408,7 +411,7 @@ def upscctvdaily(request, id) :
           val = (emp_id,p_id,"Procedure Followed",remarks,currdate,currtime)
           sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
           cursor.execute(sql,val)  
-         
+          
     cursor.execute("update scctvdaily set status = %s where p_id = %s",[status,p_id])
     
     if ups == 'DISCHARGED' :
@@ -525,10 +528,14 @@ def scctvdrepsubm(request, id) :
           sql = "INSERT INTO scctvdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
           cursor.execute(sql,val)
           cursor.execute("update scctvdaily set unit_incharge_approval = %s where p_id = %s",[None,p_id])
+          cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['11'])
+  
    
     else :
           f=2   
           status = "PENDING"
+          cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['10'])
+  
     cursor.execute("update scctvdaily set status = %s where p_id = %s",[status,p_id])
     
     if ups == 'DISCHARGED' :
@@ -613,7 +620,9 @@ def finalrepsub(request,p_id, id):
     cursor.execute(sql,val)
     cursor.execute("update scctvdaily set status = %s where p_id = %s",["COMPLETED WITH ERRORS",p_id])
     cursor.execute("update scctvdaily set unit_incharge_approval = %s where p_id = %s",[None,p_id])
-    
+    cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['14'])
+    cursor.execute("update dgmreports set r_count = r_count - 1 where r_id = %s",['10'])
+  
     if request.session.has_key('uid'):
         cursor = connection.cursor() 
         currdate = date.today()
