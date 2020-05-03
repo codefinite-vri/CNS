@@ -190,13 +190,25 @@
 	var config1 = {
         type: 'bar',
         data: {
-          
-          datasets: [{
-          	data: {{ data|safe }},
+        	labels: ['yesterday','today','tomorrow'],/*need an object that should have dates*/           
+          datasets: [
+          {
+          	data: {{ data|safe }},/*This object should have all pending values*/
             backgroundColor: 'blue',
-            label: 'r_count' 
-          }],
-          labels: {{ labels|safe }}         
+            label: 'pending' 
+          },
+          {
+          	data: {{ data|safe }},/*This object should have all declined values*/
+            backgroundColor: 'red',
+            label: 'declined' 
+          },
+          {
+          	data: {{ data|safe }},
+            backgroundColor: 'green',/*This object should have all approved values*/
+            label: 'approved' 
+          }
+          ]
+                  
         },
         options: {
           responsive: true,
@@ -205,7 +217,7 @@
           },
           title: {
             display: true,
-            text: 'Population Bar Chart'
+            text: 'Report bar chart'
           }
         }
       };
