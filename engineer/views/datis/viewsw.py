@@ -3,6 +3,7 @@ from django.db import connection
 from datetime import date,datetime,timedelta
 from engineer.views.datis.viewsd import routebackdatisd
 from login import models as models
+from django.contrib import messages
 
 def datisweeklyrec(request, id):
  if request.session.has_key('uid'):
@@ -14,6 +15,7 @@ def datisweeklyrec(request, id):
      datis_w = datis_w.filter(emp_id=id).order_by('-p_id')
      return render(request,'engineer/datis/datiswrecords.html',{'datis_w':datis_w,'id':id}) 
   else : 
+     messages.add_message(request,30, 'You cannot make changes to pending report!')
      return routebackdatisd(request, uid)
  else : 
    return render(request,'login/login.html')
@@ -34,6 +36,7 @@ def datisw(request, id) :
     if datis_w :
        return render(request,'engineer/datis/datisweeklyrep.html',{'datiswlogs':datiswlogs,'supdetails':supdetails,'datis_w':datis_w,'id':id,'datisw':datisw}) 
     else :
+       messages.add_message(request,30, 'You cannot make changes to pending report!')
        return routebackdatisd(request, id)
    else : 
      return routebackdatisd(request, uid)

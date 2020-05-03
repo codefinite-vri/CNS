@@ -30,7 +30,7 @@
 				<div class="col-sm-7">
 					{% for dscnm in dscn_m %}
 					{% if f == 0 %}
-		        	<div class="alert alert-alert">
+		        	<div class="alert alert-danger">
 						<strong>Maintenance report rejected!</strong> 
 							Redo the maintenance report.
 					{% endif %}
@@ -182,74 +182,38 @@
 	    				        <div class="modal-body">
 	    				          	<table class="table table-bordered table-condensed table-striped table-hover todaytasks">
 		    				          	<tr>
-                              <th>VALUE LABEL</th>
-                              <th>NORMAL VALUE</th>
-                          </tr>
-                          <tr>
-                              <td>SAT LED</td>
-                              <td>Steady ON</td>
-                          </tr>
-                          
-                            <tr>
-                              <td>ODU LED</td>
-                              <td>Steady ON</td>
-                          </tr>
-                              <tr>
-                              <td>I/O LED</td>
-                              <td>Steady ON</td>
-                          </tr>
-                              <tr>
-                              <td>Alarm LED</td>
-                              <td>OFF</td>
-                          </tr>
-                              <tr>
-                              <td>Power LED</td>
-                              <td>Steady ON</td>
-                          </tr>
-                              <tr>
-                              <td>V.35 LED</td>
-                              <td>Rx/Tx- Blinking, When data is being Xmitted/R'cvd</td>
-                          </tr>
-                              <tr>
-                              <td>Input Voltage</td>
-                              <td>230-10%, 230+10%</td>
-                          </tr>
-                              <tr>
-                              <td>Output Voltage</td>
-                              <td>Refer Airtel/UPS service manual</td>
-                          </tr>
-                              <tr>
-                              <td>Battery Voltage</td>
-                              <td>Refer Airtel/UPS service manual</td>
-                        </tr>
-                              <tr>
-                              <td>C/O Function</td>
-                              <td>OK</td>
-                        </tr>
-		    				          	<!--	<tr>
-		    				          		<td>Date and time of servers wrt GPS CLK</td>
-		    				          		<td>Correct</td>
-		    				          	</tr>
-		    				          		<tr>
-		    				          		<td>Status of Disk Array</td>
-		    				          		<td>OK</td>
-		    				          	</tr>
-		    				          		<tr>
-		    				          		<td>Status of VHF TX used for ATIS</td>
-		    				          		<td>On-Line</td>
-		    				          	</tr>
-		    				          		<tr>
-		    				          		<td>Status of VHF RX used for ATIS</td>
-		    				          		<td>On-Line</td>
-		    				          	</tr>
-		    				          		<tr>
-		    				          		<td>DATIS update</td>
-		    				          		<td>OK</td>
-		    				          	</tr>
-		    				          		<tr>
-		    				          		<td>Audio Quality of Datis Announcement</td>
-		    				          		<td>Good</td>
-		    				          	</tr>-->
+											<th>VALUE LABEL</th>
+											<th>NORMAL VALUE</th>
+										</tr>
+										<tr>
+											<td>CLEANING DSCN ASSOCIATED EQUIPMENT</td>
+											<td>(Check if completed)</td>
+										</tr>
+										
+										  <tr>
+											<td>BATTERY BACKUP TIME OF UPS1 AND UPS2</td>
+											<td>(Check if enough)</td>
+										</tr>
+											<tr>
+											<td>UPS BATTERY VOLTAGE ON LOAD</td>
+											<td>(Check if proper)</td>
+										</tr>
+											<tr>
+											<td>ANTENNA AND CABLE CHECK</td>
+											<td>(Check if okay)</td>
+										</tr>
+											<tr>
+											<td>EARTH RESISTANCE</td>
+											<td>(Check if okay)</td>
+										</tr>
+											<tr>
+											<td>E OR N VOLTAGE</td>
+											<td>(Check value)</td>
+										</tr>
+											<tr>
+											<td>EQUIPMENT STATUS AFTER CHECK</td>
+											<td>(Check if okay)</td>
+											</tr>   		          
 	    				          </table>
 	    				        </div>
 	    				        <div class="modal-footer">
@@ -270,34 +234,31 @@
 				                    <table class="table table-bordered table-condensed table-striped table-hover todaytasks mantab">
 				                        <thead>
 				                            <tr>  
-                                      <th>Date</th>
-                                      <th>Time</th>
-                                     <th>Cleaning_DSCN_associated_eqpt</th>
-                                   <th>Battery_backup_time_of_UPS1nUPS2</th>
-                                         <th>UPS_battery_voltage_on_load</th>
-                                      <th>Antenna_n_cable_check</th>
-                                      <th>Earth_resistance</th>
-                                      <th>EorN_voltage</th>
-                                      <th>Eqpt_status_after_check</th>
-                                      <th>Remarks</th>
-                                      <th>Test</th>
-                               </tr>
+												<th>Date-Time</th>
+												<th>Cleaning DSCN associated eqpt</th>
+											  <th>Battery backup time of UPS1 and UPS2</th>
+													<th>UPS battery voltage on load</th>
+												 <th>Antenna and cable check</th>
+												 <th>Earth resistance</th>
+												 <th>E or N voltage</th>
+												 <th>Equipment status after check</th>
+												 <th>Remarks</th>
+												 <th>Test</th> </tr>
                                   </thead>
                                   <tbody>
                                         {% for dscnmm in dscnm %}
                                     <tr>
                                      
-                                      <td>{{ dscnmm.date }}</td>
-                                      <td>{{ dscnmm.time }}</td>
-                                      <td>{{ dscnmm.cleaning_dscn_associated_eqpt }}</td>
-                                      <td>{{ dscnmm.battery_backup_time_of_ups1nups2	 }}</td>
-                                      <td>{{ dscnmm.ups_battery_voltage_on_load }}</td>
-                                      <td>{{ dscnmm.antenna_n_cable_check }}</td>
-                                      <td>{{ dscnmm.earth_resistance }}</td>
-                                      <td>{{ dscnmm.eorn_voltage }}</td>
-                                      <td>{{ dscnmm.eqpt_status_after_check }}</td>
-                                      <td>{{ dscnmm.remarks }}</td>
-                                       <td>Pass</td>  
+										<td>{{ dscnmm.date }}<br>{{ dscnmm.time }}</td>
+										<td>{{ dscnmm.cleaning_dscn_associated_eqpt }}</td>
+										<td>{{ dscnmm.battery_backup_time_of_ups1nups2	 }}</td>
+										<td>{{ dscnmm.ups_battery_voltage_on_load }}</td>
+										<td>{{ dscnmm.antenna_n_cable_check }}</td>
+										<td>{{ dscnmm.earth_resistance }}</td>
+										<td>{{ dscnmm.eorn_voltage }}</td>
+										<td>{{ dscnmm.eqpt_status_after_check }}</td>
+										<td>{{ dscnmm.remarks }}</td>
+										 <td>Pass</td>  
                                       </tr>
 				                            {% endfor %}
 				                         </tbody>

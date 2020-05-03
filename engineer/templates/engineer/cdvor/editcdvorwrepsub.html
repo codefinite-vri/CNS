@@ -213,13 +213,13 @@
                           <table class="table table-bordered table-condensed table-striped table-hover todaytasks mantab">
             <thead>
                 <tr>  
-                    <th>Date</th>
-                    <th>Time</th>
+                    <th>Date-Time</th>
                     <th>PS 5V</th>
                     <th>PS 12V</th>
                     <th>PS 28V</th>
                     <th>Outside Temperature</th>
                     <th>Sideband Frequency</th>
+                    <th>Remarks</th>
                     <th>Test</th> 
                    
                 </tr>
@@ -228,13 +228,13 @@
                 {% for cdvorw in cdvor_w %}
                 <tr>
                  
-                <td>{{ cdvorw.date }}</td>
-                  <td>{{ cdvorw.time }}</td>
+                <td>{{ cdvorw.date }}<br>{{ cdvorw.time }}</td>
                  <td>{{ cdvorw.ps_5v }}</td>
                   <td>{{ cdvorw.ps_12v }}</td>
                   <td>{{ cdvorw.ps_28v }}</td>
                   <td>{{ cdvorw.outside_temp }}</td>
                   <td>{{ cdvorw.sideband_frequency }}</td>
+                  <td>{{ cdvorw.remarks }}</td>
                   {% if cdvorw.ps_5v >= 4.75 and cdvorw.ps_5v <= 5.25 and cdvorw.ps_12v >= 11.5 and cdvorw.ps_12v <= 12.5 and cdvorw.ps_28v >= 27 and cdvorw.ps_28v <= 29 and cdvorw.outside_temp >= -25 and cdvorw.outside_temp <= 70 and cdvorw.sideband_frequency == 10001 %}
                   <td>Pass</td>
                  {% else %}

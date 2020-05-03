@@ -353,8 +353,7 @@
 				          <table class="table table-bordered table-condensed table-striped table-hover todaytasks mantab">
             <thead>
                 <tr>  
-                    <th>Date</th>
-                    <th>Time</th>
+                    <th>Date-Time</th>
                     <th>SAT LED</th>
                     <th>ODU LED</th>
                     <th>IO LED</th>
@@ -364,7 +363,8 @@
                     <th>IP Voltage</th>
                     <th>OP voltage</th>
                     <th>Battery Voltage</th>
-                    <th>CorO function</th>
+					<th>CorO function</th>
+					<th>Remarks</th>
                     <th>Test</th>
                   </tr>
 		  </thead>
@@ -372,9 +372,8 @@
             {% for dscnd in dscn_d %}
             <tr>
              
-              <td>{{ dscnd.date }}</td>
-              <td>{{ dscnd.time }}</td>
-              <td>{{ dscnd.sat_led }}</td>
+              <td>{{ dscnd.date }}<br><td>{{ dscnd.time }}</td>
+			  <td>{{ dscnd.sat_led }}</td>
               <td>{{ dscnd.odu_led }}</td>
               <td>{{ dscnd.io_led }}</td>
               <td>{{ dscnd.alarm_led }}</td>
@@ -384,7 +383,7 @@
               <td>{{ dscnd.op_voltage }}</td>
               <td>{{ dscnd.battery_voltage }}</td>
               <td>{{ dscnd.coro_function }}</td>
-              
+              <td>{{ dscnd.remarks }}</td>
               {% if dscnd.coro_function == "OK" and dscnd.ip_voltage > 219 and dscnd.ip_voltage < 241 and dscnd.op_voltage > 219 and dscnd.op_voltage < 241 and dscnd.battery_voltage > 180 and dscnd.battery_voltage < 250 and dscnd.power_led == "STEADY ON" and dscnd.sat_led == "STEADY ON" and dscnd.odu_led == "STEADY ON" and dscnd.io_led == "STEADY ON" and dscnd.alarm_led == "OFF" and dscnd.v35_led == "RX/TX BLINKING" %}
               <td>Pass</td>
               {% else %}

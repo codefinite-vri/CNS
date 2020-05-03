@@ -362,35 +362,36 @@
                           <table class="table table-bordered table-condensed table-striped table-hover todaytasks mantab">
             <thead>
                 <tr>  
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Measured Bearing 1</th>
-                    <th>Measured Bearing 2</th>
-                    <th>Measured Bearing 3</th>
-                    <th>Measured Bearing 4</th>
-                    <th>Measured Bearing 5</th>
+                    <th>Date-Time</th>
+                    <th>Measured Bearing </th>
+                    <th>Bearing Deviation</th>
                     <th>Error Spread</th>
+                    <th>Remarks</th>
                     <th>Test</th>
                 </tr>
             </thead>
             <tbody>
-                {% for cdvormm in cdvorm %}
+                {% for cdvorm in cdvorm %}
                 <tr>
-                 
-                <td>{{ cdvormm.date }}</td>
-                  <td>{{ cdvormm.time }}</td>
-                 <td>{{ cdvormm.measured_bearing_1 }}</td>
-                  <td>{{ cdvormm.measured_bearing_2 }}</td>
-                  <td>{{ cdvormm.measured_bearing_3 }}</td>
-                  <td>{{ cdvormm.measured_bearing_4 }}</td>
-                  <td>{{ cdvormm.measured_bearing_5 }}</td>
-                  <td>{{ cdvormm.error_spread }}</td>
-                  {% if cdvormm.bearing_deviation_1 < 1 and cdvormm.bearing_deviation_2 < 1 and cdvormm.bearing_deviation_3 < 1 and cdvormm.bearing_deviation_4 < 1 and cdvormm.bearing_deviation_5 < 1 and cdvormm.error_spread < 0.5 %}
-                   <td>Pass</td>
-                 {% else %}
-                  <td>Fail</td>
-               {% endif %}
-               </tr>
+                 <td>{{ cdvorm.date }}<br>{{ cdvorm.time  }}</td>   
+                 <td>1: {{ cdvorm.measured_bearing_1 }}<br>
+                  2:{{ cdvorm.measured_bearing_2 }}<br>
+                  3:{{ cdvorm.measured_bearing_3 }}<br>
+                  4:{{ cdvorm.measured_bearing_4 }}<br>
+                  5:{{ cdvorm.measured_bearing_5 }}</td>
+                  <td>1: {{ cdvorm.bearing_deviation_1 }}<br>
+                  2:{{ cdvorm.bearing_deviation_2 }}<br>
+                  3:{{ cdvorm.bearing_deviation_3 }}<br>
+                  4:{{ cdvorm.bearing_deviation_4 }}<br>
+                  5:{{ cdvorm.bearing_deviation_5 }}</td>
+                  <td>{{ cdvorm.error_spread }}</td>
+                  <td>{{ cdvorm.remarks }}</td>
+                  {% if cdvorm.bearing_deviation_1 < 1 and cdvorm.bearing_deviation_2 < 1 and cdvorm.bearing_deviation_3 < 1 and cdvorm.bearing_deviation_4 < 1 and cdvorm.bearing_deviation_5 < 1 and cdvorm.error_spread < 0.5 %}
+                  <td>Pass</td>
+                {% else %}
+                <td>Fail</td>
+                  {% endif %}
+                </tr>
                {% endfor %}
              </tbody>
                           </table>
@@ -408,58 +409,37 @@
               
 <script>
 $(function(){
-    if($("#bearing_deviation_1").val() < '1.0' ){
-        $('#measured_bearing_1').css('border-color', 'green');
-        $('#bearing_deviation_1').css('border-color', 'green');
-    }else{
+    if($("#bearing_deviation_1").val() >= '1.0' ){
         $('#measured_bearing_1').css('border-color', 'red');
         $('#bearing_deviation_1').css('border-color', 'red');
   
     }
 
-    if($("#bearing_deviation_2").val() < '1.0' ){
-        $('#measured_bearing_2').css('border-color', 'green');
-        $('#bearing_deviation_2').css('border-color', 'green');
-  
-    }else{
+    if($("#bearing_deviation_2").val() >= '1.0' ){
         $('#measured_bearing_2').css('border-color', 'red');
         $('#bearing_deviation_2').css('border-color', 'red');
   
     }
     
-    if($("#bearing_deviation_3").val() < '1.0' ){
-        $('#measured_bearing_3').css('border-color', 'green');
-        $('#bearing_deviation_3').css('border-color', 'green');
-  
-    }else{
+    if($("#bearing_deviation_3").val() >= '1.0' ){
         $('#measured_bearing_3').css('border-color', 'red');
         $('#bearing_deviation_3').css('border-color', 'red');
   
     }
    
-    if($("#bearing_deviation_4").val()< '1.0' ){
-        $('#measured_bearing_4').css('border-color', 'green');
-        $('#bearing_deviation_4').css('border-color', 'green');
-  
-    }else{
+    if($("#bearing_deviation_4").val() >='1.0' ){
         $('#measured_bearing_4').css('border-color', 'red');
         $('#bearing_deviation_4').css('border-color', 'red');
   
     }
 
-     if($("#bearing_deviation_5").val()< '1.0' ){
-        $('#measured_bearing_5').css('border-color', 'green');
-        $('#bearing_deviation_5').css('border-color', 'green');
-  
-    }else{
+     if($("#bearing_deviation_5").val() >='1.0' ){
         $('#measured_bearing_5').css('border-color', 'red');
         $('#bearing_deviation_5').css('border-color', 'red');
   
     }
 
-     if($("#error_spread").val()< '0.5' ){
-        $('#error_spread').css('border-color', 'green');
-    }else{
+     if($("#error_spread").val() >= '0.5' ){
         $('#error_spread').css('border-color', 'red');
     }
 

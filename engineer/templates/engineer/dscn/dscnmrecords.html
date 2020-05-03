@@ -28,26 +28,26 @@
                 <tr>  
                
     <tbody>
-        <th>Date</th>
-        <th>Time</th>
+        <th>Date-Time</th>
         <th>Status</th>
-       <th>Cleaning_DSCN_associated_eqpt</th>
-     <th>Battery_backup_time_of_UPS1nUPS2</th>
-           <th>UPS_battery_voltage_on_load</th>
-        <th>Antenna_n_cable_check</th>
-        <th>Earth_resistance</th>
-        <th>EorN_voltage</th>
-        <th>Eqpt_status_after_check</th>
-        <th>Remarks</th>
-        <th>Test</th>
- </tr>
+         <th>Cleaning DSCN associated eqpt</th>
+        <th>Battery backup time of UPS1 and UPS2</th>
+         <th>UPS battery voltage on load</th>
+          <th>Antenna and cable check</th>
+          <th>Earth resistance</th>
+          <th>E or N voltage</th>
+          <th>Equipment status after check</th>
+          <th>Test</th>
+           <th>Approval Status</th>
+          <th>Approval Date</th>
+          <th>Approval Time</th>
+ </tbody></tr>
     </thead>
-    <tbody>
+    <tbody><td>
           {% for dscnm in dscn_m %}
       <tr>
        
-        <td>{{ dscnm.date }}</td>
-        <td>{{ dscnm.time }}</td>
+        <td>{{ dscnm.date }}<br>{{ dscnm.time }}</td>
         <td>{{ dscnm.status }}</td>
         <td>{{ dscnm.cleaning_dscn_associated_eqpt }}</td>
         <td>{{ dscnm.battery_backup_time_of_ups1nups2	 }}</td>
@@ -56,8 +56,10 @@
         <td>{{ dscnm.earth_resistance }}</td>
         <td>{{ dscnm.eorn_voltage }}</td>
         <td>{{ dscnm.eqpt_status_after_check }}</td>
-        <td>{{ dscnm.remarks }}</td>
          <td>Pass</td>  
+         <td>{{ dscnm.unit_incharge_approval }}</td>
+            <td>{{ dscnm.approval_date }}</td>
+            <td>{{ dscnm.approval_time }}</td>
         </tr>
          {% endfor %}
              </tbody>

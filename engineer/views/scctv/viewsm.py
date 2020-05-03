@@ -3,6 +3,8 @@ from django.db import connection
 from datetime import date,datetime
 # Create your views here.
 from login import models as models
+from django.contrib import messages
+
 
 def scctvmonthlyrec(request, id):
  if request.session.has_key('uid'):
