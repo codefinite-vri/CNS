@@ -180,6 +180,7 @@ def sent(request):
     temp.approval_date=date
     temp.approval_time=time
     temp.unit_incharge_approval='NO'
+    temp.status="PENDING"
     print("temp")
     # currdate = date.today()
     temp.save()
