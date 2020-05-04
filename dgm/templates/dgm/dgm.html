@@ -135,18 +135,18 @@
 			    			<h3 class="card cardcontact"> Overview </h3>
 							{% block content %}
 						    	<canvas id="pie-chart"></canvas>
-						 	<button class="btn-primary" style="float: right;" href="#">MORE DETAILS</button>
+						 	<button class="btn-primary" style="float: right;" onclick='window.location.href="/dgm/communication"'>MORE DETAILS</button>
 					    </div>
 					    <div id="facilities" class="tab-pane fade fac">
 					    	<h3 class="card cardcontact"> Overview </h3>
 							<canvas id="population-chart"></canvas>
-							<button class="btn-primary" style="float: right;" href="#">MORE DETAILS</button>
+							<button class="btn-primary" style="float: right;" onclick='window.location.href="/dgm/navigation"'>MORE DETAILS</button>
 						</div>
 							{% endblock %}
 						<div id="verific" class="tab-pane fade fac">
 							<h3 class="card cardcontact"> Overview </h3>
 							<h1>BAR GRAPH HERE</h1>
-							<button class="btn-primary" style="float: right;" href="#">MORE DETAILS</button>
+							<button class="btn-primary" style="float: right;" onclick='window.location.href="/dgm/surveillance"'href="#">MORE DETAILS</button>
 						</div>
 					</div>		
 				</div>
@@ -190,13 +190,25 @@
 	var config1 = {
         type: 'bar',
         data: {
-          
-          datasets: [{
-          	data: {{ data|safe }},
+        	labels: ['yesterday','today','tomorrow'],/*need an object that should have dates*/           
+          datasets: [
+          {
+          	data: {{ data|safe }},/*This object should have all pending values*/
             backgroundColor: 'blue',
-            label: 'r_count' 
-          }],
-          labels: {{ labels|safe }}         
+            label: 'pending' 
+          },
+          {
+          	data: {{ data|safe }},/*This object should have all declined values*/
+            backgroundColor: 'red',
+            label: 'declined' 
+          },
+          {
+          	data: {{ data|safe }},
+            backgroundColor: 'green',/*This object should have all approved values*/
+            label: 'approved' 
+          }
+          ]
+                  
         },
         options: {
           responsive: true,
@@ -205,7 +217,7 @@
           },
           title: {
             display: true,
-            text: 'Population Bar Chart'
+            text: 'Report bar chart'
           }
         }
       };

@@ -21,6 +21,7 @@ urlpatterns = [
     path('',views.login),
     path('validate/',views.validate),
     path('schoice/',include('supervisor.urls')),
+    path('dgm/',include('dgm.urls')),
     path('',views.login),
     path('validate/',views.validate),
     path('dhomeview/',views.dhomeview),
