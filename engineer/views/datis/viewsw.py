@@ -161,8 +161,12 @@ def datiswrepsubw(request, id) :
         sql = "INSERT INTO datiswlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
         cursor.execute(sql,val)
         cursor.execute("update datisweekly set unit_incharge_approval = %s where p_id = %s",[None,p_id])
+        cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['16'])
+  
     else :
-        status = "PENDING"    
+        status = "PENDING"   
+        cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['15'])
+   
     print(status)    
     cursor.execute("update datisweekly set status = %s where p_id = %s",[status,p_id])
     datis_w = models.Datisweekly.objects.all()
@@ -289,7 +293,9 @@ def updatisweekly(request, id) :
         sql = "INSERT INTO datiswlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
         cursor.execute(sql,val)
         cursor.execute("update datisweekly set unit_incharge_approval = %s where p_id = %s",[None,id])
-   
+        cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['16'])
+        cursor.execute("update dgmreports set r_count = r_count - 1 where r_id = %s",['15'])
+  
     else : 
         val = (emp_id,p_id,"Procedure Followed",remarks,currdate,currtime)
         sql = "INSERT INTO datiswlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s,%s , %s,%s)"
@@ -332,7 +338,9 @@ def finalwrepsub(request,p_id,id):
     cursor.execute(sql,val)
     cursor.execute("update datisweekly set status = %s where p_id = %s",["COMPLETED WITH ERRORS",p_id])
     cursor.execute("update datisweekly set unit_incharge_approval = %s where p_id = %s",[None,p_id])
-   
+    cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['17'])
+    cursor.execute("update dgmreports set r_count = r_count - 1 where r_id = %s",['15'])
+  
     #code for notification to supervisor will come over here 
     if request.session.has_key('uid'):
         cursor = connection.cursor() 

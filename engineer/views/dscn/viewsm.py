@@ -104,6 +104,7 @@ def dscnmrepsub(request, id):
    dscnmlogs = dscnmlogs.filter(date=date.today()).order_by('-log_id')    
    supdetails = models.Supervisor.objects.all()
    supdetails = supdetails.values('name','contact','email').filter(dept='C')
+   cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['31'])
    f = 1
    return render(request,'engineer/dscn/dscnmonrep.html',{'dscn_m':dscn_m,'id':id,'f':f,'supdetails':supdetails,'dscnmlogs':dscnmlogs,'dscnm':dscnm}) 
        
@@ -158,7 +159,9 @@ def updscnmonthly(request, id):
    val = (emp_id,id,remarks,value,currdate,currtime)
    sql = "INSERT INTO dscnmlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
    cursor.execute(sql,val)
-   
+   cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['31'])
+   cursor.execute("update dgmreports set r_count = r_count - 1 where r_id = %s",['30'])
+     
    dscn_m = models.Dscnmonthly.objects.all()
    dscn_m = dscn_m.values('p_id','date','emp_id','time','status','cleaning_dscn_associated_eqpt','battery_backup_time_of_ups1nups2','ups_battery_voltage_on_load','antenna_n_cable_check','earth_resistance','eorn_voltage','eqpt_status_after_check','remarks')
    dscn_m = dscn_m.filter(emp_id=emp_id)  
@@ -197,7 +200,9 @@ def finalmrepsub(request,p_id,id) :
     cursor.execute(sql,val)
     cursor.execute("update dscnmonthly set status = %s where p_id = %s",["COMPLETED WITH ERRORS",p_id])
     cursor.execute("update dscnmonthly set unit_incharge_approval = %s where p_id = %s",[None,p_id])
-    
+    cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['32'])
+    cursor.execute("update dgmreports set r_count = r_count - 1 where r_id = %s",['30'])
+  
     if request.session.has_key('uid'):
         cursor = connection.cursor() 
         currdate = date.today()

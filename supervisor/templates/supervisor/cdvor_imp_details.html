@@ -37,6 +37,7 @@
                           <strong>Report Not Submitted</strong>
 
                       {% elif temp.azimuth_angle < 25 and temp.number_30hz_modulation >= 28 and temp.number_30hz_modulation < 31 and temp.number_9960hz_modulation >= 28 and temp.number_9960hz_modulation < 31 and temp.number_9960hz_deviation >= 15 and temp.number_9960hz_deviation < 18 and temp.field_intensity >= -1 and temp.field_intensity < 2 %}
+                      <div class="alert alert-success">
                           <strong> All maintenance entries matched with standard values.</strong>                   
 
                       {% else %}             
@@ -129,7 +130,7 @@
                                   <a href='/verify/{{names}}/{{temp.p_token}}' class="btn submitbut" >APPROVE</a>      
                                 {% endif %}
                                 {% endif %}
-                </form></div>
+</form></div>
                                 <div class="modal fade" id="recheck">
                                       <div class="modal-dialog">
                                         <div class="modal-content">
@@ -323,7 +324,7 @@
                         <td>Pass</td>
                                     {% else %}
                                         <td>Fail</td>
-                                    {% endif %}  
+                                    {% endif %}  -->
                                     </tr>
                                     {% endfor %}
                                  </tbody>

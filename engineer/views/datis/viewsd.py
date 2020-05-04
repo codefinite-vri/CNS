@@ -477,7 +477,9 @@ def updatisdaily(request, id) :
           cursor.execute("update datisdaily set room_temp = %s where p_id = %s",[roomtemp,id])
           cursor.execute("update datisdaily set status = %s where p_id = %s",["COMPLETED",id])
           cursor.execute("update datisdaily set unit_incharge_approval = %s where p_id = %s",[None,id])
-   
+          cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['2'])
+          cursor.execute("update dgmreports set r_count = r_count - 1 where r_id = %s",['1'])
+  
     else :
           val = (emp_id,p_id,"Procedure Followed",remarks,currdate,currtime)
           sql = "INSERT INTO datisdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
@@ -536,7 +538,8 @@ def datisdrepsubm(request, id) :
           sql = "INSERT INTO datisdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
           cursor.execute(sql,val)
           cursor.execute("update datisdaily set unit_incharge_approval = %s where p_id = %s",[None,p_id])
-   
+          cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['2'])
+  
     elif rint <= 24 and statusofac == 'SVCBL' and statusofups == 'NORMAL' and statusofservera == 'STANDBY' and statusofserverb == 'MAINS' :
           f=1
           status = "COMPLETED"
@@ -546,10 +549,13 @@ def datisdrepsubm(request, id) :
           sql = "INSERT INTO datisdlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
           cursor.execute(sql,val)
           cursor.execute("update datisdaily set unit_incharge_approval = %s where p_id = %s",[None,p_id])
-   
+          cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['2'])
+    
     else :
           f=2   
           status = "PENDING"
+          cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['1'])
+  
     cursor.execute("update datisdaily set status = %s where p_id = %s",[status,p_id])
     if f== 2:
         if roomtemp > '24' :
@@ -631,7 +637,9 @@ def finalrepsub(request,p_id, id):
     cursor.execute(sql,val)
     cursor.execute("update datisdaily set status = %s where p_id = %s",["COMPLETED WITH ERRORS",p_id])
     cursor.execute("update datisdaily set unit_incharge_approval = %s where p_id = %s",[None,p_id])
-    
+    cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['3'])
+    cursor.execute("update dgmreports set r_count = r_count - 1 where r_id = %s",['1'])
+  
     if request.session.has_key('uid'):
         cursor = connection.cursor() 
         currdate = date.today()

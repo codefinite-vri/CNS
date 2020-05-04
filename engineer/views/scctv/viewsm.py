@@ -119,11 +119,11 @@ def scctvmrepsub(request, id):
         sql = "INSERT INTO scctvmlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
         cursor.execute(sql,val)
         cursor.execute("update scctvmonthly set unit_incharge_approval = %s where p_id = %s",[None,p_id])
- 
-
+        cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['28'])
    else :
-         
         status = "PENDING"
+        cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['27'])
+  
    cursor.execute("update scctvmonthly set status = %s where p_id = %s",[status,p_id])
    f=0
    if not(upsip <= 235 and upsip >= 225):  
@@ -327,8 +327,8 @@ def upscctvmonthly(request, id):
         sql = "INSERT INTO scctvmlogs (emp_id,p_id,remarks,value,date,time) values (%s ,%s,%s, %s , %s,%s)"
         cursor.execute(sql,val)
         cursor.execute("update scctvmonthly set unit_incharge_approval = %s where p_id = %s",[None,p_id])
- 
-
+        cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['28'])
+        cursor.execute("update dgmreports set r_count = r_count - 1 where r_id = %s",['27'])
    else :
         status = "PENDING"
         val = (emp_id,p_id,"Procedure Followed",remarks,currdate,currtime)
@@ -477,6 +477,8 @@ def finalmrepsub(request,p_id,id) :
     cursor.execute(sql,val)
     cursor.execute("update scctvmonthly set status = %s where p_id = %s",["COMPLETED WITH ERRORS",p_id])
     cursor.execute("update scctvmonthly set unit_incharge_approval = %s where p_id = %s",[None,p_id])
+    cursor.execute("update dgmreports set r_count = r_count + 1 where r_id = %s",['29'])
+    cursor.execute("update dgmreports set r_count = r_count - 1 where r_id = %s",['27'])
     
     if request.session.has_key('uid'):
         cursor = connection.cursor() 
