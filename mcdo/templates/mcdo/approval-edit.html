@@ -1,0 +1,17 @@
+{% load static %}
+<html>
+    <title>Approval Edit</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <body>
+        {% if edit_entry %}
+        <form action='/entry-verify/' method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type=text placeholder="Topic" name="topic" value="{{ mcdo.topic }}">Topic</input><br>
+            <textarea rows="5" cols="20" type=text placeholder="Content" name="content" value="">{{ mcdo.content }}</textarea>Content<br>
+            <button class="btn btn-success" type="submit">Submit</button>
+        </div>   
+        </form>
+        {% endif %}
+    </body>
+</html>

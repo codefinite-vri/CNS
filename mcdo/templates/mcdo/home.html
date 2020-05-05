@@ -1,0 +1,71 @@
+{% load static %}
+<html>
+    <title>Monthly Reports</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <head>        
+        <h1>Airports Authority of India</h1>
+    </head>
+    <body>
+        <br><h3>Welcome to Monthly Reports module</h3>
+        <br>
+        <!--
+        {% if not is_active %}
+            <a class="btn btn-primary btn-sm" href="{% url 'mcdo-login' %}" role="button">Login</a>
+            <a class="btn btn-primary btn-sm" href="{% url 'mcdo-about' %}" role="button">About</a>
+        {% endif %}
+        -->
+        {% if is_active %}
+            <br><br><br><br>
+            Welcome, {{ employee.name }}
+            <br>
+            {{ employee.designation }},{{ employee.a.name }}
+            <br>
+           
+            <nav class="navbar sticky-top">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="btn btn-primary btn-sm" href="{% url 'takemehome' %}" role="button">Click Here to Return to Home Page</a>
+                        <!--    {% if employee.dept == 'N' %}
+                            <a href='#' onclick="window.location.href='/routebackcd/{{ is_active }}'" class="taskbut"><img src="{% static '/images/task.png' %}"></a>	
+                        {% elif employee.dept == 'C' %}
+                            <a href='#' onclick="window.location.href='/routebackdd/{{ is_active }}'" class="taskbut"><img src="{% static '/images/task.png' %}"></a>
+                        {% elif employee.dept == 'S' %}
+                             <a href='#' onclick="window.location.href='/routebackss/{{ is_active }}'" class="taskbut"><img src="{% static '/images/task.png' %}"></a>
+                        {% endif %}    
+                    -->         
+                    </li>
+                </ul>
+                <div class="title-header"><img src="{% static '/images/aai.jpg' %}"></div>
+                
+            </nav>
+           
+            <br>
+            ABOUT
+            <hr>
+            This module aims to capture information in a brief manner.
+            It provides a dashboard where in every employee of the organisation(Designation independent), will create a small report about what they did in this month. 
+            This will give monthly reports about the tasks undertaken by individual employees. It will also act as platform for them to highlight their special efforts and the results which they obtain, to rest of the organisation.
+            Technically, it is supposed to comprise all the details (good,bad,etc). 
+            This will give others info about what was carried out in the past, without exposing the core details(like daily maintenance logs), unless interested. 
+            So, as soon as an entry is made, the immediate supervisor receives the entry in his "Pending Approvals" section. Meanwhile, the employee can re-edit the submitted entry until it is approved or rejected. The supervisor has the ability to edit the entry of his subordinate, he can remove irrelevant information, or highlight additional points and can then approve it. He can reject an entry if it is utter nonsense. After approval, the entry is displayed onto the public dashboard, wherein all the people of the organisation, irrespective of their position, can view the entry. This can help higher authorities to take note of those certain individuals.
+
+            Another aspect to this module, is the provision of statistical information based on filters as per user's choice. For eg. Someone would want to see , "the number of failures in a particular equipment based on a certain machine parameter".
+            So, we can retrieve information from the maintenance logs on the specified basis, and can provide insightful plots like bar graphs and charts etc.
+            It is also aimed to display general information like emergency protocols and special messages from the head etc, kinda like a universal e-notice board...
+
+            <br>
+            <a class="btn btn-success btn-sm " href="{% url 'mcdo-entries' %}" role="button">Click Here to see all entries</a>
+            
+            {% if mcdo %}
+                <a class="btn btn-primary btn-sm " href="{% url 'mcdo-enter' 42 %}" role="button">Edit Last Unapproved Entry</a>
+            {% else %}
+                <a class="btn btn-primary btn-sm " href="{% url 'mcdo-enter' %}" role="button">Enter new Data</a>
+            {% endif %}
+        
+            {% if is_executive %}
+                <a class="btn btn-warning " href="{% url 'mcdo-approval' %}" role="button">Pending Approvals<span class="badge">{{ pending_approvals }}</span></a>
+            {% endif %}
+
+        {% endif %}        
+    </body>
+</html>

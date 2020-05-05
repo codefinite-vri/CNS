@@ -508,7 +508,7 @@
 								{% endif %}
 							    {% endif %}
 								<td>{{ dscnmsub_on }}</td>
-			         			<td><button class="btn standards" data-toggle="modal" data-target="#dscnmonthlyly">STANDARDS</button></td>
+			         			<td><button class="btn standards" data-toggle="modal" data-target="#dscnmonthly">STANDARDS</button></td>
 								 <td><button class="btn standards" onclick="window.location.href='/dscnmonthlyrec/{{ id }}'">MORE DETAILS</button></td>
 					     	</tr>
 				    	
@@ -666,6 +666,55 @@
 				        </table>
 					</div>
 			    </div> 
+			</div>
+		</div>
+		<div class="modal fade" id="dscnmonthly">
+			<div class="modal-dialog">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h4 class="modal-title">Standards - Dscn Monthly<button type="button" class="close" data-dismiss="modal">&times;</button></h4>
+				</div>
+				<div class="modal-body">
+				  <table  class="table table-bordered standtab table-condensed table-striped table-hover todaytasks">
+					  <tr>
+						<th>VALUE LABEL</th>
+						<th>NORMAL VALUE</th>
+					</tr>
+					<tr>
+						<td>CLEANING DSCN ASSOCIATED EQUIPMENT</td>
+						<td>(Check if completed)</td>
+					</tr>
+					
+					  <tr>
+						<td>BATTERY BACKUP TIME OF UPS1 AND UPS2</td>
+						<td>(Check if enough)</td>
+					</tr>
+						<tr>
+						<td>UPS BATTERY VOLTAGE ON LOAD</td>
+						<td>(Check if proper)</td>
+					</tr>
+						<tr>
+						<td>ANTENNA AND CABLE CHECK</td>
+						<td>(Check if okay)</td>
+					</tr>
+						<tr>
+						<td>EARTH RESISTANCE</td>
+						<td>(Check if okay)</td>
+					</tr>
+						<tr>
+						<td>E OR N VOLTAGE</td>
+						<td>(Check value)</td>
+					</tr>
+						<tr>
+						<td>EQUIPMENT STATUS AFTER CHECK</td>
+						<td>(Check if okay)</td>
+						</tr>    
+				  </table>
+				</div>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				</div>  
+			  </div>
 			</div>
 		</div>
 		<div class="modal fade" id="datisdaily">
