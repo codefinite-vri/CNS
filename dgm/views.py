@@ -8,7 +8,7 @@ from operator import itemgetter
 from django.db.models import Q
 from itertools import groupby
 # Create your views here.
-
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
 from login import models
 from django.db import connection
@@ -43,45 +43,23 @@ def homev(request,uid):
     
     com=Cdvordaily+[i for i in Cdvorweekly]+[i for i in Cdvormonthly]
     com=sorted(com,key=itemgetter('date'))
-    count=collections.Counter([d['date'] for d in com])
-    i=datetime.strptime('2020413', '%Y%m%d')
-    # print(str(i.date()))
-    j=0
-    obj=[]
-    temp_label=[]
-    temp_obj=[]
-    label=[]
-    c=1
-    today=datetime.now().strftime('%Y-%m-%d')
-    # print(today)
-    # if str(i.date()) == str(today):
-    #     print("yes")
-    # else:
-    #     print("no")
-
-    # print(i)
-    while str(i.date()) != str(today):
-        
-            
-            temp_obj.append(count[i.date()])
-            temp_label.append(i)
-            # print(label[j],"   ",obj[j])
-            if count[i] == None:
-                temp_obj.append(0)
-            c=c+1
-            i=i+timedelta(days=1)
-            if c % 8 == 0:
-                obj.append(temp_obj)
-                label.append(temp_label)
-                temp_obj=[]
-                temp_label=[]
-                c=1
-                
-                continue
-       
-    print('labels:',label)
-    print('data:',obj)    
+    pending=[]
+    completed=[]
+    error=[]
+    for i in com:
+        if i['status'] == 'PENDING':
+            pending.append(i)
+        elif i['status'] == 'COMPLETED':    
+            completed.append(i)
+        elif i['status'] == 'COMPLETED WITH ERRORS':
+            error.append(i)
     
+        pcount=collections.Counter([d['date'] for d in pending])
+        pend=compute(request,pcount)
+        ccount=collections.Counter([d['date'] for d in completed])
+        comp=compute(request,ccount)
+        ecount=collections.Counter([d['date'] for d in error])
+        err=compute(request,ecount)
 
 
    
@@ -94,7 +72,7 @@ def homev(request,uid):
     #     com_labels.append(datisd.r_status)
     #     com_data.append(datisd.r_count)
     
-    
+    print(pend)
     
     return render(request, 'dgm/dgm.html', {
         'com_labels':com_labels,
@@ -104,7 +82,73 @@ def homev(request,uid):
         'nav_data': nav_data,
      })
 
+def compute(request,count):
+    i=datetime.strptime('2020413', '%Y%m%d')
+    # print(str(i.date()))
+    j=0
+    obj=[]
+    temp_label=[]
+    temp_obj=[]
+    label=[]
+    temp_status=[]
+    status=[]
+    c=1
+    today=datetime.now()
+    threshold=today-timedelta(days=7)
+    today=today.strftime('%Y-%m-%d')
+    # today=datetime.strptime('2020505', '%Y%m%d')
+    # print(today)
+    # if str(i.date()) == str(today):
+    #     print("yes")
+    # else:
+    #     print("no")
 
+    # print(i)
+    # print(type(i.date()))
+    # print(today)
+    # print(str(i.date()))
+    flag=0
+    while str(i.date()) != today:
+        
+        
+            temp_obj.append(count[i.date()])
+            if count[i] == None:
+                temp_obj.append(0)
+            temp_label.append(i)
+
+            # print(label[j],"   ",obj[j])
+ 
+            c=c+1
+            i=i+timedelta(days=1)
+            if c % 8 == 0 and i.date() <= threshold.date():
+                obj.append(temp_obj)
+                label.append(temp_label)
+                # status.append(temp_status)
+                temp_obj=[]
+                temp_label=[]
+                # temp_status=[]
+                c=1
+                
+                continue
+            
+            elif i.date() > threshold.date():
+                flag=1
+                c=0
+                continue
+            if flag==1:
+                obj.append(temp_obj)
+                label.append(temp_label)
+                # status.append(temp_status)
+                temp_obj=[]
+                temp_label=[]
+                
+                # temp_status=[]
+                
+       
+    # print('labels:',label)
+    # print('data:',obj)
+    # print('status:',status)    
+    return [label,obj]
 
 def dgmhome(request,id):
 	today = datetime.now().strftime('%d/%m/%Y')
@@ -136,7 +180,7 @@ def navigation(request):
     # print(type(com))
     # eng=[entry for entry in models.Engineer.objects.filter(dgm_id=uid).values()]
     for i in com:
-        if i['status']=='PENDING':
+        if i['status']=='com':
             p_count=p_count+1
         elif i['status']=='COMPLETED':
             comp_count=comp_count+1
