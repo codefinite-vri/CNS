@@ -53,13 +53,13 @@ def homev(request,uid):
             completed.append(i)
         elif i['status'] == 'COMPLETED WITH ERRORS':
             error.append(i)
-    
-        pcount=collections.Counter([d['date'] for d in pending])
-        pend=compute(request,pcount)
-        ccount=collections.Counter([d['date'] for d in completed])
-        comp=compute(request,ccount)
-        ecount=collections.Counter([d['date'] for d in error])
-        err=compute(request,ecount)
+
+    pcount=collections.Counter([d['date'] for d in pending])
+    pend=compute(request,pcount)
+    ccount=collections.Counter([d['date'] for d in completed])
+    comp=compute(request,ccount)
+    ecount=collections.Counter([d['date'] for d in error])
+    err=compute(request,ecount)
 
 
    
@@ -72,14 +72,14 @@ def homev(request,uid):
     #     com_labels.append(datisd.r_status)
     #     com_data.append(datisd.r_count)
     
-    print(pend)
+    print(pend[0])
     
     return render(request, 'dgm/dgm.html', {
-        'com_labels':com_labels,
-        'com_data': com_data,
+        'labels':pend[0],
+        'data': pend[1],
         'id':uid,
-        'nav_labels':nav_labels,
-        'nav_data': nav_data,
+        # 'nav_labels':nav_labels,
+        # 'nav_data': nav_data,
      })
 
 def compute(request,count):
@@ -94,7 +94,7 @@ def compute(request,count):
     status=[]
     c=1
     today=datetime.now()
-    threshold=today-timedelta(days=7)
+    threshold=today-timedelta(days=8)
     today=today.strftime('%Y-%m-%d')
     # today=datetime.strptime('2020505', '%Y%m%d')
     # print(today)
@@ -108,6 +108,10 @@ def compute(request,count):
     # print(today)
     # print(str(i.date()))
     flag=0
+    # print(type(i.date()))
+    # print(type(threshold.date()))
+    # p=i.date()<threshold.date()
+    # print(p)
     while str(i.date()) != today:
         
         
@@ -115,11 +119,12 @@ def compute(request,count):
             if count[i] == None:
                 temp_obj.append(0)
             temp_label.append(i)
-
+            
             # print(label[j],"   ",obj[j])
  
             c=c+1
             i=i+timedelta(days=1)
+            
             if c % 8 == 0 and i.date() <= threshold.date():
                 obj.append(temp_obj)
                 label.append(temp_label)
@@ -131,16 +136,25 @@ def compute(request,count):
                 
                 continue
             
-            elif i.date() > threshold.date():
+            elif i.date() > threshold.date() and temp_label != None:
+                # print("here")
                 flag=1
-                c=0
+                if c % 8 == 0 :
+                    obj.append(temp_obj)
+                    label.append(temp_label)
+                    # status.append(temp_status)
+                    temp_obj=[]
+                    temp_label=[]
+                    # temp_status=[]
+                    c=1
                 continue
-            if flag==1:
-                obj.append(temp_obj)
-                label.append(temp_label)
-                # status.append(temp_status)
-                temp_obj=[]
-                temp_label=[]
+    if flag==1:
+        # print("here23")
+        obj.append(temp_obj)
+        label.append(temp_label)
+        # status.append(temp_status)
+        temp_obj=[]
+        temp_label=[]
                 
                 # temp_status=[]
                 

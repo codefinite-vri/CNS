@@ -164,13 +164,13 @@
       type: 'pie',
       data: {
         datasets: [{
-          data: {{ com_data|safe }},
+          data: {{ data[0]|safe }},
           backgroundColor: [
             '#1E72FA', '#11b461', '#bf0033', '#C0C0C0', '#D3D3D3'
           ],
           label: 'r_count'
         }],
-        labels: {{ labels|safe }}
+        labels: {{ labels[0]|safe }}
       },
       options: {
         responsive: true
@@ -193,17 +193,17 @@
         	labels: ['yesterday','today','tomorrow'],/*need an object that should have dates*/           
           datasets: [
           {
-          	data: {{ com_data|safe }},/*This object should have all pending values*/
+          	data: {{ data|safe }},/*This object should have all pending values*/
             backgroundColor: 'blue',
             label: 'pending' 
           },
           {
-          	data: {{ com_data|safe }},/*This object should have all declined values*/
+          	data: {{ data|safe }},/*This object should have all declined values*/
             backgroundColor: 'red',
-            label: 'declined' 
+            label:'declined' 
           },
           {
-          	data: {{ com_data|safe }},
+          	data: {{ data|safe }},
             backgroundColor: 'green',/*This object should have all approved values*/
             label: 'approved' 
           }
