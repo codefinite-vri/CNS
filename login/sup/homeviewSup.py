@@ -35,9 +35,11 @@ def run_sup(request,uid):
         Cdvordaily=[entry for entry in models.Cdvordaily.objects.filter(unit_incharge_approval=None).values().order_by('-date')]
         for item in Cdvordaily:
                 item.update( {"type":"Cdvordaily"})
+                item.update({"repdead":item['date']})
         Cdvorweekly=[entry for entry in models.Cdvorweekly.objects.filter(unit_incharge_approval=None).values().order_by('-date')]
         for item in Cdvorweekly:
                 item.update( {"type":"Cdvorweekly"})
+                item.update({"repdead":week(item['date'])})
         
         ndbdaily=[entry for entry in models.Ndbdaily.objects.filter(unit_incharge_approval=None).values().order_by('-date')]
         for item in ndbdaily:
@@ -62,7 +64,8 @@ def run_sup(request,uid):
         
         Cdvormonthly=[entry for entry in models.Cdvormonthly.objects.filter(unit_incharge_approval=None).values().order_by('-date')]
         for item in Cdvormonthly:
-                item.update( {"type":"Cdvormonthly"})        
+                item.update( {"type":"Cdvormonthly"})  
+                item.update({"repdead":month(item['date'])})      
         
         
         com=Cdvordaily+[i for i in Cdvorweekly]+[i for i in Dmeweekly]+[i for i in Dmedaily]+[i for i in Dmemonthly]+[i for i in Ndbweekly]+[i for i in ndbdaily]+[i for i in Ndbmonthly]+[i for i in Cdvormonthly]

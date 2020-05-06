@@ -1,12 +1,12 @@
 from django.shortcuts import render
-
+import collections
 from datetime import date,datetime,timedelta
 from django.db import connection
 from cryptography.fernet import Fernet as frt
 from supervisor.views import main
 from operator import itemgetter
-
-
+from django.db.models import Q
+from itertools import groupby
 # Create your views here.
 
 from django.http import HttpResponse
@@ -19,21 +19,90 @@ def homev(request,uid):
     
     request.session['type']='d'
     request.session['uid']=uid
-    # emp_id = models.Dgm.objects.all().filter(a_id=1).values('dgm_id')[0]['dgm_id']
-    queryset = models.DgmReports.objects.order_by('-r_count')
-    for datisd in queryset:
-        labels.append(datisd.r_status)
-        data.append(datisd.r_count)
+    emp_id = models.Dgm.objects.all().filter(a_id=1).values('dgm_id')[0]['dgm_id']
+    # comlist = models.DgmReports.objects.filter(Q(r_id=1) | Q(r_id=2) | Q(r_id=3) | Q(r_id=4) | Q(r_id=5) | Q(r_id=6) | Q(r_id=15) |Q(r_id=16) | Q(r_id=17) | Q(r_id=30) |Q(r_id=31) |Q(r_id=32))
+    
+    # for datisd in comlist:
+    #     com_labels.append(datisd.r_status)
+    #     com_data.append(datisd.r_count)
+
+
+    Cdvordaily=[entry for entry in models.Cdvordaily.objects.values().order_by('-date')]
+    for item in Cdvordaily:
+            item.update( {"type":"Cdvordaily"})
+    Cdvorweekly=[entry for entry in models.Cdvorweekly.objects.values().order_by('-date')]
+    for item in Cdvorweekly:
+            item.update( {"type":"Cdvorweekly"})
+    
+    
+    
+    Cdvormonthly=[entry for entry in models.Cdvormonthly.objects.values().order_by('-date')]
+    for item in Cdvormonthly:
+            item.update( {"type":"Cdvormonthly"})        
+    
+    
+    com=Cdvordaily+[i for i in Cdvorweekly]+[i for i in Cdvormonthly]
+    com=sorted(com,key=itemgetter('date'))
+    count=collections.Counter([d['date'] for d in com])
+    i=datetime.strptime('2020413', '%Y%m%d')
+    # print(str(i.date()))
+    j=0
+    obj=[]
+    temp_label=[]
+    temp_obj=[]
+    label=[]
+    c=1
+    today=datetime.now().strftime('%Y-%m-%d')
+    # print(today)
+    # if str(i.date()) == str(today):
+    #     print("yes")
+    # else:
+    #     print("no")
+
+    # print(i)
+    while str(i.date()) != str(today):
+        
+            
+            temp_obj.append(count[i.date()])
+            temp_label.append(i)
+            # print(label[j],"   ",obj[j])
+            if count[i] == None:
+                temp_obj.append(0)
+            c=c+1
+            i=i+timedelta(days=1)
+            if c % 8 == 0:
+                obj.append(temp_obj)
+                label.append(temp_label)
+                temp_obj=[]
+                temp_label=[]
+                c=1
+                
+                continue
+       
+    print('labels:',label)
+    print('data:',obj)    
+    
+
+
+   
 
     
+
+    # surlist = models.DgmReports.objects.filter(Q(r_id=10) | Q(r_id=11) | Q(r_id=14) | Q(r_id=21) | Q(r_id=22) | Q(r_id=23) | Q(r_id=27) |Q(r_id=28) | Q(r_id=) | Q(r_id=30) |Q(r_id=31) |Q(r_id=32))
+    
+    # for datisd in comlist:
+    #     com_labels.append(datisd.r_status)
+    #     com_data.append(datisd.r_count)
     
     
     
     return render(request, 'dgm/dgm.html', {
-        'labels': labels,
-        'data': data,
-        'id':uid
-    })
+        'com_labels':com_labels,
+        'com_data': com_data,
+        'id':uid,
+        'nav_labels':nav_labels,
+        'nav_data': nav_data,
+     })
 
 
 
