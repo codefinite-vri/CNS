@@ -16,7 +16,7 @@ from login.eng.logEng import logEng as logEng
 from login.eng.logEng import logEngN as logEngN
 from login.eng.logEng import logEngS as logEngS
 from head.views import dispMap as dispMap
-from login.dgm.homeviewDgm import pie_chart as pie_chart
+from dgm.views import homev as homev
 from django.http import HttpResponse
 from . import models
 from django.db import connection
@@ -38,7 +38,7 @@ def login(request):
         return run_sup(request,request.session.get('uid'))
     
     if request.session.has_key('uid') and request.session.get('type')=='d':
-        return logDgm(request,request.session.get('uid'))
+        return homev(request,request.session.get('uid'))
     else:
          return render(request,'login/login.html')
 
@@ -66,12 +66,13 @@ def validate(request):
                     request.session['type']='e'
                     return dhomeviews(request,id)
     elif b=='21' :
+        request.session['key']=frt.generate_key().decode('utf-8')
         x=models.Dgm.objects.all()
         for i in x:
             if (uid == str(i.dgm_id)) & (check_password(passw,i.password)) :
                 flag=0
                 request.session['type']='d'
-                return pie_chart(request)
+                return homev(request,id)
     
                # y=models.Airport.objects.filter(a_id=i.a_id).values()
                # print(y[0])
