@@ -72,11 +72,15 @@ def homev(request,uid):
     #     com_labels.append(datisd.r_status)
     #     com_data.append(datisd.r_count)
     
-    print(pend[0])
+    print(pend[0][0])
     
     return render(request, 'dgm/dgm.html', {
-        'labels':pend[0],
-        'data': pend[1],
+        'p_labels':pend[0][2],
+        'p_data': pend[1][2],
+        'c_labels':comp[0][2],
+        'c_data': comp[1][2],
+        'e_labels':err[0][2],
+        'e_data': err[1][2],
         'id':uid,
         # 'nav_labels':nav_labels,
         # 'nav_data': nav_data,
@@ -108,6 +112,7 @@ def compute(request,count):
     # print(today)
     # print(str(i.date()))
     flag=0
+    days=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
     # print(type(i.date()))
     # print(type(threshold.date()))
     # p=i.date()<threshold.date()
@@ -118,7 +123,7 @@ def compute(request,count):
             temp_obj.append(count[i.date()])
             if count[i] == None:
                 temp_obj.append(0)
-            temp_label.append(i)
+            temp_label.append(days[i.date().weekday()])
             
             # print(label[j],"   ",obj[j])
  
@@ -159,8 +164,8 @@ def compute(request,count):
                 # temp_status=[]
                 
        
-    # print('labels:',label)
-    # print('data:',obj)
+    print('labels:',label)
+    print('data:',obj)
     # print('status:',status)    
     return [label,obj]
 
