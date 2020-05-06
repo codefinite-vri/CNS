@@ -163,14 +163,15 @@
     var config = {
       type: 'pie',
       data: {
+		labels: [{% for i in p_labels %}"{{i}}",{% endfor %}],
         datasets: [{
-          data: {{ data[0]|safe }},
+          data: [{% for i in p_data %}{{ i }},{% endfor %}],
           backgroundColor: [
             '#1E72FA', '#11b461', '#bf0033', '#C0C0C0', '#D3D3D3'
           ],
           label: 'r_count'
         }],
-        labels: {{ labels[0]|safe }}
+        
       },
       options: {
         responsive: true
@@ -190,22 +191,22 @@
 	var config1 = {
         type: 'bar',
         data: {
-        	labels: ['yesterday','today','tomorrow'],/*need an object that should have dates*/           
+        	labels: [{% for i in p_labels %}"{{ i }}",{% endfor %}],/*need an object that should have dates*/           
           datasets: [
           {
-          	data: {{ data|safe }},/*This object should have all pending values*/
+          	data: {{ p_data|safe }},/*This object should have all pending values*/
             backgroundColor: 'blue',
             label: 'pending' 
           },
           {
-          	data: {{ data|safe }},/*This object should have all declined values*/
+          	data: {{ c_data|safe }},/*This object should have all declined values*/
             backgroundColor: 'red',
-            label:'declined' 
+            label:'completed' 
           },
           {
-          	data: {{ data|safe }},
+          	data: {{ e_data|safe }},
             backgroundColor: 'green',/*This object should have all approved values*/
-            label: 'approved' 
+            label: 'completed with errors' 
           }
           ]
                   
